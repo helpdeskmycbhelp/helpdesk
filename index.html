@@ -8,6 +8,9 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Bootstrap Icons CDN (Add this in <head>) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
   
 
 </head>
@@ -112,31 +115,24 @@
 
 </div>
 
+
+
+<!-- Chat Toggle Button with Bootstrap Icon -->
 <!-- Floating Chatbot Button -->
 <div id="chat-button" onclick="toggleChat()" style="position:fixed;bottom:20px;right:20px;z-index:9999;cursor:pointer;" >
   <img src="assets/bot.png" alt="Chat" style="width:50px;height:50px;background:#007bff;padding:10px;border-radius:50%;">
 </div>
 
 
-<!-- Chatbot Popup -->
-<div id="chat-popup" class="chat-popup" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="300">
+<!-- Chat Popup -->
+<div id="chat-popup" class="chat-popup">
   <div class="chat-header">ChatBot</div>
   <div id="chat-output" class="chat-output"></div>
   <div class="chat-input-area">
     <input type="text" id="user-input" placeholder="Ask me anything..." />
-   <button onclick="getBotReply()">
-  <i class="fas fa-paper-plane"></i>
-</button>
-
+    <button onclick="getBotReply()"><i class="fas fa-paper-plane"></i></button>
   </div>
 </div>
-
-
-</main>
-
-
-
-
 
 <script>
   const faqs = [
@@ -1862,6 +1858,9 @@ function getBotReply() {
 
   
 </script>
+
+
+
 
 
 <!-- Bootstrap JS Bundle with Popper (Required for navbar toggle) -->

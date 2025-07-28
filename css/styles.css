@@ -4,7 +4,7 @@
   top: 0;
   width: 100%;
   height: 50px;
-  background: linear-gradient(90deg, rgb(2, 16, 126), rgba(4, 30, 228, 0.673));
+  background: linear-gradient(90deg, rgb(2, 16, 126), rgba(4, 30, 228, 0.848));
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -177,6 +177,9 @@ header {
 
 /* Animate cards when in view */
 
+
+
+/* === CARD STYLING === */
 .card {
   border-radius: 20px;
   overflow: hidden;
@@ -186,6 +189,9 @@ header {
   background: rgb(255, 255, 255);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .animate-card {
   animation: fadeInUp 0.8s ease forwards;
@@ -233,25 +239,21 @@ header {
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.15);
 }
 
+/* Card hover animation */
 .card-hover:hover {
   transform: scale(1.05) translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   z-index: 10;
 }
 
+
 /* Inner content padding */
 .card-body {
   padding: 1.5rem;
 }
 
-.card img {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  object-fit: cover;
-  width: 100%;
-}
-/* Card Image */
-.custom-card img,
+/* Card image styling */
+.card img,
 .card-img-top {
   width: 100%;
   height: 180px;
@@ -260,30 +262,47 @@ header {
   transition: transform 0.4s ease;
 }
 
-.custom-card:hover img {
+
+
+/* On hover scale image */
+.card:hover img {
   transform: scale(1.05);
 }
 
-/* WhatsApp Icon Inside Card */
-.whatsapp-inside-btn {
-  position: absolute;
-  top: 12px;
-  right: 20px;
-  width: 38px;
-  height: 38px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
+/* Text section */
+.card h4 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #012169;
 }
 
-.whatsapp-inside-btn img {
-  width: 30px;
-  height: 30px;
+.card-text {
+  font-size: 0.95rem;
+  margin-bottom: auto;
+  color: #333;
+  line-height: 1.6;
+  text-align: justify;
 }
+
+
+
+
+
+@media (max-width: 576px) {
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .card-img-top {
+    height: 150px;
+  }
+}
+
+
+
+
+
+
 
 /* Card Body */
 .custom-card .card-body {
@@ -315,10 +334,7 @@ header {
 
 /* Responsive Tweaks */
 @media (max-width: 768px) {
-  .custom-card img {
-    height: 160px;
-    border-radius: 16px 16px 0 0;
-  }
+  
 
   .card-title {
     font-size: 1rem;
@@ -328,17 +344,7 @@ header {
     font-size: 0.9rem;
   }
 
-  .whatsapp-inside-btn {
-    top: 10px;
-    right: 20px;
-    width: 34px;
-    height: 34px;
-  }
-
-  .whatsapp-inside-btn img {
-    width: 50px;
-    height: 50px;
-  }
+  
 }
 
 @media (max-width: 576px) {
@@ -351,8 +357,81 @@ header {
   }
 }
 
+  /* Button Container */
+.card-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
 
- 
+.card-buttons a {
+  text-decoration: none;
+}
+
+.card-buttons a:hover,
+.card-buttons a:focus {
+  text-decoration: none;
+}
+
+
+/* Individual Buttons */
+.btn-custom {
+  flex: 1;
+  min-width: 45%;
+  padding: 25px 12px;
+  font-size: 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+  height: 80px;
+  margin-top: 20px;
+}
+
+/* WhatsApp Style */
+.btn-wa {
+  background-color: #04ef3f;
+  color: #ffffff;
+  border: 1px solid #25D366;
+}
+
+.btn-wa:hover {
+  background-color: #008d0e;
+  color: #fff;
+}
+
+/* Ticket Style */
+.btn-web {
+  background-color: #0048ff;
+  color: #ffffff;
+  border: 1px solid #2c6eff;
+}
+
+.btn-web:hover {
+  background-color: #12007b;
+  color: #fff;
+}
+
+
+
+/* Responsive for Mobile */
+@media (max-width: 576px) {
+  .card-buttons {
+    flex-direction: row;
+  }
+
+  .btn-custom {
+    width: 100%;
+    min-width: unset;
+    margin-bottom: 6px;
+  }
+}
+
 
 /* Chat Popup Container */
 .chat-popup {

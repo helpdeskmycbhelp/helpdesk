@@ -376,8 +376,8 @@
 
 @media (max-width: 576px) {
   .mySwiper {
-    padding-left: 5vw;
-    padding-right: 5vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
   }
 }
 
@@ -655,6 +655,46 @@ body {
   }
 }
 
+.custom-toggler {
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0;
+}
+
+.hamburger {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #003366;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Optional: animated X on open */
+.navbar-toggler.collapsed .hamburger span:nth-child(1) {
+  transform: rotate(0) translateY(0);
+}
+.navbar-toggler:not(.collapsed) .hamburger span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.navbar-toggler:not(.collapsed) .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+.navbar-toggler:not(.collapsed) .hamburger span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
 
 
   </style>
@@ -666,9 +706,14 @@ body {
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img src="assets/logo.png" alt="Logo" class="navbar-logo me-2" />
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Toggle navigation">
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</button>
+
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#admin">Admin</a></li>
@@ -692,7 +737,6 @@ body {
    >
   CB - Helpdesk
 </h1>
-    <h2 class="text-center mb-4  text-gradient" data-aos="fade-up" style="font-size: 1.5rem;">Tools • Support • Success</h2>
     <div class="swiper mySwiper" data-aos="fade-up">
       <div class="swiper-wrapper">
 
@@ -812,7 +856,7 @@ body {
     <div class="content">
       <h2>Policy Website</h2>
       <p>Stay up to date with Coldwell Banker policies, compliance procedures, and operational guidelines.</p>
-      <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary btn-custom">Read policy</a>
+      <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary btn-custom">Read Policy</a>
     </div>
     <div class="img-box">
       <i class="fas fa-file-contract"></i>

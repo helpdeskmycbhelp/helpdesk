@@ -33,14 +33,36 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg-gradient);
+      background: url('assets/house.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-attachment: fixed; /* optional parallax feel */
       margin: 0;
-      padding-top: 70px;
+      padding-top: 0px;
       scroll-behavior: smooth;
     }
 
+    body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.099); /* adjust opacity */
+  z-index: -1;
+}
+
+.card-title {
+  background: linear-gradient(90deg, #0056d2, #00b4db); /* Your gradient colors */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Standard for newer browsers */
+  font-weight: 700; /* Optional: bold text */
+}
+
+
     .navbar {
-      background: linear-gradient(to right, #ffffff, #f1f1f1);
+      background: linear-gradient(to right, #ffffff00, #f1f1f100);
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
       z-index: 999;
     }
@@ -76,6 +98,8 @@
       align-items: center;
       backdrop-filter: blur(8px);
       transition: all 0.4s ease;
+      
+      
     }
 
     .section:nth-child(even) {
@@ -206,6 +230,7 @@
     transform-style: preserve-3d;
     perspective: 1000px;
     animation: fadeUp 0.8s ease;
+    background-color: white;
   }
 
   .card:hover {
@@ -438,18 +463,21 @@ body {
 
   .section h2, .card-title {
     font-weight: 700;
-    color: #011d70;
+    color: #012799;
   }
 
   .section p {
-    color: #676565;
+    color: #5b5b5b;
     font-size: 1rem;
     line-height: 1.6;
+    
   }
 
   .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: none;
+    background-color: rgba(255, 255, 255, 0.641);
+    
   }
 
   .card:hover {
@@ -457,38 +485,40 @@ body {
     box-shadow: 0 12px 24px rgba(0,0,0,0.12);
   }
 
-  .btn-primary {
-    background: linear-gradient(90deg, #0056d2, #00b4db);
-    border: none;
-    font-weight: 600;
-  }
+  /* Common button styles */
+.custom-btn {
+  height: 45px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: none;
+  font-size: 1rem;
+  border-radius: 6px;
+}
 
-  .btn-primary:hover {
-    background: linear-gradient(90deg, #003c9e, #009ab8);
-  }
+/* Primary gradient button */
+.btn-primary {
+  background: linear-gradient(90deg, #0056d2, #00b4db);
+  color: white;
+}
 
-  .btn-outline-success {
-    font-weight: 600;
-    border-width: 2px;
-  }
+.btn-primary:hover {
+  background: linear-gradient(90deg, #003c9e, #009ab8);
+}
 
-  .card-title {
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
-    color: #011d70;
-  }
+/* WhatsApp button style */
+.whatsapp-btn {
+  background: linear-gradient(90deg, #25D366, #128C7E);
+  color: white;
+}
 
-  .whatsapp-inline {
-    display: inline-flex;
-    align-items: center;
-    font-weight: 600;
-    color: #fdfffe;
-    text-decoration: none;
-  }
+.whatsapp-btn:hover {
+  background: linear-gradient(90deg, #1ebe5d, #0f705e);
+  color: white;
+}
 
-  .whatsapp-inline i {
-    margin-right: 6px;
-  }
 
   .img-box i {
     font-size: 4rem;
@@ -496,7 +526,7 @@ body {
   }
 
   .text-gradient {
-    background: linear-gradient(90deg, #011d70, #0056d2, #00b4db);
+    background: linear-gradient(90deg, #011247, #033c8d, #00b4db);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700;
@@ -504,10 +534,15 @@ body {
 
   .section h2 {
     font-size: 2rem;
+    
   }
 
   .mySwiper {
     padding-bottom: 40px;
+    padding-top: 10px;
+    background-color:transparent;
+
+    
   }
 
   .swiper-pagination-bullet {
@@ -520,11 +555,112 @@ body {
     opacity: 1;
   }
 
+.btn-raise-ticket {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0, 123, 255, 0.803); /* Light blue tint */
+  border: 1px solid rgba(0, 123, 255, 0.4);
+  color: #fff !important;
+  z-index: 1;
+  transition: all 0.3s ease-in-out;
+  border-radius: 20px;
+}
+
+.btn-raise-ticket:hover {
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-raise-ticket::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine-blue 2.5s infinite;
+  z-index: 0;
+}
+
+.btn-raise-ticket > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes shine-blue {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+.btn-whatsapp {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(10, 213, 71, 0.786); /* WhatsApp green tint */
+  border: 1px solid rgba(37, 211, 102, 0.4);
+  color: #fff !important;
+  z-index: 1;
+  transition: all 0.3s ease-in-out;
+  border-radius: 20px;
+}
+
+.btn-whatsapp:hover {
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine-green 2.5s infinite;
+  z-index: 0;
+}
+
+.btn-whatsapp > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes shine-green {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
 
 
   </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navMenu" data-bs-offset="80" tabindex="0">
+  <div class="bg-overlay">
 <nav class="navbar navbar-expand-lg fixed-top bg-white shadow-sm">
   <div class="container-fluid px-4">
     <a class="navbar-brand d-flex align-items-center" href="#">
@@ -545,25 +681,18 @@ body {
 
 
 
-  <h1 class="title text-center fw-bold" data-aos="fade-down"
-    style="
-      font-size: 3rem;
-      font: bol;
-      background: linear-gradient(90deg, #01144f, #0b6aef, #00b4db);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-family: 'Poppins', sans-serif;
+  
 
-      letter-spacing: 1px;
-    ">
+
+
+<section class="py-5 bg-transparent-section">
+
+  <div class="container">
+    <h1 class="title text-center fw-bold text-gradient" data-aos="fade-down"
+   >
   CB - Helpdesk
 </h1>
-
-
-
-<section class="py-5 bg-light">
-  <div class="container">
-    <h2 class="text-center mb-4 text-gradient" data-aos="fade-up" style="font-size: 1.5rem;">Tools • Support • Success</h2>
+    <h2 class="text-center mb-4  text-gradient" data-aos="fade-up" style="font-size: 1.5rem;">Tools • Support • Success</h2>
     <div class="swiper mySwiper" data-aos="fade-up">
       <div class="swiper-wrapper">
 
@@ -571,12 +700,25 @@ body {
         <div class="swiper-slide">
           <div class="card h-100 shadow-lg rounded-4">
             <div class="card-body text-center d-flex flex-column">
-              <i class="fas fa-user-shield fa-3x mb-3 text-primary"></i>
-              <h5 class="card-title">Admin Support</h5>
-              <div class="mt-auto d-flex justify-content-center gap-2 pt-3" style="height: 100px;">
-                <a href="https://coldwelluae.zohodesk.com/portal/en/newticket" target="_blank" class="btn btn-primary btn-custom">Raise Ticket ↗</a>
-                <a href="https://wa.me/971529236871" target="_blank" class="whatsapp-inline" >WhatsApp</a>
-              </div>
+              <i class="fas fa-user-shield fa-3x mb-3 text-primary" ></i>
+              <h5 class="card-title" >Admin Support</h5>
+              <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
+  <a href="https://coldwelluae.zohodesk.com/portal/en/newticket"
+   target="_blank"
+   class="btn btn-primary custom-btn btn-raise-ticket w-50">
+   Raise Ticket
+</a>
+
+<a href="https://wa.me/971529236871"
+   target="_blank"
+   class="btn custom-btn whatsapp-btn btn-whatsapp w-50">
+   WhatsApp
+</a>
+
+
+
+</div>
+
             </div>
           </div>
         </div>
@@ -587,10 +729,22 @@ body {
             <div class="card-body text-center d-flex flex-column">
               <i class="fas fa-tools fa-3x mb-3 text-info"></i>
               <h5 class="card-title">IT Support</h5>
-              <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
-                <a href="https://cbae.freshservice.com/support/home" target="_blank" class="btn btn-primary btn-custom">Raise Ticket ↗</a>
-                <a href="https://wa.me/971554479709" target="_blank" class="whatsapp-inline">WhatsApp</a>
-              </div>
+              <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
+
+
+  <a href="https://cbae.freshservice.com/support/home"
+   target="_blank"
+   class="btn btn-primary custom-btn btn-raise-ticket w-50">
+   Raise Ticket
+</a>
+
+<a href="https://wa.me/971554479709"
+   target="_blank"
+   class="btn custom-btn whatsapp-btn btn-whatsapp w-50">
+   WhatsApp
+</a>
+</div>
+
             </div>
           </div>
         </div>
@@ -602,7 +756,12 @@ body {
               <i class="fas fa-book fa-3x mb-3 text-warning"></i>
               <h5 class="card-title">Policy Help</h5>
               <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
-                <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary btn-custom">Read Policy ↗</a>
+                <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp"
+   target="_blank"
+   class="btn btn-primary custom-btn btn-raise-ticket w-50">
+   Read Policy
+</a>
+                
               </div>
             </div>
           </div>
@@ -619,8 +778,8 @@ body {
 
   <section id="admin" class="section" data-aos="fade-right">
     <div class="content">
-      <h2>Admin Support</h2>
-      <p>Access admin-related resources, approvals, and internal coordination through the Admin portal.</p>
+      <h2 > Admin Support</h2>
+      <p >Access admin-related resources, approvals, and internal coordination through the Admin portal.</p>
       <div class="d-flex flex-wrap gap-3 mt-3">
         <a href="https://coldwelluae.zohodesk.com/portal/en/newticket" target="_blank" class="btn btn-primary btn-custom">Rise ticket</a>
         <a href="https://wa.me/971529236871" target="_blank" class="whatsapp-inline">
@@ -638,7 +797,7 @@ body {
       <h2 >IT Support</h2>
       <p >Need help with devices, internet, accounts, or software? Visit the IT portal or chat with our team.</p>
       <div class="d-flex flex-wrap gap-3 mt-3">
-        <a href="https://cbae.freshservice.com/support/home" target="_blank" class="btn btn-primary btn-custom">Rise Ticket</a>
+        <a href="https://cbae.freshservice.com/support/home" target="_blank" class="btn btn-primary btn-custom">Rise ticket</a>
         <a href="https://wa.me/971554479709" target="_blank" class="whatsapp-inline">
           <i class="fab fa-whatsapp"></i> Chat
         </a>
@@ -653,12 +812,13 @@ body {
     <div class="content">
       <h2>Policy Website</h2>
       <p>Stay up to date with Coldwell Banker policies, compliance procedures, and operational guidelines.</p>
-      <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary btn-custom">Read Policy</a>
+      <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary btn-custom">Read policy</a>
     </div>
     <div class="img-box">
       <i class="fas fa-file-contract"></i>
     </div>
   </section>
+  </div>
 
 
 

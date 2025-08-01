@@ -16,8 +16,9 @@
       margin: 0;
       padding: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(145deg, #1c1c3c, #2e2b4f);
-      color: #fff;
+      background: url('assets/image.jpg') no-repeat center center fixed; /* Background image */
+      background-size: cover; /* Cover the entire viewport */
+      color: #333; /* Dark text for better contrast */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -26,16 +27,26 @@
       overflow-x: hidden;
     }
 
+     body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(6, 6, 6, 0.33); /* adjust opacity */
+  z-index: -1;
+}
+
     .home-btn {
       position: fixed;
       top: 20px;
       left: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.8); /* Semi-transparent button background */
       padding: 10px 20px;
       border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
+      border: 1px solid #ccc; /* Light gray border */
+      color: #333; /* Dark text for button */
       text-decoration: none;
       font-weight: 500;
       transition: all 0.3s ease;
@@ -43,8 +54,9 @@
     }
 
     .home-btn:hover {
-      background: #00bfff;
-      box-shadow: 0 0 12px #00bfff;
+      background: #007bff; /* Blue hover color */
+      color: #fff; /* White text on hover */
+      box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
     }
 
     .hero {
@@ -54,10 +66,12 @@
     }
 
     .hero h1 {
-      font-size: 2.5rem;
-      background: linear-gradient(90deg, #00f2fe, #007bff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+       background: linear-gradient(90deg, #01204b,#023276, #447cf3); /* Your gradient colors */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Standard for newer browsers */
+  font-weight: 700; /* Optional: bold text */
+  font-size: 50px;
       animation: fadeIn 1.2s ease-in-out;
     }
 
@@ -67,14 +81,13 @@
     }
 
     .form-card {
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.612); /* Semi-transparent white card background */
       border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid #60d9fb; /* Light gray border */
       padding: 35px 30px;
       width: 100%;
       max-width: 620px;
-      box-shadow: 0 10px 40px rgba(0, 173, 255, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); /* Soft shadow */
       animation: fadeIn 0.8s ease-in-out;
     }
 
@@ -82,7 +95,7 @@
       text-align: center;
       font-size: 28px;
       font-weight: 700;
-      color: #00e0ff;
+      color: #007bff; /* Blue heading color */
       margin-bottom: 25px;
     }
 
@@ -90,7 +103,7 @@
       display: block;
       margin-bottom: 6px;
       font-size: 14px;
-      color: #f4f2f2;
+      color: #2d2b2b; /* Darker label color */
       font-weight: 500;
     }
 
@@ -98,29 +111,30 @@
       width: 100%;
       padding: 14px 16px;
       margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #f9f9f9; /* Light input background */
+      border: 1px solid #31ccf7; /* Light gray border */
+      border-color: #00b4db;
       border-radius: 12px;
-      color: #f9f9fc;
+      color: #333; /* Dark text for inputs */
       font-size: 15px;
       transition: all 0.3s ease;
     }
-    
 
     input:focus, textarea:focus {
       outline: none;
-      border-color: #00f2fe;
-      background-color: rgba(255, 255, 255, 0);
-      box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.2);
+      border-color: #007bff; /* Blue focus border */
+      background-color: #ffffff; /* White background on focus */
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
     }
 
-    select:focus{
-      color: #ffffff;
-      
+    select:focus {
+      color: #333; /* Dark text for select */
+      border-color: #00b4db;
     }
 
     input::placeholder, textarea::placeholder {
-      color: #aaa;
+      color: #aaa; /* Placeholder color */
+      border-color: #00b4db;
     }
 
     .file-note {
@@ -128,6 +142,7 @@
       color: #aaa;
       margin-top: -15px;
       margin-bottom: 15px;
+      border-color:  #00b4db;
     }
 
     .btn-group {
@@ -149,22 +164,22 @@
     }
 
     .btn-submit {
-      background: linear-gradient(to right, #007bff, #00f2fe);
+      background: #007bff; /* Blue submit button */
       color: #fff;
     }
 
     .btn-submit:hover {
-      box-shadow: 0 0 15px #00f2fe;
+      box-shadow: 0 0 15px rgba(0, 29, 59, 0.5);
       transform: scale(1.02);
     }
 
     .btn-reset {
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
+      background: #f0f0f0; /* Light gray reset button */
+      color: #fe6767; /* Dark text for reset button */
     }
 
     .btn-reset:hover {
-      background: #444;
+      background: #e0e0e0; /* Slightly darker gray on hover */
       transform: scale(1.02);
     }
 
@@ -181,6 +196,7 @@
     @media (max-width: 480px) {
       .form-card {
         padding: 25px 15px;
+        
       }
 
       input, select, textarea {
@@ -200,32 +216,29 @@
     }
 
     select {
-  background-color: 
-#32304f; /* dark background */
-  color: #fff;              /* light text */
-  border: 1px solid #555;
-}
+      background-color: #f9f9f9; /* Light background for select */
+      color: #333; /* Dark text for select */
+      border: 1px solid #ccc; /* Light gray border */
+    }
 
+    .custom-textarea {
+      width: 100%;
+      height: 150px;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc; /* Light gray border */
+      border-radius: 8px;
+      resize: vertical;
+      background: #f9f9f9; /* Light background */
+      color: #333; /* Dark text */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: border 0.3s ease;
+    }
 
-.custom-textarea {
-  width: 100%; /* or set a fixed width like 500px */
-  height: 150px; /* increases height visually */
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  resize: vertical; /* allows user to resize vertically */
-  background: transparent; /* light background */
-  color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: border 0.3s ease;
-}
-
-.custom-textarea:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
+    .custom-textarea:focus {
+      border-color: #007bff; /* Blue focus border */
+      outline: none;
+    }
 
   </style>
 </head>
@@ -237,7 +250,7 @@
 
   <!-- Hero Section -->
   <div class="hero" data-aos="fade-down">
-    <h1>Raise a Support Ticket</h1>
+    <h1>Raise a  Ticket</h1>
   </div>
 
   <!-- Form Section -->
@@ -272,50 +285,48 @@
       </select>
 
       <label for="request">Select Your Request *</label>
-<select name="Select Your Request" required>
-  <optgroup label="Listing">
-    <option>Listing :: Create</option>
-    <option>Listing :: Update</option>
-  </optgroup>
+      <select name="Select Your Request" required>
+        <optgroup label="Listing">
+          <option>Listing :: Create</option>
+          <option>Listing :: Update</option>
+        </optgroup>
 
-  <optgroup label="Opportunity">
-    <option>Opportunity :: Create</option>
-    <option>Opportunity :: Update</option>
-    <option>Opportunity :: Relist</option>
-  </optgroup>
+        <optgroup label="Opportunity">
+          <option>Opportunity :: Create</option>
+          <option>Opportunity :: Update</option>
+          <option>Opportunity :: Relist</option>
+        </optgroup>
 
-  <optgroup label="Form">
-    <option>Form :: Create</option>
-    <option>Form :: Update</option>
-  </optgroup>
+        <optgroup label="Form">
+          <option>Form :: Create</option>
+          <option>Form :: Update</option>
+        </optgroup>
 
-  <optgroup label="Invoice">
-    <option>Invoice :: Create</option>
-    <option>Invoice :: Update</option>
-    <option>Invoice :: Cancellation</option>
-  </optgroup>
+        <optgroup label="Invoice">
+          <option>Invoice :: Create</option>
+          <option>Invoice :: Update</option>
+          <option>Invoice :: Cancellation</option>
+        </optgroup>
 
-  <optgroup label="Open House">
-    <option>Open House :: Create</option>
-    <option>Open House :: Update</option>
-  </optgroup>
+        <optgroup label="Open House">
+          <option>Open House :: Create</option>
+          <option>Open House :: Update</option>
+        </optgroup>
 
-  <optgroup label="Portal">
-    <option>Portal :: Remove</option>
-  </optgroup>
+        <optgroup label="Portal">
+          <option>Portal :: Remove</option>
+        </optgroup>
 
-  <optgroup label="Other">
-    <option>Escalations / Others</option>
-  </optgroup>
-</select>
-
+        <optgroup label="Other">
+          <option>Escalations / Others</option>
+        </optgroup>
+      </select>
 
       <label for="subject">Subject *</label>
       <input type="text" name="Subject" placeholder="Brief summary of your request" required />
 
-      <label for="description">  Description *</label>
-<textarea name="Description" class="custom-textarea" rows="6" placeholder="Detailed description ..." required></textarea>
-
+      <label for="description">Description *</label>
+      <textarea name="Description" class="custom-textarea" rows="6" placeholder="Detailed description ..." required></textarea>
 
       <label>Attachment (Max 5 files)</label>
       <input type='file' name='attachment_1' />

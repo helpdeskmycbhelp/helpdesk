@@ -206,6 +206,27 @@
   border: 1px solid #555;
 }
 
+
+.custom-textarea {
+  width: 100%; /* or set a fixed width like 500px */
+  height: 150px; /* increases height visually */
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical; /* allows user to resize vertically */
+  background: #f8f9fa; /* light background */
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: border 0.3s ease;
+}
+
+.custom-textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+
   </style>
 </head>
 
@@ -264,8 +285,9 @@
       <label for="subject">Subject *</label>
       <input type="text" name="Subject" placeholder="Brief summary of your request" required />
 
-      <label for="description">Description *</label>
-      <textarea name="Description" rows="4" placeholder="Detailed description..." required></textarea>
+      <label for="description">  Description *</label>
+<textarea name="Description" class="custom-textarea" rows="6" placeholder="Detailed description ..." required></textarea>
+
 
       <label>Attachment (Max 5 files)</label>
       <input type='file' name='attachment_1' />

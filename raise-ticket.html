@@ -272,15 +272,43 @@
       </select>
 
       <label for="request">Select Your Request *</label>
-      <select name="Select Your Request" required>
-        <option>Listing :: Create</option>
-        <option>Listing :: Update</option>
-        <option>Opportunity :: Create</option>
-        <option>Opportunity :: Update</option>
-        <option>Form :: Create</option>
-        <option>Invoice :: Create</option>
-        <option>Escalations / Others</option>
-      </select>
+<select name="Select Your Request" required>
+  <optgroup label="Listing">
+    <option>Listing :: Create</option>
+    <option>Listing :: Update</option>
+  </optgroup>
+
+  <optgroup label="Opportunity">
+    <option>Opportunity :: Create</option>
+    <option>Opportunity :: Update</option>
+    <option>Opportunity :: Relist</option>
+  </optgroup>
+
+  <optgroup label="Form">
+    <option>Form :: Create</option>
+    <option>Form :: Update</option>
+  </optgroup>
+
+  <optgroup label="Invoice">
+    <option>Invoice :: Create</option>
+    <option>Invoice :: Update</option>
+    <option>Invoice :: Cancellation</option>
+  </optgroup>
+
+  <optgroup label="Open House">
+    <option>Open House :: Create</option>
+    <option>Open House :: Update</option>
+  </optgroup>
+
+  <optgroup label="Portal">
+    <option>Portal :: Remove</option>
+  </optgroup>
+
+  <optgroup label="Other">
+    <option>Escalations / Others</option>
+  </optgroup>
+</select>
+
 
       <label for="subject">Subject *</label>
       <input type="text" name="Subject" placeholder="Brief summary of your request" required />

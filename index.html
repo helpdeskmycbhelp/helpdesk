@@ -19,7 +19,6 @@
       --glass-effect: rgba(255, 255, 255, 0.6);
     }
 
-
     html {
   scroll-behavior: smooth;
 }
@@ -34,6 +33,7 @@
       margin: 0;
       padding-top: 0;
       scroll-behavior: smooth;
+      
     }
 
     body::before {
@@ -49,14 +49,16 @@
 
   @media (max-width: 768px) {
   body {
-    background: url('assets/house.jpg') no-repeat center center fixed;
+    background: url('assets/house.jpg') no-repeat center center;
     background-size: cover;
-    background-attachment: fixed; /* optional for performance on mobile */
-    height: 100vh; /* ensures it takes full viewport height */
-    width: 100vw;  /* ensures full viewport width */
+    background-attachment: scroll; /* Allow scroll on mobile */
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: auto; /* Allow content height */
   }
+
+
 
 
 
@@ -67,7 +69,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(251, 252, 253, 0.338);
+      background: rgba(251, 252, 253, 0.186);
       z-index: -1;
     }
 }
@@ -97,9 +99,12 @@
 
 
 .card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 12px 28px rgba(0, 123, 255, 0.25);
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(0, 123, 255, 0.35);
 }
+
+
+
 
 /* ====== Mobile Responsive Overrides ====== */
 @media (max-width: 768px) {
@@ -123,7 +128,24 @@
       background: linear-gradient(to right, #ffffff74, #f1f1f1a0);
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
       z-index: 999;
+      animation: slideDown 0.5s ease-in-out;
+      
+
+      
+      
+
     }
+
+    @keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
     .navbar-brand {
       font-weight: bold;
@@ -448,12 +470,25 @@
   }
 }
 
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main, section {
+  flex: 1;
+}
+
+
 
 
   </style>
 </head>
 
 <body>
+
+  
   <div class="page-wrapper">
   <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
     <div class="container-fluid px-4">
@@ -527,7 +562,7 @@
     </div>
   </section>
 
- <footer class="footer-section py-4 mt-auto">
+ <footer class="footer-section py-4 mt-auto" >
   <div class="container text-center text-md-start">
     <div class="row align-items-center gy-4">
       <div class="col-md-4 text-center text-md-start footer-column">
@@ -591,7 +626,3 @@
   <script type='text/javascript'>window.ZOHOIM=window.ZOHOIM||function(a,b){ZOHOIM[a]=b;};window.ZOHOIM.prefilledMessage="";(function(){var d=document;var s=d.createElement('script');s.type='text/javascript';s.nonce='{place_your_nonce_value_here}';s.defer=true;s.src="https://im.zoho.com/api/v1/public/channel/9d54007e042a5fda8f169afb3f0f2836/widget";d.getElementsByTagName('head')[0].appendChild(s); })()</script>
 </body>
 </html>
-
-
-
-

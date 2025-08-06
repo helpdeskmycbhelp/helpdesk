@@ -41,13 +41,18 @@
       z-index: -1;
     }
 
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
   body {
-    background: url('assets/house.jpg') no-repeat fixed;
-    background-position: center 1px;
+    background: url('assets/house.jpg') no-repeat center center fixed;
     background-size: cover;
-    background-attachment: scroll; /* optional: smoother for mobile */
+    background-attachment: scroll; /* optional for performance on mobile */
+    height: 100vh; /* ensures it takes full viewport height */
+    width: 100vw;  /* ensures full viewport width */
+    margin: 0;
+    padding: 0;
   }
+
+
 
   body::before {
       content: '';
@@ -580,4 +585,5 @@
   <script type='text/javascript'>window.ZOHOIM=window.ZOHOIM||function(a,b){ZOHOIM[a]=b;};window.ZOHOIM.prefilledMessage="";(function(){var d=document;var s=d.createElement('script');s.type='text/javascript';s.nonce='{place_your_nonce_value_here}';s.defer=true;s.src="https://im.zoho.com/api/v1/public/channel/9d54007e042a5fda8f169afb3f0f2836/widget";d.getElementsByTagName('head')[0].appendChild(s); })()</script>
 </body>
 </html>
+
 

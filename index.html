@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,76 +10,125 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- Swiper CSS -->
-<link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet" />
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-
-
-
-
-
-
   <style>
     :root {
       --primary: #007bff;
       --secondary: #0056d2;
       --text-color: #003366;
       --bg-light: #f4f6fc;
-      --bg-gradient: linear-gradient(to right, var(--bg-light), #e8f0fe);
       --glass-effect: rgba(255, 255, 255, 0.6);
     }
 
-  body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url('assets/house.png') no-repeat fixed;
-  background-position: center -40px; /* shift image 40px up */
-  background-size: cover;
-  background-attachment: fixed;
-  margin: 0;
-  padding-top: 0;
-  scroll-behavior: smooth;
-}
-
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('assets/house.jpg') no-repeat fixed;
+      background-position: center -40px;
+      background-size: cover;
+      background-attachment: fixed;
+      margin: 0;
+      padding-top: 0;
+      scroll-behavior: smooth;
+    }
 
     body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 254, 254, 0.695); /* adjust opacity */
-  z-index: -1;
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(251, 252, 253, 0.274);
+      z-index: -1;
+    }
+
+    @media (max-width: 768px) {
+  body {
+    background: url('assets/house.jpg') no-repeat fixed;
+    background-position: center 1px;
+    background-size: cover;
+    background-attachment: scroll; /* optional: smoother for mobile */
+  }
+
+  body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(251, 252, 253, 0.186);
+      z-index: -1;
+    }
 }
 
-.card-title {
-  background: linear-gradient(90deg, #01204b,#023276, #00b4db); /* Your gradient colors */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text; /* Standard for newer browsers */
-  font-weight: 700; /* Optional: bold text */
+
+    .card-title {
+      background: linear-gradient(90deg, #01204b, #023276, #00b4db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+    
+
+/* ====== Desktop Default Card Style ====== */
+.card {
+  background: rgba(255, 255, 255, 0.338); /* semi-transparent white */
+  backdrop-filter: blur(12px);          /* adds glass blur effect */
+  -webkit-backdrop-filter: blur(12px);  /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle border */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 400px;
+  margin: auto;
+  border-radius: 12px;
 }
+
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 123, 255, 0.25);
+}
+
+/* ====== Mobile Responsive Overrides ====== */
+@media (max-width: 768px) {
+  .card {
+    width: 100% !important;
+    max-width: 100%;
+    margin: 0 auto 20px auto;
+    transform: none !important; /* disables hover lift on touch devices */
+    
+  }
+
+  .card:hover {
+    transform: none !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
 
 
     .navbar {
-      background: linear-gradient(to right, #ffffff9a, #f1f1f1a0);
+      background: linear-gradient(to right, #ffffff74, #f1f1f1a0);
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
       z-index: 999;
     }
+
     .navbar-brand {
       font-weight: bold;
       color: var(--text-color) !important;
       font-size: 1.5rem;
     }
+
     .nav-link {
       color: var(--text-color) !important;
       font-weight: 600;
       margin-left: 15px;
       transition: color 0.3s ease, border-bottom 0.3s ease;
     }
-    .nav-link:hover, .nav-link.active {
+
+    .nav-link:hover,
+    .nav-link.active {
       color: var(--primary) !important;
       border-bottom: 2px solid var(--primary);
     }
@@ -89,406 +138,66 @@
       font-size: 2.8rem;
       font-weight: 800;
       color: var(--text-color);
-      padding: 50px 15px 20px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    }
-
-    .section {
-      padding: 70px 15px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      backdrop-filter: blur(8px);
-      transition: all 0.4s ease;
-      
-      
-    }
-
-    .section:nth-child(even) {
-      flex-direction: row-reverse;
-      background: var(--glass-effect);
-    }
-
-    .content {
-      flex: 1;
-      padding: 25px;
-    }
-    .content h2 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--text-color);
-    }
-    .content p {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: #676666;
-    }
-
-    .btn-custom {
-      margin-top: 15px;
-      padding: 12px 28px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      text-decoration: none !important;
-    }
-    .btn-custom::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -75%;
-      width: 150%;
-      height: 100%;
-      background: rgba(255,255,255,0.2);
-      transform: skewX(-30deg);
-      transition: all 0.5s ease;
-    }
-    .btn-custom:hover::before {
-      left: 125%;
-    }
-    .btn-custom:hover {
-      transform: scale(1.04);
-      box-shadow: 0 12px 30px rgba(0, 123, 255, 0.5);
-    }
-
-    .whatsapp-inline {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #25D366, #128C7E);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-weight: bold;
-      box-shadow: 0 8px 18px rgba(37, 211, 102, 0.3);
-      margin-left: 12px;
-      margin-top: 12px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none !important;
-    }
-    .whatsapp-inline::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -70%;
-      width: 140%;
-      height: 100%;
-      background: rgba(255,255,255,0.1);
-      transform: skewX(-25deg);
-      transition: all 0.5s ease;
-      z-index: 0;
-    }
-    .whatsapp-inline:hover::before {
-      left: 120%;
-    }
-    .whatsapp-inline:hover {
-      transform: scale(1.04);
-    }
-
-    .img-box {
-      flex: 1;
-      text-align: center;
-      margin-top: 20px;
-    }
-    .img-box i {
-      font-size: 100px;
-      color: var(--primary);
-      transition: transform 0.3s ease;
-    }
-    .img-box i:hover {
-      transform: scale(1.1) rotate(8deg);
+       padding-top: 100px;  /* increase top padding to push it down */
+    padding-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     @media (max-width: 768px) {
-      .section {
-        flex-direction: row !important;
-      }
-      .whatsapp-inline {
-        display: block;
-        margin-left: 0;
-      }
-      .title {
-        font-size: 2.2rem;
-      }
-    }
+  .title {
+    font-size: 2rem; /* smaller on mobile */
+     padding-top: 80px;  /* increase top padding to push it down */
+    padding-bottom: 20px;
+  }
+}
+
 
     html, body {
       overflow-x: hidden;
     }
 
-
-    .card {
-    border-radius: 16px;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    animation: fadeUp 0.8s ease;
-    background-color: white;
-  }
-
-  .card:hover {
-    transform: rotateY(5deg) scale(1.02);
-    box-shadow: 0 16px 28px rgba(0, 0, 0, 0.2);
-  }
-
-  @keyframes fadeUp {
-    0% {
-      opacity: 0;
-      transform: translateY(30px);
+    .navbar-logo {
+      height: 30px;
+      width: auto;
+      max-height: 100%;
     }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
+
+    .navbar-nav .nav-link {
+      color: #003366;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s ease;
     }
-  }
 
-  .btn-3d::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -75%;
-    width: 50%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: skewX(-25deg);
-    transition: left 0.5s ease;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .btn-3d:hover::before {
-    left: 120%;
-  }
-
-  .btn-3d {
-    position: relative;
-    overflow: hidden;
-    border-radius: 50px;
-    color: white;
-    font-weight: 600;
-    padding: 12px 24px;
-    font-size: 0.95rem;
-    text-align: center;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: auto;
-  }
-
-  .btn-3d i {
-    margin-right: 0.5rem;
-    z-index: 2;
-  }
-
-  .btn-3d span {
-    z-index: 2;
-    position: relative;
-  }
-
-  .btn-wa {
-    background: linear-gradient(to right, #1ebea5, #25D366);
-    box-shadow: 0 6px 14px rgba(30, 190, 165, 0.3);
-  }
-
-  .btn-wa:hover {
-    transform: translateY(-6px) scale(1.05) rotateX(12deg);
-    box-shadow: 0 16px 24px rgba(30, 190, 165, 0.5);
-  }
-
-  .btn-web {
-    background: linear-gradient(to right, #0051cc, #0066ff);
-    box-shadow: 0 6px 14px rgba(0, 81, 204, 0.3);
-  }
-
-  .btn-web:hover {
-    transform: translateY(-6px) scale(1.05) rotateX(12deg);
-    box-shadow: 0 16px 24px rgba(0, 81, 204, 0.5);
-  }
-
-  .card-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-     margin-top: auto; 
-
-  }
-
-  @media (min-width: 576px) {
-    .card-buttons {
-      flex-direction: row;
-      justify-content: center;
+    .navbar-nav .nav-link:hover {
+      color: #13377e;
     }
-  }
-.swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: stretch; /* ensure full height */
-  height: auto;
-}
 
-.swiper-slide .card {
-  width: 85vw;
-  max-width: 320px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
+    @media (max-width: 991.98px) {
+      .navbar-collapse {
+        background-color: #ffffff;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
 
-.card-body {
-  flex: 1; /* make body grow to full height */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+      .navbar-nav .nav-link {
+        padding: 0.75rem 0;
+        font-size: 1rem;
+      }
 
-.mySwiper {
-  padding-left: 10vw;
-  padding-right: 10vw;
-   padding-bottom: 40px;
-}
+      .navbar-brand {
+        font-size: 1rem;
+      }
 
+      .navbar-logo {
+        height: 25px;
+        width: 230px;
+      }
+    }
 
-
-
-
-
-.swiper-pagination {
-  text-align: center;
-  margin-top: 5px;
-}
-
-.swiper-pagination-bullet {
-  background: #007bff;
-  opacity: 0.5;
-}
-
-.swiper-pagination-bullet-active {
-  opacity: 1;
-}
-
-@media (max-width: 576px) {
-  .mySwiper {
-    padding-left: 2vw;
-    padding-right: 2vw;
-  }
-}
-
-.swiper-pagination-bullet {
-  background: #007bff;
-  opacity: 0.4;
-  transition: transform 0.3s ease;
-}
-
-.swiper-pagination-bullet-active {
-  transform: scale(1.3);
-  opacity: 1;
-}
-.swiper-pagination-bullet {
-  background: #007bff;
-  opacity: 0.4;
-  transition: transform 0.3s ease;
-}
-
-.swiper-pagination-bullet-active {
-  transform: scale(1.3);
-  opacity: 1;
-}
-
-
-
-
-
-
-/* Navbar Logo */
-.navbar-logo {
-  height: 30px;
-  width: auto;
-  max-height: 100%;
-}
-
-/* Navbar Brand Text */
-.navbar-brand {
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #7b9fe9;
-}
-
-/* Navbar Links */
-.navbar-nav .nav-link {
-  color: #003366;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  transition: color 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #13377e;
-}
-
-/* Mobile View Adjustments */
-@media (max-width: 991.98px) {
-  .navbar-collapse {
-    background-color: #ffffff;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .navbar-nav .nav-link {
-    padding: 0.75rem 0;
-    font-size: 1rem;
-  }
-
-  .navbar-brand {
-    font-size: 1rem;
-  }
-
-  .navbar-logo {
-    height: 25px;
-    width: 230px;;
-  }
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-  }
-
-  .section h2, .card-title {
-    font-weight: 700;
-    color: #1337a5;
-  }
-
-  .section p {
-    color: #5b5b5b;
-    font-size: 1rem;
-    line-height: 1.6;
-    
-  }
-
-  .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.622);
-    
-  }
-
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
-  }
-
-  /* Common button styles */
-.custom-btn {
+  .custom-btn {
+  position: relative;
   height: 45px;
   font-weight: 500;
   display: flex;
@@ -498,436 +207,376 @@ body {
   border: none;
   font-size: 1rem;
   border-radius: 6px;
-}
-
-/* Primary gradient button */
-.btn-primary {
-  background: linear-gradient(90deg, #0056d2, #00b4db);
-  color: white;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(90deg, #003c9e, #009ab8);
-}
-
-/* WhatsApp button style */
-.whatsapp-btn {
-  background: linear-gradient(90deg, #25D366, #128C7E);
-  color: white;
-}
-
-.whatsapp-btn:hover {
-  background: linear-gradient(90deg, #1ebe5d, #0f705e);
-  color: white;
-}
-
-
-  .img-box i {
-    font-size: 4rem;
-    color: #0056d2;
-  }
-
-  .text-gradient {
-    background: linear-gradient(90deg, #00081e, #0c5dd0, #0bd1fd);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
-  }
-
-  .section h2 {
-    font-size: 2rem;
-    
-  }
-
-  .mySwiper {
-    padding-bottom: 40px;
-    padding-top: 10px;
-    background-color:transparent;
-
-    
-  }
-
-  .swiper-pagination-bullet {
-    background: #0056d2;
-    opacity: 0.7;
-  }
-
-  .swiper-pagination-bullet-active {
-    background: #00b4db;
-    opacity: 1;
-  }
-
-.btn-raise-ticket {
-  position: relative;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  background: linear-gradient(135deg, rgba(2, 83, 169, 0.9), rgba(0, 212, 255, 0.7));
-
-  
-  color: #fff !important;
-  z-index: 1;
-  transition: all 0.3s ease-in-out;
-  border-radius: 20px;
-}
-
-.btn-raise-ticket:hover {
-  box-shadow: 0 4px 15px rgba(0, 58, 119, 0.4);
-  transform: translateY(-2px);
-}
-
-.btn-raise-ticket::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  transform: skewX(-20deg);
-  animation: shine-blue 2.5s infinite;
-  z-index: 0;
-}
-
-.btn-raise-ticket > * {
-  position: relative;
-  z-index: 2;
-}
-
-@keyframes shine-blue {
-  0% {
-    left: -75%;
-  }
-  100% {
-    left: 125%;
-  }
-}
-
-.btn-whatsapp {
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  background: linear-gradient(to right, #1ebea5, #25D366);
-    box-shadow: 0 6px 14px rgba(30, 190, 165, 0.3);
-
-  
-  color: #fff !important;
-  z-index: 1;
-  transition: all 0.3s ease-in-out;
-  border-radius: 20px;
-}
-
-.btn-whatsapp:hover {
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-  transform: translateY(-2px);
-}
-
-.btn-whatsapp::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  transform: skewX(-20deg);
-  animation: shine-green 2.5s infinite;
-  z-index: 0;
-}
-
-.btn-whatsapp > * {
-  position: relative;
-  z-index: 2;
-}
-
-@keyframes shine-green {
-  0% {
-    left: -75%;
-  }
-  100% {
-    left: 125%;
-  }
-}
-
-.custom-toggler {
-  border: none;
-  background: transparent;
-  outline: none;
-  padding: 0;
-}
-
-.hamburger {
-  width: 30px;
-  height: 20px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   cursor: pointer;
-}
-
-.hamburger span {
-  display: block;
-  height: 3px;
-  width: 100%;
-  background: #003366;
-  border-radius: 3px;
   transition: all 0.3s ease;
 }
 
-/* Optional: animated X on open */
-.navbar-toggler.collapsed .hamburger span:nth-child(1) {
-  transform: rotate(0) translateY(0);
-}
-.navbar-toggler:not(.collapsed) .hamburger span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-.navbar-toggler:not(.collapsed) .hamburger span:nth-child(2) {
+.custom-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  transform: rotate(25deg);
   opacity: 0;
+  pointer-events: none;
 }
-.navbar-toggler:not(.collapsed) .hamburger span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+
+.custom-btn:hover::before {
+  animation: glass-reflect 1.2s ease-in-out forwards;
+}
+
+@keyframes glass-reflect {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) rotate(25deg);
+    opacity: 0;
+  }
 }
 
 
-.custom-icon-gradient {
-  background: linear-gradient(45deg, #1654fc, #012e6c); /* Your gradient colors */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    .text-gradient {
+      background: linear-gradient(90deg, #00081e, #0c5dd0, #0bd1fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    .btn-raise-ticket {
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(135deg, rgba(2, 83, 169, 0.9), rgba(0, 212, 255, 0.7));
+      color: #fff !important;
+      z-index: 1;
+      transition: all 0.3s ease-in-out;
+      border-radius: 20px;
+    }
+
+    .btn-raise-ticket:hover {
+      box-shadow: 0 4px 15px rgba(0, 58, 119, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp {
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(to right, #1ebea5, #25D366);
+      box-shadow: 0 6px 14px rgba(30, 190, 165, 0.3);
+      color: #fff !important;
+      z-index: 1;
+      transition: all 0.3s ease-in-out;
+      border-radius: 20px;
+    }
+
+    .btn-whatsapp:hover {
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .custom-icon-gradient {
+      background: linear-gradient(45deg, #1654fc, #012e6c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .book-icon-gradient {
+      background: linear-gradient(45deg, #f97c23, #ada402);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .navbar-toggler-icon {
+      background-image: none !important;
+    }
+
+    .navbar-toggler {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .hamburger {
+      width: 30px;
+      height: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      width: 100%;
+      background: #003366;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-toggler:not(.collapsed) .hamburger span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .navbar-toggler:not(.collapsed) .hamburger span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .navbar-toggler:not(.collapsed) .hamburger span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+
+ html, body {
+  height: 100%;
+  margin: 0;
 }
 
-.book-icon-gradient {
-  background: linear-gradient(45deg, #f97c23, #ada402); /* Example: yellow to red */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
+/* === Base Footer Style === */
+.footer-section {
+  background-color: rgba(2, 43, 85, 0.85); /* clean semi-transparent blue */
+  color: #ffffff;
+  font-size: 0.9rem;
+  padding: 40px 0;
+  border-top: 1px solid #0c3a6b;
+}
+
+.footer-section img {
+  max-height: 40px;
+  width: 60px;
+}
+
+.footer-section h6 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.footer-section small {
+  display: block;
+  margin-top: 2px;
+  color: #9ce7f8;
+  font-size: 0.8rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.footer-section li {
+  margin-bottom: 6px;
+}
+
+.footer-link {
+  color: #b8d4fe;
+  text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #70e5ff;
+  text-decoration: underline;
+}
+
+/* === Layout Enhancements === */
+.footer-section .custom-gap {
+  gap: 3rem;
+}
+
+.footer-section .footer-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Responsive Layout === */
+@media (max-width: 767.98px) {
+  .footer-section .row {
+    text-align: center;
+  }
+
+  .footer-section .col-md-4 {
+    margin-bottom: 20px;
+  }
+
+  .footer-section .d-flex.flex-md-row {
+    flex-direction: column !important;
+    gap: 1.5rem;
+  }
+
+  .footer-section .text-md-start,
+  .footer-section .text-md-end {
+    text-align: center !important;
+  }
+}
 
 
 
   </style>
 </head>
+
 <body>
-  <div class="bg-overlay">
-<nav class="navbar navbar-expand-lg fixed-top  shadow-sm">
-  <div class="container-fluid px-4">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="assets/logo.png" alt="Logo" class="navbar-logo me-2" />
-    </a>
-    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Toggle navigation">
-  <div class="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</button>
+  <div class="page-wrapper">
+  <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="assets/logo.png" alt="Logo" class="navbar-logo me-2" />
+      </a>
+      <button class="navbar-toggler custom-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a href="raise-ticket.html" class="nav-link">Admin</a></li>
-        <li class="nav-item"><a class="nav-link" href="#it">IT Support</a></li>
-        <li class="nav-item"><a class="nav-link" href="#policy">Policy</a></li>
-      </ul>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a href="raise-ticket.html" class="nav-link">Admin</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://cbae.freshservice.com/support/home">IT Support</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://coldwellbankeruae.sharepoint.com/sites/pnp">Policy</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-
-
-  
-
-
-
-<section class="py-5 bg-transparent-section">
-
-  <div class="container">
-    <h1 class="title text-center fw-bold text-gradient" data-aos="fade-down"
-   >
-  CB - Helpdesk
-</h1>
-    <div class="swiper mySwiper" data-aos="fade-up">
-      <div class="swiper-wrapper">
-
+  <section class="py-5 bg-transparent-section">
+    <div class="container">
+      <h1 class="title text-center fw-bold text-gradient" data-aos="fade-down">CB - Helpdesk</h1>
+      <div class="row g-4" data-aos="fade-up">
         <!-- Admin Support Card -->
-        <div class="swiper-slide">
+        <div class="col-md-4">
           <div class="card h-100 shadow-lg rounded-4">
             <div class="card-body text-center d-flex flex-column">
               <i class="fas fa-user-shield fa-3x mb-3 custom-icon-gradient"></i>
-
-              <h5 class="card-title" >Admin Support</h5>
+              <h5 class="card-title">Admin Support</h5>
               <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
-  <a href="raise-ticket.html"
-   target="_blank"
-   class="btn btn-primary custom-btn btn-raise-ticket w-50">
-   Raise Ticket
-</a>
-
-<a href="https://wa.me/971529236871"
-   target="_blank"
-   class="btn custom-btn whatsapp-btn btn-whatsapp w-50">
-   WhatsApp
-</a>
-
-
-
-</div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- IT Support Card -->
-        <div class="swiper-slide">
-          <div class="card h-100 shadow-lg rounded-4">
-            <div class="card-body text-center d-flex flex-column">
-              <i class="fas fa-tools fa-3x mb-3 text-info  custom-icon-gradient"></i>
-              <h5 class="card-title">IT Support</h5>
-              <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
-
-
-  <a href="https://cbae.freshservice.com/support/home"
-   target="_blank"
-   class="btn btn-primary custom-btn btn-raise-ticket w-50">
-   Raise Ticket
-</a>
-
-<a href="https://wa.me/971554479709"
-   target="_blank"
-   class="btn custom-btn whatsapp-btn btn-whatsapp w-50">
-   WhatsApp
-</a>
-</div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Policy Help Card -->
-        <div class="swiper-slide">
-          <div class="card h-100 shadow-lg rounded-4">
-            <div class="card-body text-center d-flex flex-column">
-              <i class="fas fa-book fa-3x mb-3 book-icon-gradient"></i>
-
-              <h5 class="card-title">Policy Help</h5>
-              <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
-                <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp"
-   target="_blank"
-   class="btn btn-primary custom-btn btn-raise-ticket w-50">
-   Read Policy
-</a>
-                
+                <a href="raise-ticket.html" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Raise Ticket</a>
+                <a href="https://wa.me/971529236871" target="_blank" class="btn custom-btn whatsapp-btn btn-whatsapp w-50">WhatsApp</a>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- IT Support Card -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-lg rounded-4">
+            <div class="card-body text-center d-flex flex-column">
+              <i class="fas fa-tools fa-3x mb-3 text-info custom-icon-gradient"></i>
+              <h5 class="card-title">IT Support</h5>
+              <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
+                <a href="https://cbae.freshservice.com/support/home" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Raise Ticket</a>
+                <a href="https://wa.me/971554479709" target="_blank" class="btn custom-btn whatsapp-btn btn-whatsapp w-50">WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Policy Help Card -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-lg rounded-4">
+            <div class="card-body text-center d-flex flex-column">
+              <i class="fas fa-book fa-3x mb-3 book-icon-gradient"></i>
+              <h5 class="card-title">Policy Help</h5>
+              <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
+                <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Read Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+
+ <footer class="footer-section py-4 mt-auto">
+  <div class="container text-center text-md-start">
+    <div class="row align-items-center gy-4">
+      <div class="col-md-4 text-center text-md-start footer-column">
+        <img src="assets/ff.png" alt="Coldwell Banker" style="height: 40px;" />
+        <h6 class="mt-2 mb-0 fw-bold">Coldwell Banker UAE</h6>
+        <small>Empowering Real Estate Excellence</small>
+      </div>
+
+      <!-- Quick Links Row -->
+      <div class="col-md-4">
+        <div class="d-flex flex-column flex-md-row justify-content-center text-center text-md-start custom-gap">
+          <!-- Admin Support Links -->
+          <div class="footer-column me-md-4">
+            <p class="fw-bold mb-1">Admin Support</p>
+            <ul class="list-unstyled mb-0">
+              <li><a href="raise-ticket.html" class="footer-link">Admin Ticket Portal</a></li>
+              <li><a href="https://wa.me/971529236871" class="footer-link">WhatsApp</a></li>
+            </ul>
+          </div>
+
+          <!-- Policy Links -->
+          <div class="footer-column me-md-4">
+            <p class="fw-bold mb-1">Policy</p>
+            <ul class="list-unstyled mb-0">
+              <li><a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" class="footer-link">Read Policy</a></li>
+            </ul>
+          </div>
+
+          <!-- IT Support Links -->
+          <div class="footer-column">
+            <p class="fw-bold mb-1">IT Support</p>
+            <ul class="list-unstyled mb-0">
+              <li><a href="https://cbae.freshservice.com/support/home" class="footer-link">IT Ticket Portal</a></li>
+              <li><a href="https://wa.me/971554479709" class="footer-link">WhatsApp</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social or Contact Info -->
+      <div class="col-md-4 text-center text-md-end">
+        <p class="mb-1">© 2025 Coldwell Banker UAE</p>
+        <small style="color: #8bc3fe;">Designed & Managed by IT Support</small>
+      </div>
     </div>
   </div>
-</section>
+</footer>
 
 
-
-
-  <section id="admin" class="section" data-aos="fade-right">
-    <div class="content">
-      <h2 > Admin Support</h2>
-      <p >Access admin-related resources, approvals, and internal coordination through the Admin portal.</p>
-      <div class="d-flex flex-wrap gap-3 mt-3">
-        <a href="raise-ticket.html" target="_blank" class="btn btn-primary btn-custom">Raise ticket</a>
-        <a href="https://wa.me/971529236871" target="_blank" class="whatsapp-inline">
-          <i class="fab fa-whatsapp"></i> Chat
-        </a>
-      </div>
-    </div>
-    <div class="img-box">
-      <i class="fas fa-user-shield"></i>
-    </div>
-  </section>
-
-  <section id="it" class="section" data-aos="fade-left">
-    <div class="content">
-      <h2 >IT Support</h2>
-      <p >Need help with devices, internet, accounts, or software? Visit the IT portal or chat with our team.</p>
-      <div class="d-flex flex-wrap gap-3 mt-3">
-        <a href="https://cbae.freshservice.com/support/home" target="_blank" class="btn btn-primary btn-custom">Raise ticket</a>
-        <a href="https://wa.me/971554479709" target="_blank" class="whatsapp-inline">
-          <i class="fab fa-whatsapp"></i> Chat
-        </a>
-      </div>
-    </div>
-    <div class="img-box">
-      <i class="fas fa-tools"></i>
-    </div>
-  </section>
-
-  <section id="policy" class="section" data-aos="fade-right">
-    <div class="content">
-      <h2>Policy Website</h2>
-      <p>Stay up to date with Coldwell Banker policies, compliance procedures, and operational guidelines.</p>
-      <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary btn-custom">Read Policy</a>
-    </div>
-    <div class="img-box">
-      <i class="fas fa-file-contract"></i>
-    </div>
-  </section>
   </div>
 
 
+  
 
 
-
-
-
-
-
-
-
-
-
-
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>AOS.init();</script>
-<script>
-  const swiper = new Swiper('.mySwiper', {
-  loop: true,
-  spaceBetween: 16,
-  slidesPerView: 1,
-  centeredSlides: true,
-  autoplay: {
-    delay: 3500,
-    disableOnInteraction: false,
-  },
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-  speed: 800,
-});
 
-
-
-
-
-</script>
-
-
-<script type='text/javascript'>window.ZOHOIM=window.ZOHOIM||function(a,b){ZOHOIM[a]=b;};window.ZOHOIM.prefilledMessage="";(function(){var d=document;var s=d.createElement('script');s.type='text/javascript';s.nonce='{place_your_nonce_value_here}';s.defer=true;s.src="https://im.zoho.com/api/v1/public/channel/9d54007e042a5fda8f169afb3f0f2836/widget";d.getElementsByTagName('head')[0].appendChild(s); })()</script>
-
-
+  <script type='text/javascript'>window.ZOHOIM=window.ZOHOIM||function(a,b){ZOHOIM[a]=b;};window.ZOHOIM.prefilledMessage="";(function(){var d=document;var s=d.createElement('script');s.type='text/javascript';s.nonce='{place_your_nonce_value_here}';s.defer=true;s.src="https://im.zoho.com/api/v1/public/channel/9d54007e042a5fda8f169afb3f0f2836/widget";d.getElementsByTagName('head')[0].appendChild(s); })()</script>
 </body>
 </html>

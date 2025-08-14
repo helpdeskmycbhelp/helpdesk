@@ -43,7 +43,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(251, 252, 253, 0.274);
+      background: rgba(251, 252, 253, 0.275);
       z-index: -1;
     }
 
@@ -480,6 +480,12 @@ main, section {
   flex: 1;
 }
 
+.marketing-icon-gradient {
+  background: linear-gradient(45deg, #0f0ff4, #045ffb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 
 
 
@@ -508,6 +514,7 @@ main, section {
           <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
           <li class="nav-item"><a href="raise-ticket.html" class="nav-link">Admin</a></li>
           <li class="nav-item"><a class="nav-link" href="https://cbae.freshservice.com/support/home">IT Support</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://www.mycbverse.com/">Marketing Support</a></li>
           <li class="nav-item"><a class="nav-link" href="https://coldwellbankeruae.sharepoint.com/sites/pnp">Policy</a></li>
         </ul>
       </div>
@@ -517,49 +524,62 @@ main, section {
   <section class="py-5 bg-transparent-section">
     <div class="container">
       <h1 class="title text-center fw-bold text-gradient" data-aos="fade-down">CB - Helpdesk</h1>
-      <div class="row g-4" data-aos="fade-up">
-        <!-- Admin Support Card -->
-        <div class="col-md-4">
-          <div class="card h-100 shadow-lg rounded-4">
-            <div class="card-body text-center d-flex flex-column">
-              <i class="fas fa-user-shield fa-3x mb-3 custom-icon-gradient"></i>
-              <h5 class="card-title">Admin Support</h5>
-              <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
-                <a href="raise-ticket.html" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Raise Ticket</a>
-                <a href="https://wa.me/971529236871" target="_blank" class="btn custom-btn whatsapp-btn btn-whatsapp w-50">WhatsApp</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- IT Support Card -->
-        <div class="col-md-4">
-          <div class="card h-100 shadow-lg rounded-4">
-            <div class="card-body text-center d-flex flex-column">
-              <i class="fas fa-tools fa-3x mb-3 text-info custom-icon-gradient"></i>
-              <h5 class="card-title">IT Support</h5>
-              <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
-                <a href="https://cbae.freshservice.com/support/home" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Raise Ticket</a>
-                <a href="https://wa.me/971554479709" target="_blank" class="btn custom-btn whatsapp-btn btn-whatsapp w-50">WhatsApp</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Policy Help Card -->
-        <div class="col-md-4">
-          <div class="card h-100 shadow-lg rounded-4">
-            <div class="card-body text-center d-flex flex-column">
-              <i class="fas fa-book fa-3x mb-3 book-icon-gradient"></i>
-              <h5 class="card-title">Policy Help</h5>
-              <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
-                <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Read Policy</a>
-              </div>
-            </div>
-          </div>
+      <div class="row g-4 justify-content-center" data-aos="fade-up">
+  <!-- Admin Support -->
+  <div class="col-md-6 col-lg-5 col-xl-4">
+    <div class="card h-100 shadow-lg rounded-4">
+      <div class="card-body text-center d-flex flex-column">
+        <i class="fas fa-user-shield fa-3x mb-3 custom-icon-gradient"></i>
+        <h5 class="card-title">Admin Support</h5>
+        <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
+          <a href="raise-ticket.html" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Raise Ticket</a>
+          <a href="https://wa.me/971529236871" target="_blank" class="btn custom-btn whatsapp-btn btn-whatsapp w-50">WhatsApp</a>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- IT Support -->
+  <div class="col-md-6 col-lg-5 col-xl-4">
+    <div class="card h-100 shadow-lg rounded-4">
+      <div class="card-body text-center d-flex flex-column">
+        <i class="fas fa-tools fa-3x mb-3 text-info custom-icon-gradient"></i>
+        <h5 class="card-title">IT Support</h5>
+        <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
+          <a href="https://cbae.freshservice.com/support/home" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Raise Ticket</a>
+          <a href="https://wa.me/971554479709" target="_blank" class="btn custom-btn whatsapp-btn btn-whatsapp w-50">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marketing Support -->
+  <div class="col-md-6 col-lg-5 col-xl-4">
+    <div class="card h-100 shadow-lg rounded-4">
+      <div class="card-body text-center d-flex flex-column">
+        <i class="fas fa-bullhorn fa-3x mb-3 marketing-icon-gradient"></i>
+        <h5 class="card-title">Marketing Support</h5>
+        <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
+          <a href="https://www.mycbverse.com/" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-75">Raise Ticket</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Policy Help -->
+  <div class="col-md-6 col-lg-5 col-xl-4">
+    <div class="card h-100 shadow-lg rounded-4">
+      <div class="card-body text-center d-flex flex-column">
+        <i class="fas fa-book fa-3x mb-3 book-icon-gradient"></i>
+        <h5 class="card-title">Policy Help</h5>
+        <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
+          <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Read Policy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   </section>
 
  <footer class="footer-section py-4 mt-auto" >
@@ -583,6 +603,15 @@ main, section {
             </ul>
           </div>
 
+          <!-- Marketing Help -->
+<div class="footer-column me-md-4">
+  <p class="fw-bold mb-1">Marketing Support</p>
+  <ul class="list-unstyled mb-0">
+    <li><a href="https://www.mycbverse.com/" class="footer-link">Raise Ticket</a></li>
+  </ul>
+</div>
+
+
           <!-- Policy Links -->
           <div class="footer-column me-md-4">
             <p class="fw-bold mb-1">Policy</p>
@@ -601,6 +630,9 @@ main, section {
           </div>
         </div>
       </div>
+
+ 
+
 
       <!-- Social or Contact Info -->
       <div class="col-md-4 text-center text-md-end">
@@ -626,4 +658,3 @@ main, section {
   <script type='text/javascript'>window.ZOHOIM=window.ZOHOIM||function(a,b){ZOHOIM[a]=b;};window.ZOHOIM.prefilledMessage="";(function(){var d=document;var s=d.createElement('script');s.type='text/javascript';s.nonce='{place_your_nonce_value_here}';s.defer=true;s.src="https://im.zoho.com/api/v1/public/channel/9d54007e042a5fda8f169afb3f0f2836/widget";d.getElementsByTagName('head')[0].appendChild(s); })()</script>
 </body>
 </html>
-

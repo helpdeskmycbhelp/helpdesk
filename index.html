@@ -1,668 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Coldwell Banker - Internal Hub</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CB – Helpdesk</title>
 
-  <!-- External CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@350;400;700;800;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --primary: #007bff;
-      --secondary: #0056d2;
-      --text-color: #003366;
-      --bg-light: #f4f6fc;
-      --glass-effect: rgba(255, 255, 255, 0.6);
-    }
-
-    html {
-  scroll-behavior: smooth;
-}
+<style>
+  :root{
+    /* Background (closer to the artwork) */
+    --bg-top:#22405a92;
+    --bg-bot:#12324f8e;
+    --wsp-hover:#08b764;   /* hover */
+--wsp-press:#05904c;   /* pressed/click */
 
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('assets/house.jpg') no-repeat fixed;
-      background-position: center -40px;
-      background-size: cover;
-      background-attachment: fixed;
-      margin: 0;
-      padding-top: 0;
-      scroll-behavior: smooth;
-      
-    }
+    /* Card base (dark glass like Admin/Marketing/Policies) */
+    --card-top:#fcfeff27;  /* top of dark card */
+    --card-bot:#f2f6fa20;  /* bottom of dark card */
+    --card-stroke:rgba(255,255,255,.12);
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(251, 252, 253, 0.163);
-      z-index: -1;
-    }
+    /* Hover: IT grey */
+    --hover-top:#718292;
+    --hover-bot:#718292;
 
-  @media (max-width: 768px) {
-  body {
-    background: url('assets/house.jpg') no-repeat center center;
-    background-size: cover;
-    background-attachment: scroll; /* Allow scroll on mobile */
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: auto; /* Allow content height */
-  }
+    /* Text & UI */
+    --title:#ffffff;
+    --muted:#d5e2f3;
+    --bullet:#b8c8dc;
 
-
-
-
-
-  body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(251, 252, 253, 0.307);
-      z-index: -1;
-    }
-}
-
-
-    .card-title {
-      background: linear-gradient(90deg, #01204b, #023276, #00b4db);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 700;
-    }
+    --btn-chip:#6d8eae;
+    --btn-chip-hover:#67A4E7;
+    --wsp:#079853;
+    
     
 
-/* ====== Desktop Default Card Style ====== */
-.card {
-  background: rgba(255, 255, 255, 0.338); /* semi-transparent white */
-  backdrop-filter: blur(12px);          /* adds glass blur effect */
-  -webkit-backdrop-filter: blur(12px);  /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle border */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  width: 400px;
-  margin: auto;
-  border-radius: 12px;
+    /* Shadows */
+    --shadow-soft:0 14px 28px rgba(0,0,0,.22);
+    --shadow-strong:0 22px 42px rgba(0,0,0,.35);
+    --btn-shadow:0 12px 24px rgba(0,0,0,.18);
+  }
+
+  /* Background with subtle vignettes */
+  body {
+  margin: 0;
+  min-height: 100vh;
+  color: #e9f2ff;
+  font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+
+  background:
+    radial-gradient(1200px 620px at 18% 6%, rgba(255, 255, 255, .0), transparent 60%),
+    radial-gradient(1300px 620px at 82% 12%, rgba(255, 255, 255, .0), transparent 60%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%),
+    url('assets/t.jpg') no-repeat center center fixed;
+
+  background-size: cover;
 }
+
+
+  /* Title like the mock */
+  .main-title{
+    font-family:Montserrat,Inter,sans-serif;
+    font-weight:700;
+    letter-spacing:.0em;
+    color:var(--title);
+    text-align:center;
+    text-shadow:0 6px 18px rgba(0,0,0,.45);
+    font-size:clamp(34px,5.2vw,56px);
+    margin:-20px 0 16px;
+    position: relative;
+  }
+
+  /* Glow behind title */
+  .main-title::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    height: 380px;
+    background: radial-gradient(circle,
+                rgba(255, 255, 255, 0.353) 0%,
+                rgba(255, 255, 255, 0.16) 35%,
+                transparent 70%);
+    filter: blur(20px);
+    border-radius: 50%;
+    z-index: -1;
+    
+  }
+
+  .cards-wrap{ padding:80px 0 64px; }
+  .col-card {
+    padding: 6px; /* smaller padding */
+    display: flex;
+    justify-content: center;
+}
+
+  /* Card – glass + round corners */
+  .help-card{
+    /** SIZE CHANGES ONLY (colors untouched) **/
+    max-width: 400px;           /* narrower card */
+    width: 250px;
+    height: 400px;          /* taller card */
+    display: flex;              /* let content push buttons down */
+    flex-direction: column;
+
+    border-radius:22px;
+    border:1px solid var(--card-stroke);
+    padding:26px 50px 28px;
+    background:linear-gradient(180deg, var(--card-top), var(--card-bot));
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    transform:scale(1);
+    transform-origin:center;
+    will-change:transform, background, box-shadow;
+    text-align: center;         /* center all text inside the card */
+    border-color: #00000087;
+
+    /* remove all shadows first */
+  box-shadow: none;
+
+  
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25); /* soft fade */
+}
+
+
+  
+
+  /* FIXED: no focus-within */
+.help-card:hover,
+.help-card.is-active{
+  transform:scale(1.1);
+   box-shadow: 0 14px 20px -6px rgba(0, 0, 0, 0.6);
+  
+  background:linear-gradient(180deg, var(--hover-top), var(--hover-bot));
+}
+
+
+/* Card titles */
+.card-title-text {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;                /* Semi-bold for clarity */
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -5px;           /* Slight letter spread */
+  line-height: 1.3;                /* Slightly taller look */
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+  .card-container {
+  display: flex;
+  align-items: center;   /* Vertical center */
+  justify-content: center; /* Horizontal center */
+    gap: 5px;
+}
+
+
+  
+  .muted{
+    text-transform:uppercase;
+    color:var(--muted);
+    letter-spacing:.08em;
+    font-weight:800;
+    font-size:14px;
+    margin-bottom:20px;
+  }
+
+  /* Bullet list (centered) */
+  .bullet-list{ list-style:none; padding:0; margin:6px 0 22px; }
+  .bullet{
+    display:flex; gap:10px;
+    align-items:flex-start; justify-content:center; /* center bullets */
+    margin:10px 0; font-size:10px;
+  }
+  .bullet i{ color:var(--bullet); margin-top:2px; }
+
+  /* Actions pinned to bottom */
+  .help-card .d-grid{ margin-top:auto; }       /* push buttons to the bottom */
+  .btn-pill{
+    border-radius:999px; border:0; font-weight:800; letter-spacing:.02em; padding:10px 18px;
+    box-shadow:var(--btn-shadow);
+    width:100%;                                 /* fill card width nicely */
+  }
+  .btn-chip{ background:var(--btn-chip); color:#0b1b2b; }
+  .btn-chip:hover{ background:var(--btn-chip-hover); color:#0b1b2b; }
+  .btn-wsp{ background:var(--wsp); color:#0b1b12; }
+  .btn-wsp:hover{ filter:brightness(1.06); color:#08150e; }
+
+  
+
+  /* --- force the card title to be perfectly centered --- */
+.help-card { position: relative; } /* already there, safe to repeat */
+
+.help-card .card-title-text{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);  /* center regardless of padding */
+  margin: 0 0 2px 0;
+  text-align: center;
+  white-space: nowrap;           /* prevents slight wrap that can look off-center */
+  width: max-content;            /* shrink to text so translate centers the word */
+}
+
+/* Bullet list aligned in straight column */
+.bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 22px;
+}
+
+.bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  justify-content: flex-start;  /* Align all items to start */
+  margin: 10px 0;
+  font-size: 11px;              /* Slightly larger for readability */
+  text-align: left;             /* Align text to left */
+}
+
+.bullet i {
+  color: var(--bullet);
+  margin-top: 3px;
+  flex: 0 0 16px;               /* Fixed icon width so text aligns */
+  text-align: center;           /* Keep icon centered in its space */
+}
+
+.card {
+  background: #223344;
+  border-radius: 15px;
+  padding: 20px;
+ 
+}
+
+
 
 
 .card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 12px 28px rgba(0, 123, 255, 0.35);
+  /* optional: lift card on hover */
+  transform: translateY(-5px);
+  
+}
+
+.btn-wsp{
+  background: var(--wsp);
+  color:white;
+  box-shadow: 0 12px 24px rgba(0,0,0,.18);
+  transition: background-color .2s ease, box-shadow .2s ease, transform .05s ease;
+}
+
+.btn-wsp:hover{
+  background: var(--wsp-hover);  
+  color: rgb(19, 19, 55);               /* new hover color */
+  box-shadow: 0 16px 30px rgba(8,183,100,.32); 
+   /* a touch more lift on hover */
+}
+
+.btn-wsp:active{
+  background: var(--wsp-press);                 /* pressed color */
+  transform: translateY(1px);                   /* subtle click feedback */
+}
+
+
+/* let Bootstrap's gutter variable control the space */
+.col-card{
+  padding-left: calc(var(--bs-gutter-x) / 2);
+  padding-right: calc(var(--bs-gutter-x) / 2);
+}
+
+
+.gx-tight {
+  --bs-gutter-x: 2rem;
 }
 
 
 
+.header-logo {
+  height: 100px; /* adjust to match screenshot */
+  width: 100px;
+  margin-top: 25px;
+}
 
-/* ====== Mobile Responsive Overrides ====== */
-@media (max-width: 768px) {
-  .card {
-    width: 100% !important;
+
+/* ================= MOBILE ONLY (≤ 576px) ================= */
+@media (max-width: 575.98px) {
+  html, body { overflow-x: hidden; }         /* kill sideways scroll */
+
+  /* tighten the page padding so cards can be full width */
+  .container { padding-left: 12px; padding-right: 12px; }
+
+  /* collapse row gutters on phones */
+  .row { --bs-gutter-x: 0; margin-left: 0; margin-right: 0; }
+
+  /* no extra padding on columns */
+  .col-card { padding-left: 0; padding-right: 0; }
+
+  /* make each card full width and centered; reduce inner padding */
+  .help-card {
+    width: 340px;
     max-width: 100%;
-    margin: 0 auto 20px auto;
-    transform: none !important; /* disables hover lift on touch devices */
+    margin: 0 auto 14px;
+    padding: 16px;
+    height: auto;
+    transform: none !important;    /* avoid zoom jump on touch */
+  }
+
+  /* header logo + title */
+  .header-logo {
+    display: block;
+    height: 56px;
+    width: auto;
+    margin: 12px auto 6px;
+  }
+  .main-title {
+    margin: 6px 0 10px;
+    font-size: clamp(22px, 6.2vw, 30px);
+    letter-spacing: .06em;
+    font-weight: 800;
+    text-align: center;
+  
+  }
+  .main-title::before { width: 85vw; height: 38vw; } /* resize glow */
+
+  /* tidy typography */
+  .card-title-text { font-size: 30px; letter-spacing: 0; line-height: 1.2; font-weight: 400; }
+  .muted { font-size: 12px; margin-bottom: 10px; }
+
+  /* bullets readable, left-aligned */
+  .bullet { justify-content: flex-start; font-size: 12px; margin: 8px 0; }
+
+  /* buttons fill card cleanly and don’t overflow */
+  .btn-pill {
+    width: 100%;
+    padding: 12px 14px;
+    white-space: normal;           /* allow wrap if needed */
+  }
+
+  /* a touch of vertical spacing around the list */
+  .cards-wrap { padding: 16px 0 28px; }
+}
+
+.cb-footer {
+  background: rgba(0, 0, 0, 0.4); /* semi-transparent to match glass style */
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 13px;
+  position: relative;       /* sticks to bottom */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  backdrop-filter: blur(10px); /* glass effect */
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cb-footer .footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+@media (max-width: 576px) {
+  .cb-footer {
+    font-size: 12px;
+    padding: 8px 0;
     
   }
+}
 
-  .card:hover {
-    transform: none !important;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
+.btn-chip{
+  color: white;
+  font-weight: 50px;
 }
 
 
-
-    .navbar {
-      background: linear-gradient(to right, #ffffff74, #f1f1f1a0);
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-      z-index: 999;
-      animation: slideDown 0.5s ease-in-out;
-      
-
-      
-      
-
-    }
-
-    @keyframes slideDown {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-    .navbar-brand {
-      font-weight: bold;
-      color: var(--text-color) !important;
-      font-size: 1.5rem;
-    }
-
-    .nav-link {
-      color: var(--text-color) !important;
-      font-weight: 600;
-      margin-left: 15px;
-      transition: color 0.3s ease, border-bottom 0.3s ease;
-    }
-
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--primary) !important;
-      border-bottom: 2px solid var(--primary);
-    }
-
-    .title {
-      text-align: center;
-      font-size: 2.8rem;
-      font-weight: 800;
-      color: var(--text-color);
-       padding-top: 100px;  /* increase top padding to push it down */
-    padding-bottom: 20px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (max-width: 768px) {
-  .title {
-    font-size: 2rem; /* smaller on mobile */
-     padding-top: 80px;  /* increase top padding to push it down */
-    padding-bottom: 20px;
-  }
-}
-
-
-    html, body {
-      overflow-x: hidden;
-    }
-
-    .navbar-logo {
-      height: 30px;
-      width: auto;
-      max-height: 100%;
-    }
-
-    .navbar-nav .nav-link {
-      color: #003366;
-      font-weight: 500;
-      padding: 0.5rem 1rem;
-      transition: color 0.3s ease;
-    }
-
-    .navbar-nav .nav-link:hover {
-      color: #13377e;
-    }
-
-    @media (max-width: 991.98px) {
-      .navbar-collapse {
-        background-color: #ffffff;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      .navbar-nav .nav-link {
-        padding: 0.75rem 0;
-        font-size: 1rem;
-      }
-
-      .navbar-brand {
-        font-size: 1rem;
-      }
-
-      .navbar-logo {
-        height: 25px;
-        width: 230px;
-      }
-    }
-
-  .custom-btn {
-  position: relative;
-  height: 45px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  border: none;
-  font-size: 1rem;
-  border-radius: 6px;
-  padding: 0 20px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.custom-btn::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.7) 50%,
-    rgba(255, 255, 255, 0.3) 100%
-  );
-  transform: rotate(25deg);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.custom-btn:hover::before {
-  animation: glass-reflect 1.2s ease-in-out forwards;
-}
-
-@keyframes glass-reflect {
-  0% {
-    transform: translateX(-100%) rotate(25deg);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(100%) rotate(25deg);
-    opacity: 0;
-  }
-}
-
-
-    .text-gradient {
-      background: linear-gradient(90deg, #011241, #040769, #0bd1fd);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 700;
-    }
-
-    .btn-raise-ticket {
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(8px);
-      background: linear-gradient(135deg, rgba(2, 83, 169, 0.9), rgba(0, 212, 255, 0.7));
-      color: #fff !important;
-      z-index: 1;
-      transition: all 0.3s ease-in-out;
-      border-radius: 20px;
-    }
-
-    .btn-raise-ticket:hover {
-      box-shadow: 0 4px 15px rgba(0, 58, 119, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .btn-whatsapp {
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(8px);
-      background: linear-gradient(to right, #1ebea5, #25D366);
-      box-shadow: 0 6px 14px rgba(30, 190, 165, 0.3);
-      color: #fff !important;
-      z-index: 1;
-      transition: all 0.3s ease-in-out;
-      border-radius: 20px;
-    }
-
-    .btn-whatsapp:hover {
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .custom-icon-gradient {
-      background: linear-gradient(45deg, #02024d, #045ffb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .book-icon-gradient {
-      background: linear-gradient(45deg, #02024d, #045ffb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .navbar-toggler-icon {
-      background-image: none !important;
-    }
-
-    .navbar-toggler {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-    }
-
-    .hamburger {
-      width: 30px;
-      height: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      cursor: pointer;
-    }
-
-    .hamburger span {
-      height: 3px;
-      width: 100%;
-      background: #003366;
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .navbar-toggler:not(.collapsed) .hamburger span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .navbar-toggler:not(.collapsed) .hamburger span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .navbar-toggler:not(.collapsed) .hamburger span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
-
-
- html, body {
-  height: 100%;
-  margin: 0;
-}
-
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* === Base Footer Style === */
-.footer-section {
-  background-color: rgba(2, 43, 85, 0.85); /* clean semi-transparent blue */
-  color: #ffffff;
-  font-size: 0.9rem;
-  padding: 40px 0;
-  border-top: 1px solid #0c3a6b;
-}
-
-.footer-section img {
-  max-height: 40px;
-  width: 60px;
-}
-
-.footer-section h6 {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.footer-section small {
-  display: block;
-  margin-top: 2px;
-  color: #9ce7f8;
-  font-size: 0.8rem;
-}
-
-.footer-section ul {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0;
-}
-
-.footer-section li {
-  margin-bottom: 6px;
-}
-
-.footer-link {
-  color: #b8d4fe;
-  text-decoration: none;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-.footer-link:hover {
-  color: #70e5ff;
-  text-decoration: underline;
-}
-
-/* === Layout Enhancements === */
-.footer-section .custom-gap {
-  gap: 3rem;
-}
-
-.footer-section .footer-column {
-  display: flex;
-  flex-direction: column;
-}
-
-/* === Responsive Layout === */
-@media (max-width: 767.98px) {
-  .footer-section .row {
-    text-align: center;
-  }
-
-  .footer-section .col-md-4 {
-    margin-bottom: 20px;
-  }
-
-  .footer-section .d-flex.flex-md-row {
-    flex-direction: column !important;
-    gap: 1.5rem;
-  }
-
-  .footer-section .text-md-start,
-  .footer-section .text-md-end {
-    text-align: center !important;
-  }
-}
-
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main, section {
-  flex: 1;
-}
-
-.marketing-icon-gradient {
-  background: linear-gradient(45deg, #02024d, #045ffb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-
-
-
-  </style>
-</head>
-
-<body>
 
   
-  <div class="page-wrapper">
-  <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
-    <div class="container-fluid px-4">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="assets/logo.png" alt="Logo" class="navbar-logo me-2" />
-      </a>
-      <button class="navbar-toggler custom-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <div class="hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </button>
+</style>
+</head>
+<body>
 
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-          <li class="nav-item"><a href="raise-ticket.html" class="nav-link">Admin</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://cbae.freshservice.com/support/home">IT Support</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://www.mycbverse.com/">Marketing Support</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://coldwellbankeruae.sharepoint.com/sites/pnp">Policy</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <section class="py-5 bg-transparent-section">
-  <div class="container">
-    <h1 class="title text-center fw-bold text-gradient" data-aos="fade-down">CB - Helpdesk</h1>
-    <div class="row gx-1 gy-3 justify-content-center">
-
-
-
-
-      <!-- Admin Support -->
-      <div class="col-12 col-sm-6 col-md-5 col-lg-4 px-1">
-        <div class="card h-100 shadow-lg rounded-4">
-          <div class="card-body text-center d-flex flex-column">
-            <i class="fas fa-user-shield fa-3x mb-3 custom-icon-gradient"></i>
-            <h5 class="card-title">Admin Support</h5>
-            <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
-              <a href="raise-ticket.html" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Raise Ticket</a>
-              <a href="https://wa.me/971529236871" target="_blank" class="btn custom-btn whatsapp-btn btn-whatsapp w-50">WhatsApp</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- IT Support -->
-      <div class="col-12 col-sm-6 col-md-5 col-lg-4 px-1">
-        <div class="card h-100 shadow-lg rounded-4">
-          <div class="card-body text-center d-flex flex-column">
-            <i class="fas fa-tools fa-3x mb-3 text-info custom-icon-gradient"></i>
-            <h5 class="card-title">IT Support</h5>
-            <div class="mt-auto d-flex justify-content-between gap-2 pt-3">
-              <a href="https://cbae.freshservice.com/support/home" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Raise Ticket</a>
-              <a href="https://wa.me/971554479709" target="_blank" class="btn custom-btn whatsapp-btn btn-whatsapp w-50">WhatsApp</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-100 d-none d-md-block"></div>
-
-      <!-- Marketing Support -->
-      <div class="col-12 col-sm-6 col-md-5 col-lg-4 px-1">
-        <div class="card h-100 shadow-lg rounded-4">
-          <div class="card-body text-center d-flex flex-column">
-            <i class="fas fa-bullhorn fa-3x mb-3 marketing-icon-gradient"></i>
-            <h5 class="card-title">Marketing Support</h5>
-            <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
-              <a href="https://www.mycbverse.com/" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-75">Raise Ticket</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Policy Help -->
-      <div class="col-12 col-sm-6 col-md-5 col-lg-4 px-1">
-        <div class="card h-100 shadow-lg rounded-4">
-          <div class="card-body text-center d-flex flex-column">
-            <i class="fas fa-book fa-3x mb-3 book-icon-gradient"></i>
-            <h5 class="card-title">Policy Help</h5>
-            <div class="mt-auto d-flex justify-content-center gap-2 pt-3">
-              <a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" class="btn btn-primary custom-btn btn-raise-ticket w-50">Read Policy</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
- <footer class="footer-section py-4 mt-auto" >
-  <div class="container text-center text-md-start">
-    <div class="row align-items-center gy-4">
-      <div class="col-md-4 text-center text-md-start footer-column">
-        <img src="assets/ff.png" alt="Coldwell Banker" style="height: 40px;" />
-        <h6 class="mt-2 mb-0 fw-bold">Coldwell Banker UAE</h6>
-        <small>Empowering Real Estate Excellence</small>
-      </div>
-
-      <!-- Quick Links Row -->
-      <div class="col-md-4">
-        <div class="d-flex flex-column flex-md-row justify-content-center text-center text-md-start custom-gap">
-          <!-- Admin Support Links -->
-          <div class="footer-column me-md-4">
-            <p class="fw-bold mb-1">Admin Support</p>
-            <ul class="list-unstyled mb-0">
-              <li><a href="raise-ticket.html" class="footer-link">Admin Ticket Portal</a></li>
-              <li><a href="https://wa.me/971529236871" class="footer-link">WhatsApp</a></li>
-            </ul>
-          </div>
-
-          <!-- Marketing Help -->
-<div class="footer-column me-md-4">
-  <p class="fw-bold mb-1">Marketing Support</p>
-  <ul class="list-unstyled mb-0">
-    <li><a href="https://www.mycbverse.com/" class="footer-link">Raise Ticket</a></li>
-  </ul>
+<div class="container">
+  <img src="assets/ff.png" alt="CB Helpdesk Logo" class="header-logo">
+  <h1 class="main-title">CB - HELPDESK</h1>
 </div>
 
+<div class="container cards-wrap">
+<div class="row justify-content-center gx-tight gy-3">
 
-          <!-- Policy Links -->
-          <div class="footer-column me-md-4">
-            <p class="fw-bold mb-1">Policy</p>
-            <ul class="list-unstyled mb-0">
-              <li><a href="https://coldwellbankeruae.sharepoint.com/sites/pnp" class="footer-link">Read Policy</a></li>
-            </ul>
-          </div>
 
-          <!-- IT Support Links -->
-          <div class="footer-column">
-            <p class="fw-bold mb-1">IT Support</p>
-            <ul class="list-unstyled mb-0">
-              <li><a href="https://cbae.freshservice.com/support/home" class="footer-link">IT Ticket Portal</a></li>
-              <li><a href="https://wa.me/971554479709" class="footer-link">WhatsApp</a></li>
-            </ul>
-          </div>
+
+    <!-- ADMIN -->
+     <div class="col-12 col-sm-6 col-lg-auto col-card"> 
+      <div class="help-card">
+        <div class="card-title-text">ADMIN</div>
+        <div class="muted">SUPPORT</div>
+        <ul class="bullet-list">
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Listing Support</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>CRM Closings</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Documentation</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Portals Support</li>
+        </ul>
+        <div class="d-grid gap-3">
+          <a class="btn btn-pill btn-wsp" target="_blank" href="https://wa.me/971529236871"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a>
+          <a class="btn btn-pill btn-chip" target="_blank" href="raise-ticket.html">Raise Ticket</a>
         </div>
       </div>
+    </div>
 
- 
-
-
-      <!-- Social or Contact Info -->
-      <div class="col-md-4 text-center text-md-end">
-        <p class="mb-1">© 2025 Coldwell Banker UAE</p>
-        <small style="color: #8bc3fe;">Designed & Managed by IT Support</small>
+    <!-- IT -->
+     <div class="col-12 col-sm-6 col-lg-auto col-card"> 
+      <div class="help-card">
+        <div class="card-title-text">IT</div>
+        <div class="muted">SUPPORT</div>
+        <ul class="bullet-list">
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Setup and Accounts</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Device Support</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>CRM and Platforms</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Technical Support</li>
+        </ul>
+        <div class="d-grid gap-3">
+          <a class="btn btn-pill btn-wsp" target="_blank" href="https://wa.me/971554479709"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a>
+          <a class="btn btn-pill btn-chip" target="_blank" href="https://cbae.freshservice.com/support/home">Raise Ticket</a>
+        </div>
       </div>
     </div>
+
+    <!-- MARKETING -->
+    <div class="col-12 col-sm-6 col-lg-auto col-card"> 
+      <div class="help-card">
+        <div class="card-title-text" >MARKETING</div>
+        <div class="muted">SUPPORT</div>
+        <ul class="bullet-list">
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Photoshoots</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Videography</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Edits &amp; Enhancing</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Campaign Support</li>
+        </ul>
+        <div class="d-grid">
+          <a class="btn btn-pill btn-chip" target="_blank" href="https://www.mycbverse.com/">Raise Ticket</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- POLICIES -->
+     <div class="col-12 col-sm-6 col-lg-auto col-card">
+      <div class="help-card">
+        <div class="card-title-text">POLICIES</div>
+        <div class="muted">&nbsp;</div>
+        <ul class="bullet-list">
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Leads Policies</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Listing Policies</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>General Office Policies</li>
+          <li class="bullet"><i class="fa-solid fa-circle-check"></i>Transaction Closing</li>
+        </ul>
+        <div class="d-grid">
+          <a class="btn btn-pill btn-chip" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank">Get Started</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="cb-footer">
+  <div class="footer-content">
+    © 2025 Coldwell Banker UAE | Helpdesk
   </div>
 </footer>
 
 
-  </div>
+<script>
+  // remove any 'is-active' and blur focused element
+  function resetCards() {
+    document.querySelectorAll('.help-card.is-active')
+      .forEach(c => c.classList.remove('is-active'));
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
+  }
 
+  // When returning via back/forward cache
+  window.addEventListener('pageshow', resetCards);
+  // Also when tab becomes visible again
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) resetCards();
+  });
 
-  
+  // Touch feedback that auto-clears quickly (optional)
+  document.querySelectorAll('.help-card').forEach(card => {
+    card.addEventListener('touchstart', () => {
+      card.classList.add('is-active');
+      setTimeout(() => card.classList.remove('is-active'), 180);
+    }, {passive:true});
+  });
 
+  // Make sure buttons don't keep focus after click
+  document.querySelectorAll('.help-card a, .help-card button').forEach(el => {
+    el.addEventListener('click', () => setTimeout(() => el.blur(), 50));
+  });
+</script>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>AOS.init();</script>
+ <script type='text/javascript'>window.ZOHOIM=window.ZOHOIM||function(a,b){ZOHOIM[a]=b;};window.ZOHOIM.prefilledMessage="";(function(){var d=document;var s=d.createElement('script');s.type='text/javascript';s.nonce='{place_your_nonce_value_here}';s.defer=true;s.src="https://im.zoho.com/api/v1/public/channel/9d54007e042a5fda8f169afb3f0f2836/widget";d.getElementsByTagName('head')[0].appendChild(s); })()</script>
 
-  <script type='text/javascript'>window.ZOHOIM=window.ZOHOIM||function(a,b){ZOHOIM[a]=b;};window.ZOHOIM.prefilledMessage="";(function(){var d=document;var s=d.createElement('script');s.type='text/javascript';s.nonce='{place_your_nonce_value_here}';s.defer=true;s.src="https://im.zoho.com/api/v1/public/channel/9d54007e042a5fda8f169afb3f0f2836/widget";d.getElementsByTagName('head')[0].appendChild(s); })()</script>
 </body>
 </html>

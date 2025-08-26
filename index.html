@@ -45,8 +45,25 @@
 /* ====== Background image + fixed overlay tints ====== */
 html{
   height:100%;
-  background:url('assets/t.jpg') center/cover no-repeat fixed;
+  background:#0b2340;           /* fallback color to avoid white flash */
+  overscroll-behavior-y: none;   /* reduce rubber-band bounce showing the page behind */
 }
+
+/* fixed, hardware-accelerated background layer */
+.bg-fixed{
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background: url('assets/t.jpg') center / cover no-repeat;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* keep your tint overlay above the image but below content */
+body::before{
+  z-index: -2;    /* was -1; we’re putting it just above the photo */
+}
+
 html, body{
   min-height:100%;
   margin:0;
@@ -379,6 +396,7 @@ html, body {
 <body>
 
 <!-- Fixed header (hides on scroll) -->
+<div class="bg-fixed" aria-hidden="true"></div>
 <div class="main-content">
   <div class="container">
     <div class="logo-container">

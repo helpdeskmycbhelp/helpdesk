@@ -257,13 +257,31 @@ color: white;
 
   .help-card{ width:340px; max-width:100%; margin:0 auto 14px; padding:16px; height:auto; transform:none !important; margin-top: 90px; }
 
-  .header-logo{ display:block; height:56px; width:auto; margin:12px auto 6px;margin-left: 200px; }
+  .header-logo{ display:block; height:56px; width:auto; margin:12px auto 6px;margin-left: 200px;}
   .main-title{ margin:6px 0 10px; font-size:clamp(22px,6.2vw,30px); letter-spacing:.06em; font-weight:800; }
   .main-title::before{ width:85vw; height:38vw; }
 
   .card-title-text{ font-size:30px; letter-spacing:0; line-height:1.2; font-weight:400; }
   .muted{ font-size:12px; margin-bottom:10px; }
-  .bullet{ font-size:12px; margin:8px 0; }
+  /* center the whole list block */
+/* Center the whole list block, keep items left-aligned */
+.bullet-list{
+  width: max-content;   /* shrink to content width */
+  margin: 0 auto;       /* center the list as a block */
+}
+
+.bullet{
+  justify-content: flex-start; /* left-align icon + text */
+  align-items: center;
+  text-align: left;  
+  font-size: .8rem;          /* wrapped lines stay left */
+}
+
+.bullet-list{ margin-bottom: 28px; } /* try 24–40px */
+
+
+.bullet i{ margin-top: 0; } /* optional: remove top bump on the icon */
+
   .btn-pill{ width: 70%; margin-inline: auto;  padding:12px 14px; white-space:normal; margin-left: auto;}
 
   .cards-wrap{ padding:16px 0 28px; }
@@ -316,6 +334,7 @@ color: white;
     max-width: 80px;
     margin: 0;                 /* remove the left offset */
     display: block;
+    margin-top: 20px;
   }
 
 
@@ -550,5 +569,3 @@ html, body {
 
 </body>
 </html>
-
-

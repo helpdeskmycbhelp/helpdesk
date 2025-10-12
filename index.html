@@ -96,7 +96,7 @@
 
   /* Card – glass + round corners + bottom-only shadow */
   .help-card{
-    width:300px; max-width:400px; height:420px;
+    width:300px; max-width:400px; height:380px;
     display:flex; flex-direction:column; text-align:center;
 
     border-radius:22px;
@@ -242,6 +242,20 @@
       rgba(160,120,40,.8) 12% 18%, rgba(255,220,120,.9) 18% 24%), var(--grain);
     mix-blend-mode: color-burn; filter: brightness(.95) contrast(1.4) saturate(.9);
   }
+
+/* Center the bullet list block inside each card */
+.help-card .bullet-list{
+  width: max-content;      /* shrink to content width */
+  margin: 0 auto 16px;     /* center the block */
+}
+
+/* Keep each bullet row left-aligned within that centered block */
+.help-card .bullet{
+  justify-content: flex-start;
+  text-align: left;
+}
+
+
   </style>
 </head>
 <body>

@@ -58,12 +58,12 @@
   .row.g-tight{ --bs-gutter-x: 18px; --bs-gutter-y: var(--gridGap); width:100%; }
   .col-card{ display:flex; justify-content:center; }
 
-  /* ===== Flip Card (image fills, no frame) ===== */
+  /* ===== Flip Card ===== */
   .flip-card{
     position: relative;
     width: 100%;
-    max-width: 320px;             /* smaller card */
-    aspect-ratio: 16 / 11;        /* proportion */
+    max-width: 320px;
+    aspect-ratio: 16 / 11;
     border-radius: 16px;
     background: transparent;
     border: none;
@@ -80,31 +80,26 @@
     border-radius:inherit; display:block;
     transition: transform .45s cubic-bezier(.175,.885,.32,1.275), opacity .3s ease;
   }
+  /* label (always visible before hover) */
+  .card-label{
+    position:absolute; left:50%; top:10px; transform:translateX(-50%);
+    padding:6px 14px; border-radius:999px;
+    font: 800 .78rem/1 Montserrat, system-ui;
+    letter-spacing:.06em; text-transform:uppercase;
+    color:#fff; background:rgba(5,13,28,.58);
+    border:1px solid rgba(255,255,255,.18);
+    box-shadow:0 10px 20px rgba(0,0,0,.25);
+    pointer-events:none; white-space:nowrap;
+  }
+  .flip-card:hover .card-label{ opacity:.0; transform:translate(-50%,-2px); transition:opacity .25s ease, transform .25s ease; }
 
-  /* icon-style images (transparent background): never crop, nudge up a bit */
-  .img-contain{
-    object-fit: contain;
-    object-position: center 40%;
-    transform: translateY(-3%);            /* move slightly upward */
-  }
-  .flip-card:hover .img-contain,
-  .flip-card.is-open .img-contain{
-    transform: translateY(-3%) scale(0.94);
-    opacity: .06;
-  }
+  /* image fit helpers */
+  .img-contain{ object-fit: contain; object-position:center 40%; transform: translateY(-3%); }
+  .flip-card:hover .img-contain, .flip-card.is-open .img-contain{ transform: translateY(-3%) scale(.94); opacity:.06; }
+  .img-cover{ object-fit: cover; object-position:center; }
+  .flip-card:hover .img-cover, .flip-card.is-open .img-cover{ transform: scale(.96); opacity:.06; }
 
-  /* photo-style images (need full bleed): keep cover */
-  .img-cover{
-    object-fit: cover;
-    object-position: center;
-  }
-  .flip-card:hover .img-cover,
-  .flip-card.is-open .img-cover{
-    transform: scale(0.96);
-    opacity:.06;
-  }
-
-  /* Glass content (sits flush to edges) */
+  /* Reveal panel */
   .flip-card__content{
     position:absolute; inset:0;
     padding:14px 16px 12px; box-sizing:border-box;
@@ -119,24 +114,34 @@
   .flip-card:hover .flip-card__content,
   .flip-card.is-open .flip-card__content{ transform: rotateX(0deg); }
 
-  /* Typography */
   .flip-card__title{
     margin:0 0 2px 0;
     font-family: Montserrat, Inter, sans-serif; font-weight:800; letter-spacing:.06em;
-    font-size: clamp(.95rem, 1.6vw, 1.05rem); color:#fff;
+    font-size: clamp(.95rem, 1.6vw, 1.05rem); color:#fff; text-align:center;
   }
   .flip-card__sub{
     margin:0 0 10px 0; text-transform:uppercase; color:var(--muted);
-    letter-spacing:.08em; font-weight:800; font-size: clamp(.56rem, 1.1vw, .62rem);
+    letter-spacing:.08em; font-weight:800; font-size: clamp(.56rem, 1.1vw, .62rem); text-align:center;
   }
-  .flip-card__list{ list-style:none; padding:0; margin:0 0 12px 0; }
-  .flip-card__list li{
-    display:flex; gap:9px; align-items:flex-start; margin:4px 0;
-    font-size: clamp(.85rem, 1.8vw, .78rem); color:#eef5ff; line-height:1.3;
-  }
-  .flip-card__list i{ color:var(--bullet); margin-top:3px; flex:0 0 15px; }
 
-  /* Actions */
+  /* === Centered block, straight left alignment === */
+  .flip-card__list{
+    list-style:none; padding:0; margin:0 0 12px 0;
+
+    /* center the whole list as a block */
+    width:max-content; max-width:90%;
+    margin-inline:auto;
+
+    /* keep items in a straight left-aligned column */
+    display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+    text-align:left;
+  }
+  .flip-card__list li{
+    display:flex; align-items:center; gap:9px;
+    font-size: clamp(.70rem, 1.3vw, .60rem); color:#eef5ff; line-height:1.3;
+  }
+  .flip-card__list i{ color:var(--bullet); flex:0 0 16px; }
+
   .flip-card__actions{
     margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;
     justify-content:center; align-items:center; padding-bottom:6px;
@@ -160,7 +165,6 @@
   .flip-btn--wsp{ background: var(--wsp); }
   .flip-btn--wsp:hover{ background: var(--wsp-hover); color:#f5f5f6; }
 
-  /* Footer */
   .site-footer{ text-align:center; padding:6px 10px; font-size:12px; color:#fff; opacity:.8; height:var(--footerH); display:flex; align-items:center; justify-content:center; }
 
   /* ======= Responsive ======= */
@@ -175,14 +179,7 @@
     .wrap{ min-height:auto; display:block; padding-bottom:10px; }
     .row.g-tight{ --bs-gutter-x:14px; --bs-gutter-y:16px; }
     .flip-card{ max-width:none; width:100%; aspect-ratio: 16 / 11; }
-    .flip-card__content{ padding:12px 12px 10px; }
-    .flip-card__list li{ gap:8px; }
-    .flip-btn{ min-width:120px; }
-  }
-  @media (max-width:360px){
-    .hero-title{ font-size:20px; }
-    .flip-card{ aspect-ratio: 16 / 12; }
-    .flip-btn{ min-width:110px; padding:8px 14px; }
+    .card-label{ top:8px; font-size:.72rem; padding:6px 12px; }
   }
 
   @media (prefers-reduced-motion: reduce){ *{ transition:none !important; animation:none !important; } }
@@ -207,7 +204,8 @@
       <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="0">
         <div class="flip-card" aria-label="Admin Support">
           <div class="flip-front">
-            <img class="img-contain" src="assets/admin.png" alt="Admin support" loading="lazy" decoding="async">
+            <span class="card-label">ADMIN</span>
+            <img class="img-contain" src="assets/admin.png" alt="Admin support" loading="lazy" decoding="async"style="width:50%; height:63%;">
           </div>
           <div class="flip-card__content">
             <p class="flip-card__title">ADMIN</p>
@@ -232,7 +230,8 @@
       <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="80">
         <div class="flip-card" aria-label="IT Support">
           <div class="flip-front">
-            <img class="img-contain" src="assets/it.png" alt="IT support" loading="lazy" decoding="async">
+            <span class="card-label">IT</span>
+            <img class="img-contain" src="assets/it.png" alt="IT support" loading="lazy" decoding="async"style="width:50%; height:70%;">
           </div>
           <div class="flip-card__content">
             <p class="flip-card__title">IT</p>
@@ -257,7 +256,8 @@
       <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="160">
         <div class="flip-card" aria-label="Marketing Support">
           <div class="flip-front">
-            <img class="img-contain" src="assets/marketing.png" alt="Marketing" loading="lazy" decoding="async">
+            <span class="card-label">MARKETING</span>
+            <img class="img-contain" src="assets/marketing.png" alt="Marketing" loading="lazy" decoding="async"style="width:50%; height:63%;">
           </div>
           <div class="flip-card__content">
             <p class="flip-card__title">MARKETING</p>
@@ -275,11 +275,12 @@
         </div>
       </div>
 
-      <!-- POLICIES (photo-style, keep full bleed) -->
+      <!-- POLICIES (photo style) -->
       <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="240">
         <div class="flip-card" aria-label="Policies">
           <div class="flip-front">
-            <img class="img-cover" src="assets/policy.jpg" alt="Policies" loading="lazy" decoding="async">
+            <span class="card-label">POLICIES</span>
+            <img class="img-cover" src="assets/policy.png" alt="Policies" loading="lazy" decoding="async" style="width:48%; height:63%;">
           </div>
           <div class="flip-card__content">
             <p class="flip-card__title">POLICIES</p>
@@ -301,7 +302,8 @@
       <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="320">
         <div class="flip-card" aria-label="HR Portal">
           <div class="flip-front">
-            <img class="img-contain" src="assets/hr.png" alt="HR portal" loading="lazy" decoding="async">
+            <span class="card-label">HR PORTAL</span>
+            <img class="img-contain" src="assets/hr.png" alt="HR portal" loading="lazy" decoding="async"style="width:50%; height:70%;">
           </div>
           <div class="flip-card__content">
             <p class="flip-card__title">HR PORTAL</p>
@@ -323,7 +325,8 @@
       <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="400">
         <div class="flip-card" aria-label="Knowledge Base">
           <div class="flip-front">
-            <img class="img-contain" src="assets/kb.png" alt="Knowledge base" loading="lazy" decoding="async">
+            <span class="card-label">KNOWLEDGE BASE</span>
+            <img class="img-contain" src="assets/kb.png" alt="Knowledge base" loading="lazy" decoding="async"style="width:50%; height:65%;">
           </div>
           <div class="flip-card__content">
             <p class="flip-card__title">KNOWLEDGE BASE</p>
@@ -346,67 +349,57 @@
 
   <footer class="site-footer">© 2025 Coldwell Banker UAE | Helpdesk</footer>
 
-  <!-- CSS-only floating chatbot for SharePoint Embed web part -->
-<style>
+  <style>
   :root{
-    --cb-color: #2563eb;        /* launcher color */
-    --cb-w: 380px;               /* panel width (desktop) */
-    --cb-h: 560px;               /* panel height (desktop) */
+    --cb-color: #2563eb;
+    --cb-w: 380px;
+    --cb-h: 560px;
     --cb-radius: 16px;
-    --cb-z: 2147483000;          /* very high to sit above page UI */
+    --cb-z: 2147483000;
   }
 
   #cb-wrap { position: fixed; right: 18px; bottom: 18px; z-index: var(--cb-z); }
-
-  /* Hidden checkbox toggles visibility (no JS) */
   #cb-toggle { position: fixed; right: 18px; bottom: 18px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
-  /* Launcher button */
   #cb-btn{
     position: fixed; right: 18px; bottom: 18px;
     display: grid; place-items: center;
     width: 56px; height: 56px; border-radius: 999px;
     background: var(--cb-color); color: #fff; cursor: pointer;
-    font: 600 18px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    font: 600 18px system-ui,-apple-system,Segoe UI,Roboto,Arial;
     box-shadow: 0 12px 30px rgba(0,0,0,.24);
     user-select: none;
   }
   #cb-btn:active { transform: translateY(1px); }
 
-  /* Panel */
   #cb-panel{
     position: fixed; right: 18px; bottom: 86px;
     width: var(--cb-w); height: var(--cb-h);
     background: #fff; border-radius: var(--cb-radius);
     box-shadow: 0 18px 60px rgba(0,0,0,.28);
-    overflow: hidden; display: grid; grid-template-rows: 44px 1fr;
+    overflow: hidden; display: grid; grid-template-rows: auto 1fr;
     opacity: 0; transform: translateY(8px); pointer-events: none;
     transition: opacity .18s ease, transform .18s ease;
   }
-  #cb-toggle:checked ~ #cb-panel{
-    opacity: 1; transform: translateY(0); pointer-events: auto;
-  }
+  #cb-toggle:checked ~ #cb-panel{ opacity:1; transform:translateY(0); pointer-events:auto; }
 
-  /* Panel header (close button is a <label> that unchecks the checkbox) */
+  /* Header / Close strip */
   .cb-hdr{
-    display: flex; align-items: center; gap: 10px; padding: 0 10px;
-    background: #0f172a; color: #fff; font: 600 14px/44px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:6px 10px; background:#0f172a; color:#fff;
+    font:600 14px system-ui; height:44px;
   }
-  .cb-close{
-    margin-left: auto; color: #fff; text-decoration: none; cursor: pointer;
-    display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px;
-  }
-  .cb-close:hover{ background: rgba(255,255,255,.12); }
+  .cb-close{ cursor:pointer; color:#fff; background:none; border:0; font-size:20px; line-height:1; }
 
-  /* iFrame area */
-  .cb-frame{ width: 100%; height: 100%; border: 0; display: block; background: #f8fafc; }
+  .cb-frame{ width:100%; height:100%; border:0; display:block; background:#f8fafc; }
 
-  /* Mobile: full-height sheet */
-  @media (max-width: 520px){
+  /* Mobile full-sheet + always-visible close bar */
+  @media (max-width:520px){
     #cb-panel{
-      right: 0; left: 0; bottom: 0; width: 100vw; height: 85vh; border-radius: 12px 12px 0 0;
+      right:0; left:0; bottom:0; width:100vw; height:100svh;
+      border-radius:0; grid-template-rows:44px 1fr;
     }
-    #cb-btn{ right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0)); }
+    #cb-btn{ right:12px; bottom:calc(12px + env(safe-area-inset-bottom,0)); }
   }
 </style>
 
@@ -417,7 +410,7 @@
   <div id="cb-panel" role="dialog" aria-label="Policy Assistant">
     <div class="cb-hdr">
       <span>Assistant</span>
-      <label class="cb-close" for="cb-toggle" title="Close">✕</label>
+      <label for="cb-toggle" class="cb-close" title="Close">✕</label>
     </div>
     <iframe
       class="cb-frame"

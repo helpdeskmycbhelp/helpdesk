@@ -8,347 +8,620 @@
   <link rel="icon" href="data:,">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700;800;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
   :root{
     --bg-top:#22405a92; --bg-bot:#12324f8e;
+    --card-top:#fcfeff27; --card-bot:#f2f6fa20; --card-stroke:rgba(255,255,255,.12);
+    --hover-top:#718292b9; --hover-bot:#718292c0;
     --title:#ffffff; --muted:#d5e2f3; --bullet:#b8c8dc;
-    --btn-chip:#6d8eae; --btn-chip-hover:#67A4E7; --wsp:#079853; --wsp-hover:#08b764;
+    --btn-chip:#6d8eae; --btn-chip-hover:#67A4E7;
+    --wsp:#079853; --wsp-hover:#08b764; --wsp-press:#05904c;
     --btn-shadow:0 12px 24px rgba(0,0,0,.18);
-
-    --topbarH: 82px;
-    --footerH: 26px;
-    --gridGap: 22px;
+    --slides-gap:24px; --per:4;
   }
 
   html{ height:100%; background:#0b2340; overscroll-behavior-y:none; }
+  .bg-fixed{ position:fixed; inset:0; z-index:-3; background:url('assets/t.jpg') center/cover no-repeat; will-change:transform; transform:translateZ(0); }
   body::before{
-    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
     background:
       radial-gradient(1200px 620px at 18% 6%, rgba(255,255,255,.016), transparent 60%),
       radial-gradient(1300px 620px at 82% 12%, rgba(255,255,255,.07), transparent 60%),
       linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%);
   }
-  .bg-fixed{ position:fixed; inset:0; z-index:-3; background:url('assets/t.jpg') center/cover no-repeat; }
+  html,body{ min-height:100%; margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#e9f2ff; }
+  body{ background:transparent; }
 
-  html, body{ min-height:100%; margin:0; font-family:Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif; color:#e9f2ff; background:transparent; }
-
-  /* ======= Top bar ======= */
-  .topbar{ position:relative; padding:10px 16px 0; height:var(--topbarH); }
-  .brand{ position:absolute; inset-block-start:6px; inset-inline-start:12px; display:flex; align-items:center; }
-  .brand img{ height:100px; width:auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.35)); }
+  /* HERO */
+  .hero-header{ padding:48px 0 12px; text-align:center; }
+  .hero-logo{ height:86px; width:auto; filter:drop-shadow(0 8px 20px rgba(0,0,0,.35)); }
   .hero-title{
-    margin:6px 0 0; text-align:center;
-    font-family: Montserrat, Inter, sans-serif; font-weight:800; color:var(--title);
-    text-shadow: 0 6px 18px rgba(0,0,0,.5);
-    font-size: clamp(26px, 5.5vw, 46px);
-    letter-spacing:.06em;
+    font-family:Montserrat,Inter,sans-serif; font-weight:800; color:var(--title);
+    text-shadow:0 8px 22px rgba(0,0,0,.5); font-size:clamp(28px,6vw,56px); letter-spacing:.06em; margin:10px 0 0;
   }
 
-  /* ======= Content wrapper ======= */
-  .wrap{
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 16px 8px;
-    min-height: calc(100vh - var(--topbarH) - var(--footerH));
-    display:flex; align-items:center;
-  }
-  .row.g-tight{ --bs-gutter-x: 18px; --bs-gutter-y: var(--gridGap); width:100%; }
-  .col-card{ display:flex; justify-content:center; }
+  .main-content{ padding-top:16px; }
+  .cards-wrap{ padding:32px 0 64px; }
 
-  /* ===== Flip Card ===== */
-  .flip-card{
-    position: relative;
-    width: 100%;
-    max-width: 320px;
-    aspect-ratio: 16 / 11;
-    border-radius: 16px;
-    background: transparent;
-    border: none;
-    box-shadow: 0 14px 34px rgba(0,0,0,.45);
-    overflow:hidden; perspective:1000px;
-    transition: transform .45s cubic-bezier(.175,.885,.32,1.275),
-                box-shadow .45s cubic-bezier(.175,.885,.32,1.275);
-  }
-  .flip-card:hover{ transform: translateY(-2px) scale(1.02); box-shadow:0 22px 48px rgba(0,0,0,.55); }
+  /* CARD */
+  /* Equal height cards and bottom-aligned buttons */
+.help-card {
+  width: 250px;
+  max-width: 400px;
+  height: 400px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  border-radius: 22px;
+  border: 1px solid var(--card-stroke);
+  padding: 22px 28px 24px; /* slightly reduced padding for balance */
+  background: linear-gradient(180deg, var(--card-top), var(--card-bot));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 22px 36px -14px rgba(0, 0, 0, 0.77);
+  transition: transform 0.28s cubic-bezier(.22, .61, .36, 1), box-shadow 0.28s ease;
+}
 
-  .flip-front{ position:absolute; inset:0; display:grid; place-items:center; border-radius:inherit; }
-  .flip-front img{
-    width:75%; height:75%;
-    border-radius:inherit; display:block;
-    transition: transform .45s cubic-bezier(.175,.885,.32,1.275), opacity .3s ease;
-  }
-  /* label (always visible before hover) */
-  .card-label{
-    position:absolute; left:50%; top:10px; transform:translateX(-50%);
-    padding:6px 14px; border-radius:999px;
-    font: 800 .78rem/1 Montserrat, system-ui;
-    letter-spacing:.06em; text-transform:uppercase;
-    color:#fff; background:rgba(5,13,28,.58);
-    border:1px solid rgba(255,255,255,.18);
-    box-shadow:0 10px 20px rgba(0,0,0,.25);
-    pointer-events:none; white-space:nowrap;
-  }
-  .flip-card:hover .card-label{ opacity:.0; transform:translate(-50%,-2px); transition:opacity .25s ease, transform .25s ease; }
+  .help-card:hover,.help-card.is-active{ transform:scale(1.02); box-shadow:0 26px 44px -16px rgba(0,0,0,.65); background:linear-gradient(180deg,var(--hover-top),var(--hover-bot)); }
 
-  /* image fit helpers */
-  .img-contain{ object-fit: contain; object-position:center 40%; transform: translateY(-3%); }
-  .flip-card:hover .img-contain, .flip-card.is-open .img-contain{ transform: translateY(-3%) scale(.94); opacity:.06; }
-  .img-cover{ object-fit: cover; object-position:center; }
-  .flip-card:hover .img-cover, .flip-card.is-open .img-cover{ transform: scale(.96); opacity:.06; }
-
-  /* Reveal panel */
-  .flip-card__content{
-    position:absolute; inset:0;
-    padding:14px 16px 12px; box-sizing:border-box;
-    border-radius:inherit;
-    background: linear-gradient(180deg, rgba(20,34,54,.36), rgba(20,34,54,.28));
-    backdrop-filter: blur(6px);
-    transform: rotateX(-90deg); transform-origin: bottom;
-    transition: transform .45s cubic-bezier(.175,.885,.32,1.275);
-    display:flex; flex-direction:column;
-    border: 1px solid rgba(255,255,255,.10);
+  .card-title-text{
+    font-family:Montserrat,sans-serif; font-weight:700; font-size:clamp(18px,2.4vw,25px); line-height:1.15;
+    text-transform:uppercase; margin:0 0 6px; text-align:center; white-space:normal; word-break:break-word; hyphens:auto;
   }
-  .flip-card:hover .flip-card__content,
-  .flip-card.is-open .flip-card__content{ transform: rotateX(0deg); }
+  .muted{ text-transform:uppercase; color:var(--muted); letter-spacing:.08em; font-weight:800; font-size:14px; margin-bottom:20px; }
 
-  .flip-card__title{
-    margin:0 0 2px 0;
-    font-family: Montserrat, Inter, sans-serif; font-weight:800; letter-spacing:.06em;
-    font-size: clamp(.95rem, 1.6vw, 1.05rem); color:#fff; text-align:center;
-  }
-  .flip-card__sub{
-    margin:0 0 10px 0; text-transform:uppercase; color:var(--muted);
-    letter-spacing:.08em; font-weight:800; font-size: clamp(.56rem, 1.1vw, .62rem); text-align:center;
+  .bullet-list{ list-style:none; padding:0; margin:6px 0 22px; min-height:140px; }
+  .bullet{ display:flex; gap:10px; align-items:flex-start; justify-content:flex-start; margin:10px 0; font-size:11px; text-align:left; }
+  .bullet i{ color:var(--bullet); margin-top:3px; flex:0 0 16px; text-align:center; }
+
+  /* Content fills card; button block sits at bottom */
+  .holo-content{ display:flex; flex-direction:column; flex:1 1 auto; min-height:0; height:100%; }
+  .holo-content > .d-grid{
+    margin-top:auto;        /* anchor at bottom area */
+    margin-bottom:24px;     /* default lift for ALL cards */
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:12px;
   }
 
-  /* === Centered block, straight left alignment === */
-  .flip-card__list{
-    list-style:none; padding:0; margin:0 0 12px 0;
+  /* Per-card adjustments (only change this section to re-align) */
+  .admin-card .holo-content > .d-grid{ margin-bottom:300px; }  /* ADMIN */
+  .it-card    .holo-content > .d-grid{ margin-bottom:0px; }   /* IT    */
+  /* Example for others if needed:
+     .marketing-card .holo-content > .d-grid{ margin-bottom:24px; }
+     .policies-card  .holo-content > .d-grid{ margin-bottom:24px; } */
 
-    /* center the whole list as a block */
-    width:max-content; max-width:90%;
-    margin-inline:auto;
-
-    /* keep items in a straight left-aligned column */
-    display:flex; flex-direction:column; align-items:flex-start; gap:8px;
-    text-align:left;
+  /* Buttons */
+  .btn-pill{
+    border-radius:999px; border:0; font-weight:600; letter-spacing:.02em;
+    padding:10px 15px; box-shadow:var(--btn-shadow); width:200px; color:#fff;
+    display:inline-flex; align-items:center; justify-content:center; margin:0 auto;
   }
-  .flip-card__list li{
-    display:flex; align-items:center; gap:9px;
-    font-size: clamp(.70rem, 1.3vw, .60rem); color:#eef5ff; line-height:1.3;
+  .btn-chip{ background:var(--btn-chip); }
+  .btn-chip:hover{ background:var(--btn-chip-hover); color:#fff; }
+  .btn-wsp{ background:var(--wsp); }
+  .btn-wsp:hover{ background:var(--wsp-hover); color:#131337; }
+  .btn-wsp:active{ background:var(--wsp-press); transform:translateY(1px); }
+  .btn{ position:relative; overflow:hidden; transition:transform .25s ease, box-shadow .25s ease, background .25s ease; }
+  .btn:hover{ transform:scale(1.05); box-shadow:0 6px 18px rgba(0,0,0,.25); color:#fff; }
+  .btn:active{ transform:scale(.95); box-shadow:0 2px 8px rgba(0,0,0,.2); }
+  .btn::after{
+    content:""; position:absolute; left:50%; top:50%; width:0; height:0; background:rgba(255,255,255,.4); border-radius:50%;
+    transform:translate(-50%,-50%); opacity:0; transition:width .6s ease, height .6s ease, opacity .8s ease;
   }
-  .flip-card__list i{ color:var(--bullet); flex:0 0 16px; }
+  .btn:active::after{ width:220%; height:220%; opacity:0; transition:0s; }
 
-  .flip-card__actions{
-    margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;
-    justify-content:center; align-items:center; padding-bottom:6px;
-    opacity:0; transform: translateY(6px); pointer-events:none;
-    transition: opacity .3s ease, transform .3s ease;
+  .site-footer{ background-color:#001f3f14; color:#fff; text-align:center; padding:14px 20px; font-size:14px; }
+
+  /* Carousel */
+  .cb-carousel{ position:relative; width:100%; margin:0 auto 48px; padding:0 56px; }
+  .cb-carousel .viewport{ overflow-x:hidden; overflow-y:visible; padding-top:28px; margin-top:-28px; padding-bottom:22px; -ms-overflow-style:none; scrollbar-width:none; scrollbar-gutter:stable both-edges; }
+  .cb-carousel .viewport::-webkit-scrollbar{ display:none; }
+  .cb-carousel .track{ list-style:none; margin:0; padding:0; display:flex; gap:var(--slides-gap); overflow:visible; }
+  .cb-carousel .slide{ box-sizing:border-box; flex:0 0 calc((100% - (var(--slides-gap) * (var(--per) - 1)) - 1px) / var(--per)); display:flex; justify-content:center; overflow:visible; }
+  .cb-carousel .nav{
+    position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:999px; border:0;
+    display:grid; place-items:center; background:rgba(0,0,0,.35); color:#fff; box-shadow:var(--btn-shadow); cursor:pointer;
+    transition:transform .18s ease, background .18s ease, opacity .2s ease; z-index:3;
   }
-  .flip-card:hover .flip-card__actions,
-  .flip-card.is-open .flip-card__actions{ opacity:1; transform: translateY(0); pointer-events:auto; }
+  .cb-carousel .nav:hover{ transform:translateY(-50%) scale(1.06); background:rgba(0,0,0,.48); }
+  .cb-carousel .nav:disabled{ opacity:.35; cursor:not-allowed; }
+  .cb-carousel .prev{ left:6px; } .cb-carousel .next{ right:6px; }
 
-  .flip-btn{
-    flex:0 0 auto; border:0; border-radius:999px;
-    min-height:44px; min-width:120px; padding:10px 18px;
-    font-size:.95rem; font-weight:700; line-height:1; letter-spacing:.02em; color:#fff;
-    display:inline-flex; align-items:center; justify-content:center; gap:10px;
-    text-decoration:none !important; box-shadow:var(--btn-shadow);
-    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-  }
-  .flip-btn:hover{ transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.28); }
-  .flip-btn--chip{ background: var(--btn-chip); }
-  .flip-btn--chip:hover{ background: var(--btn-chip-hover); }
-  .flip-btn--wsp{ background: var(--wsp); }
-  .flip-btn--wsp:hover{ background: var(--wsp-hover); color:#f5f5f6; }
-
-  .site-footer{ text-align:center; padding:6px 10px; font-size:12px; color:#fff; opacity:.8; height:var(--footerH); display:flex; align-items:center; justify-content:center; }
-
-  /* ======= Responsive ======= */
-  @media (max-width: 991.98px){
-    .wrap{ align-items:stretch; }
-    .flip-card{ max-width: 360px; aspect-ratio: 16 / 11; }
-  }
+  @media (max-width:991.98px){ :root{ --per:2; } }
   @media (max-width:575.98px){
-    :root{ --topbarH: 70px; }
-    .brand img{ height:48px; }
-    .hero-title{ font-size: clamp(22px, 6.2vw, 28px); letter-spacing:.04em; margin-top:10px; }
-    .wrap{ min-height:auto; display:block; padding-bottom:10px; }
-    .row.g-tight{ --bs-gutter-x:14px; --bs-gutter-y:16px; }
-    .flip-card{ max-width:none; width:100%; aspect-ratio: 16 / 11; }
-    .card-label{ top:8px; font-size:.72rem; padding:6px 12px; }
+    :root{ --per:1; }
+    .cb-carousel{ padding:0 48px; }
+    .help-card{ width:340px; max-width:100%; margin:0 auto 14px; padding:16px; height:auto; transform:none!important; }
+    .bullet-list{ width:max-content; margin:0 auto 24px; min-height:unset; }
+    .bullet{ justify-content:flex-start; align-items:center; text-align:left; font-size:.95rem; }
+    .btn-pill{ width:70%; padding:12px 14px; white-space:normal; }
+    /* mobile offsets if needed
+       .admin-card .holo-content > .d-grid{ margin-bottom:60px; }
+       .it-card    .holo-content > .d-grid{ margin-bottom:24px; } */
   }
 
-  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; animation:none !important; } }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } }
+
+  /* HOLO EFFECT (unchanged visuals) */
+  .holo-card{ position:relative; transform-style:preserve-3d; will-change:transform,filter;
+    --mx:50%; --my:50%; --rx:0deg; --ry:0deg; --b:.95; --c:1.05; --s:1.02; --shine:.18;
+    --grain:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii44IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbHRlcj0idXJsKCNuKSIgb3BhY2l0eT0iLjI1Ii8+PC9zdmc+"); transition:transform .3s ease, filter .3s ease, box-shadow .3s ease;
+  }
+  .holo-card:hover{ transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s)); filter:brightness(var(--b)) contrast(var(--c)); }
+  .holo-card::after{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; mix-blend-mode:color-dodge; opacity:.9;
+    background-image:repeating-linear-gradient(calc(120deg + (var(--mx)-50%)*.6 + (var(--my)-50%)*.4),
+      rgba(255,120,120,.6) 0%, rgba(255,255,120,.6) 10%, rgba(120,255,160,.6) 20%, rgba(120,220,255,.6) 30%,
+      rgba(200,140,255,.6) 40%, rgba(255,120,200,.6) 50%, rgba(255,120,120,.6) 60%), var(--grain);
+    background-size:220% 220%, 180% 180%; background-position:calc(var(--mx)) calc(var(--my)), center;
+    filter:saturate(1.2) brightness(.9) contrast(1.25); transition:opacity .25s ease; border-radius:22px;
+  }
+  .holo-card::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; mix-blend-mode:screen; opacity:var(--shine);
+    background:radial-gradient(350px 220px at var(--mx) var(--my), rgba(255,255,255,.55) 0%, rgba(255,255,255,.25) 25%, rgba(255,255,255,.10) 40%, rgba(255,255,255,0) 60%);
+    transition:opacity .2s ease; border-radius:22px;
+  }
+  .holo-card .holo-content{ position:relative; transform:translateZ(20px); }
+
+  /* Equal height cards and bottom-aligned buttons */
+.help-card {
+  width: 250px;
+  max-width: 400px;
+  height: 420px; /* slightly taller for balance */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* space between title and buttons */
+  text-align: center;
+  border-radius: 22px;
+  border: 1px solid var(--card-stroke);
+  padding: 26px 32px 28px;
+  background: linear-gradient(180deg, var(--card-top), var(--card-bot));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 22px 36px -14px rgba(0, 0, 0, 0.77);
+  transition: transform 0.28s cubic-bezier(.22, .61, .36, 1), box-shadow 0.28s ease;
+}
+
+/* Remove per-card offsets */
+.admin-card .holo-content > .d-grid,
+.it-card .holo-content > .d-grid {
+  margin-bottom: 0 !important;
+}
+
+/* Ensure content fills card and buttons stay anchored */
+.holo-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.holo-content > .d-grid {
+  margin-top: auto;  /* pushes buttons to bottom */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+/* Center the list as a block, keep left-aligned text */
+.bullet-list{
+  list-style:none;
+  padding:0;
+  margin: 6px auto 4px;   /* centers the whole list */
+  width: max-content;      /* shrink to content so centering is exact */
+  text-align:left;         /* keep lines left-aligned */
+  display:block;
+}
+
+/* Make icon + text line up in neat columns */
+.bullet{
+  display: grid;
+  grid-template-columns: 18px auto;  /* fixed icon column, fluid text */
+  gap: 4px;
+  align-items: start;
+  margin: 12px 0;
+  font-size: 12px;
+}
+
+/* Keep the check icon column perfectly aligned */
+.bullet i{
+  width:18px;              /* same as the first grid column */
+  text-align:center;
+  margin-top: 2px;         /* small optical lift */
+  color: var(--bullet);
+}
+/* === MOBILE STACK VIEW: one card below another === */
+@media (max-width: 600px){
+  /* remove carousel behaviour */
+  .cb-carousel .viewport {
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .cb-carousel .track {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important; /* space between cards */
+    align-items: center !important; /* center cards */
+  }
+  .cb-carousel .slide {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .cb-carousel .nav {
+    display: none !important; /* hide arrows */
+  }
+  .cb-carousel {
+    padding: 0 16px !important;
+  }
+
+  /* card sizing */
+  .help-card {
+    width: 100% !important;
+    max-width: 380px !important;
+    height: auto !important;
+    padding: 16px !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+
+  /* bullets perfectly centered block, straight column */
+  .bullet-list {
+    width: max-content;
+    margin: 8px auto 10px;
+    text-align: left;
+  }
+  .bullet {
+    display: grid;
+    grid-template-columns: 18px auto;
+    gap: 8px;
+    align-items: start;
+    margin: 8px 0;
+    font-size: .95rem;
+  }
+  .bullet i {
+    width: 18px;
+    text-align: center;
+    margin-top: 2px;
+    color: var(--bullet);
+  }
+
+  /* buttons centered */
+  .holo-content {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  .holo-content > .d-grid {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .btn-pill {
+    width: 92% !important;
+    max-width: 360px;
+    padding: 12px 14px;
+    margin: 0 auto;
+  }
+}
+/* === DOUBLE BUTTON SIDE-BY-SIDE FIX FOR MOBILE === */
+@media (max-width: 800px){
+  /* Arrange WhatsApp + Raise Ticket side by side */
+  .holo-content > .d-grid {
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;            /* side by side */
+    justify-content: center;        /* center both buttons */
+    align-items: center;
+    gap: 10px;                      /* space between buttons */
+    flex-wrap: nowrap;              /* keep same row */
+    width: 100%;
+  }
+
+  /* Make buttons equal width */
+  .btn-pill {
+    flex: 1 1 48%;                  /* 2 buttons take equal width */
+    max-width: 200px;
+    min-width: 140px;
+    padding: 12px 0;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Center single-button cards (like HR, Policies) */
+  .holo-content > .d-grid:only-child,
+  .holo-content > .d-grid:has(:only-child) {
+    justify-content: center;
+  }
+}
+
+/* === MOBILE: two buttons side-by-side, single button centered === */
+@media (max-width: 600px){
+
+  /* Button group layout */
+  .holo-content > .d-grid{
+    margin-top: auto;
+    display: flex !important;
+    flex-direction: row !important;     /* side-by-side */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;       /* keep in one row */
+    width: 100%;
+  }
+
+  /* Make each button take half width; override any previous width:92% */
+  .holo-content > .d-grid .btn-pill{
+    width: auto !important;
+    flex: 1 1 48% !important;           /* equal halves */
+    min-width: 0;
+    max-width: 200px;
+    padding: 12px 10px;
+    margin: 0 !important;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* If there's only ONE button in the group, center it and make it wide */
+  .holo-content > .d-grid .btn-pill:only-child{
+    flex: 0 1 92% !important;           /* wide single button */
+    max-width: 360px;
+  }
+}
+
+
   </style>
 </head>
 <body>
 
   <div class="bg-fixed" aria-hidden="true"></div>
 
-  <!-- Top bar -->
-  <header class="topbar">
-    <div class="brand">
-      <img src="assets/ff.png" alt="Coldwell Banker UAE logo" loading="eager">
-    </div>
+  <header class="hero-header">
+    <img src="assets/ff.png" alt="Coldwell Banker UAE logo" class="hero-logo" loading="eager">
     <h1 class="hero-title">CB - HELPDESK</h1>
   </header>
 
-  <main class="wrap" role="main">
-    <div class="row g-tight row-cols-1 row-cols-sm-2 row-cols-lg-3 justify-content-center">
+  <main class="main-content" role="main">
+    <div class="container">
+      <div class="cards-wrap">
 
-      <!-- ADMIN -->
-      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="0">
-        <div class="flip-card" aria-label="Admin Support">
-          <div class="flip-front">
-            <span class="card-label">ADMIN</span>
-            <img class="img-contain" src="assets/admin.png" alt="Admin support" loading="lazy" decoding="async"style="width:50%; height:63%;">
-          </div>
-          <div class="flip-card__content">
-            <p class="flip-card__title">ADMIN</p>
-            <p class="flip-card__sub">SUPPORT</p>
-            <ul class="flip-card__list">
-              <li><i class="fa-solid fa-circle-check"></i>Listing Support</li>
-              <li><i class="fa-solid fa-circle-check"></i>CRM Closings</li>
-              <li><i class="fa-solid fa-circle-check"></i>Documentation</li>
-              <li><i class="fa-solid fa-circle-check"></i>Portals Support</li>
+        <!-- ===== CAROUSEL START ===== -->
+        <div class="cb-carousel" data-aos="zoom-in-up">
+          <button class="nav prev" aria-label="Previous">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+
+          <div class="viewport">
+            <ul class="track">
+
+              <!-- ADMIN -->
+              <li class="slide admin-card">
+                <div class="help-card holo-card" data-rarity="rare-holo">
+                  <div class="holo-content">
+                    <div class="card-title-text">ADMIN</div>
+                    <div class="muted">SUPPORT</div>
+                    <ul class="bullet-list">
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Listing Support</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>CRM Closings</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Documentation</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Portals Support</li>
+                    </ul>
+                    <div class="d-grid">
+                      <a class="btn btn-pill btn-wsp" target="_blank" href="https://wa.me/971529236871" rel="noopener">
+                        <i class="fab fa-whatsapp me-2" aria-hidden="true"></i><span>WhatsApp</span>
+                      </a>
+                      <a class="btn btn-pill btn-chip" target="_blank" href="raise-ticket.html" rel="noopener">Raise Ticket</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- IT -->
+              <li class="slide it-card">
+                <div class="help-card holo-card" data-rarity="rare-holo">
+                  <div class="holo-content">
+                    <div class="card-title-text">IT</div>
+                    <div class="muted">SUPPORT</div>
+                    <ul class="bullet-list">
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Setup and Accounts</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Device Support</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>CRM and Platforms</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Technical Support</li>
+                    </ul>
+                    <div class="d-grid">
+                      <a class="btn btn-pill btn-wsp" target="_blank" href="https://wa.me/971554479709" rel="noopener">
+                        <i class="fab fa-whatsapp me-2" aria-hidden="true"></i><span>WhatsApp</span>
+                      </a>
+                      <a class="btn btn-pill btn-chip" target="_blank" href="https://cbae.freshservice.com/support/home" rel="noopener">Raise Ticket</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- MARKETING -->
+              <li class="slide marketing-card">
+                <div class="help-card holo-card" data-rarity="rare-holo">
+                  <div class="holo-content">
+                    <div class="card-title-text">MARKETING</div>
+                    <div class="muted">SUPPORT</div>
+                    <ul class="bullet-list">
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Photoshoots</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Videography</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Edits &amp; Enhancing</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Campaign Support</li>
+                    </ul>
+                    <div class="d-grid">
+                      <a class="btn btn-pill btn-chip" target="_blank" href="https://www.mycbverse.com/" rel="noopener">Raise Ticket</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- POLICIES -->
+              <li class="slide policies-card">
+                <div class="help-card holo-card" data-rarity="rare-holo">
+                  <div class="holo-content">
+                    <div class="card-title-text">POLICIES</div>
+                    <div class="muted">&nbsp;</div>
+                    <ul class="bullet-list">
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Leads Policies</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Listing Policies</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>General Office Policies</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Transaction Closing</li>
+                    </ul>
+                    <div class="d-grid">
+                      <a class="btn btn-pill btn-chip" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" rel="noopener">Get Started</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- HR -->
+              <li class="slide hr-card">
+                <div class="help-card holo-card" data-rarity="rare-holo">
+                  <div class="holo-content">
+                    <div class="card-title-text">HR PORTAL</div>
+                    <div class="muted">PORTAL</div>
+                    <ul class="bullet-list">
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Leave Requests</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Onboarding &amp; Offboarding</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Payroll &amp; Letters</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>HR Policies</li>
+                    </ul>
+                    <div class="d-grid">
+                      <a class="btn btn-pill btn-chip" target="_blank" href="https://cbemirates.keka.com/" rel="noopener">Open HR</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- KB -->
+              <li class="slide kb-card">
+                <div class="help-card holo-card" data-rarity="rare-holo">
+                  <div class="holo-content">
+                    <div class="card-title-text">KNOWLEDGE BASE</div>
+                    <div class="muted">GUIDES</div>
+                    <ul class="bullet-list">
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>How-to Articles</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>FAQs</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Troubleshooting</li>
+                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Best Practices</li>
+                    </ul>
+                    <div class="d-grid">
+                      <a class="btn btn-pill btn-chip" target="_blank" href="https://cbae.freshservice.com/support/solutions" rel="noopener">Open KB</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
             </ul>
-            <div class="flip-card__actions">
-              <a class="flip-btn flip-btn--wsp" href="https://wa.me/971529236871" target="_blank" rel="noopener">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-              </a>
-              <a class="flip-btn flip-btn--chip" href="raise-ticket.html" target="_blank" rel="noopener">Raise Ticket</a>
-            </div>
           </div>
-        </div>
-      </div>
 
-      <!-- IT -->
-      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="80">
-        <div class="flip-card" aria-label="IT Support">
-          <div class="flip-front">
-            <span class="card-label">IT</span>
-            <img class="img-contain" src="assets/it.png" alt="IT support" loading="lazy" decoding="async"style="width:50%; height:70%;">
-          </div>
-          <div class="flip-card__content">
-            <p class="flip-card__title">IT</p>
-            <p class="flip-card__sub">SUPPORT</p>
-            <ul class="flip-card__list">
-              <li><i class="fa-solid fa-circle-check"></i>Setup and Accounts</li>
-              <li><i class="fa-solid fa-circle-check"></i>Device Support</li>
-              <li><i class="fa-solid fa-circle-check"></i>CRM and Platforms</li>
-              <li><i class="fa-solid fa-circle-check"></i>Technical Support</li>
-            </ul>
-            <div class="flip-card__actions">
-              <a class="flip-btn flip-btn--wsp" href="https://wa.me/971554479709" target="_blank" rel="noopener">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-              </a>
-              <a class="flip-btn flip-btn--chip" href="https://cbae.freshservice.com/support/home" target="_blank" rel="noopener">Raise Ticket</a>
-            </div>
-          </div>
+          <button class="nav next" aria-label="Next">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
         </div>
-      </div>
+        <!-- ===== CAROUSEL END ===== -->
 
-      <!-- MARKETING -->
-      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="160">
-        <div class="flip-card" aria-label="Marketing Support">
-          <div class="flip-front">
-            <span class="card-label">MARKETING</span>
-            <img class="img-contain" src="assets/marketing.png" alt="Marketing" loading="lazy" decoding="async"style="width:50%; height:63%;">
-          </div>
-          <div class="flip-card__content">
-            <p class="flip-card__title">MARKETING</p>
-            <p class="flip-card__sub">SUPPORT</p>
-            <ul class="flip-card__list">
-              <li><i class="fa-solid fa-circle-check"></i>Photoshoots</li>
-              <li><i class="fa-solid fa-circle-check"></i>Videography</li>
-              <li><i class="fa-solid fa-circle-check"></i>Edits &amp; Enhancing</li>
-              <li><i class="fa-solid fa-circle-check"></i>Campaign Support</li>
-            </ul>
-            <div class="flip-card__actions">
-              <a class="flip-btn flip-btn--chip" href="https://www.mycbverse.com/" target="_blank" rel="noopener">Raise Ticket</a>
-            </div>
-          </div>
-        </div>
       </div>
-
-      <!-- POLICIES (photo style) -->
-      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="240">
-        <div class="flip-card" aria-label="Policies">
-          <div class="flip-front">
-            <span class="card-label">POLICIES</span>
-            <img class="img-cover" src="assets/policy.png" alt="Policies" loading="lazy" decoding="async" style="width:48%; height:63%;">
-          </div>
-          <div class="flip-card__content">
-            <p class="flip-card__title">POLICIES</p>
-            <p class="flip-card__sub">&nbsp;</p>
-            <ul class="flip-card__list">
-              <li><i class="fa-solid fa-circle-check"></i>Leads Policies</li>
-              <li><i class="fa-solid fa-circle-check"></i>Listing Policies</li>
-              <li><i class="fa-solid fa-circle-check"></i>General Office Policies</li>
-              <li><i class="fa-solid fa-circle-check"></i>Transaction Closing</li>
-            </ul>
-            <div class="flip-card__actions">
-              <a class="flip-btn flip-btn--chip" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" rel="noopener">Get Started</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- HR PORTAL -->
-      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="320">
-        <div class="flip-card" aria-label="HR Portal">
-          <div class="flip-front">
-            <span class="card-label">HR PORTAL</span>
-            <img class="img-contain" src="assets/hr.png" alt="HR portal" loading="lazy" decoding="async"style="width:50%; height:70%;">
-          </div>
-          <div class="flip-card__content">
-            <p class="flip-card__title">HR PORTAL</p>
-            <p class="flip-card__sub">PORTAL</p>
-            <ul class="flip-card__list">
-              <li><i class="fa-solid fa-circle-check"></i>Leave Requests</li>
-              <li><i class="fa-solid fa-circle-check"></i>Onboarding &amp; Offboarding</li>
-              <li><i class="fa-solid fa-circle-check"></i>Payroll &amp; Letters</li>
-              <li><i class="fa-solid fa-circle-check"></i>HR Policies</li>
-            </ul>
-            <div class="flip-card__actions">
-              <a class="flip-btn flip-btn--chip" href="https://cbemirates.keka.com/" target="_blank" rel="noopener">Open HR</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- KNOWLEDGE BASE -->
-      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="400">
-        <div class="flip-card" aria-label="Knowledge Base">
-          <div class="flip-front">
-            <span class="card-label">KNOWLEDGE BASE</span>
-            <img class="img-contain" src="assets/kb.png" alt="Knowledge base" loading="lazy" decoding="async"style="width:50%; height:65%;">
-          </div>
-          <div class="flip-card__content">
-            <p class="flip-card__title">KNOWLEDGE BASE</p>
-            <p class="flip-card__sub">GUIDES</p>
-            <ul class="flip-card__list">
-              <li><i class="fa-solid fa-circle-check"></i>How-to Articles</li>
-              <li><i class="fa-solid fa-circle-check"></i>FAQs</li>
-              <li><i class="fa-solid fa-circle-check"></i>Troubleshooting</li>
-              <li><i class="fa-solid fa-circle-check"></i>Best Practices</li>
-            </ul>
-            <div class="flip-card__actions">
-              <a class="flip-btn flip-btn--chip" href="https://cbae.freshservice.com/support/solutions" target="_blank" rel="noopener">Open KB</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </main>
 
-  <footer class="site-footer">© 2025 Coldwell Banker UAE | Helpdesk</footer>
+  <footer class="site-footer" role="contentinfo">
+    © 2025 Coldwell Banker UAE | Helpdesk
+  </footer>
 
+  <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    window.addEventListener('load', function(){
+      if (window.AOS){
+        AOS.init({ duration: 750, easing: 'ease-out-cubic', offset: 80, once: false, mirror: true });
+        AOS.refreshHard();
+      }
+    });
+  </script>
+
+  <!-- Holo tilt -->
+  <script>
+  (function(){
+    const cards=document.querySelectorAll('.holo-card');
+    function setVars(el,x,y,rect){
+      const mx=((x-rect.left)/rect.width)*100, my=((y-rect.top)/rect.height)*100;
+      const ry=((mx-50)/50)*12, rx=((50-my)/50)*12;
+      el.style.setProperty('--mx',mx+'%'); el.style.setProperty('--my',my+'%');
+      el.style.setProperty('--rx',rx.toFixed(2)+'deg'); el.style.setProperty('--ry',ry.toFixed(2)+'deg');
+      el.style.setProperty('--s','1.04'); el.style.setProperty('--shine','.32');
+    }
+    function resetVars(el){
+      el.style.setProperty('--rx','0deg'); el.style.setProperty('--ry','0deg');
+      el.style.setProperty('--s','1.02'); el.style.setProperty('--shine','.18');
+      el.style.setProperty('--mx','50%'); el.style.setProperty('--my','50%');
+    }
+    cards.forEach(el=>{
+      el.addEventListener('mousemove',e=>{ const r=el.getBoundingClientRect(); setVars(el,e.clientX,e.clientY,r); },{passive:true});
+      el.addEventListener('mouseleave',()=>resetVars(el),{passive:true});
+      el.addEventListener('touchmove',e=>{ const t=e.touches[0]; if(!t)return; const r=el.getBoundingClientRect(); setVars(el,t.clientX,t.clientY,r); },{passive:true});
+      el.addEventListener('touchend',()=>resetVars(el),{passive:true});
+    });
+    function hookOrientation(){
+      window.addEventListener('deviceorientation',ev=>{
+        const gamma=Math.max(-30,Math.min(30,ev.gamma||0));
+        const beta =Math.max(-30,Math.min(30,ev.beta ||0));
+        cards.forEach(el=>{
+          const ry=(gamma/30)*12, rx=(-beta/30)*12;
+          el.style.setProperty('--ry',ry.toFixed(2)+'deg');
+          el.style.setProperty('--rx',rx.toFixed(2)+'deg');
+          const mx=50+(gamma/30)*25, my=50+(-beta/30)*25;
+          el.style.setProperty('--mx',mx+'%'); el.style.setProperty('--my',my+'%');
+          el.style.setProperty('--s','1.04'); el.style.setProperty('--shine','.3');
+        });
+      },{passive:true});
+    }
+    if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission==='function'){
+      document.addEventListener('click',async function once(){
+        try{ const p=await DeviceOrientationEvent.requestPermission(); if(p==='granted') hookOrientation(); }catch(_){}
+        document.removeEventListener('click',once);
+      });
+    } else if (window.DeviceOrientationEvent){ hookOrientation(); }
+  })();
+  </script>
+
+  <!-- Carousel JS -->
+  <script>
+  (function(){
+    const carousel=document.querySelector('.cb-carousel');
+    if(!carousel) return;
+    const viewport=carousel.querySelector('.viewport');
+    const prevBtn=carousel.querySelector('.prev');
+    const nextBtn=carousel.querySelector('.next');
+
+    function updateArrows(){
+      const max=Math.max(0,viewport.scrollWidth-viewport.clientWidth);
+      prevBtn.disabled=viewport.scrollLeft<=2;
+      nextBtn.disabled=viewport.scrollLeft>=(max-2);
+    }
+    function pageRight(){ viewport.scrollBy({left:viewport.clientWidth,behavior:'smooth'}); }
+    function pageLeft(){  viewport.scrollBy({left:-viewport.clientWidth,behavior:'smooth'}); }
+
+    nextBtn.addEventListener('click',pageRight);
+    prevBtn.addEventListener('click',pageLeft);
+    viewport.addEventListener('scroll',updateArrows,{passive:true});
+
+    function init(){ viewport.scrollLeft=0; updateArrows(); }
+    window.addEventListener('load',init);
+    window.addEventListener('resize',init);
+  })();
+  </script>
+
+  <!-- Zoho widget -->
   <style>
   :root{
     --cb-color: #2563eb;
@@ -423,34 +696,5 @@
   </div>
 </div>
 
-
-  <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    window.addEventListener('load', function(){
-      if (window.AOS){
-        AOS.init({ duration: 600, easing: 'ease-out-cubic', offset: 50, once: false, mirror: true });
-        AOS.refreshHard();
-      }
-    });
-
-    // Tap-to-open for touch devices
-    (function(){
-      const cards = document.querySelectorAll('.flip-card');
-      cards.forEach(card => {
-        let primed = false;
-        card.addEventListener('click', (e)=>{
-          if(!card.classList.contains('is-open')){
-            e.preventDefault();
-            card.classList.add('is-open');
-            primed = true;
-            cards.forEach(c=>{ if(c!==card) c.classList.remove('is-open'); });
-          } else if(primed){ primed = false; }
-        }, true);
-        document.addEventListener('click', (e)=>{
-          if(!card.contains(e.target)) card.classList.remove('is-open');
-        });
-      });
-    })();
-  </script>
 </body>
 </html>

@@ -5,499 +5,459 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CB – Helpdesk</title>
 
-  <!-- Prevent favicon 404 -->
   <link rel="icon" href="data:,">
-
-  <!-- Vendor CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700;800;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
   :root{
-    /* Background tint over the image */
-    --bg-top:#22405a92;
-    --bg-bot:#12324f8e;
-
-    /* Card glass */
-    --card-top:#fcfeff27;
-    --card-bot:#f2f6fa20;
-    --card-stroke:rgba(255,255,255,.12);
-
-    /* Hover tint */
-    --hover-top:#718292b9;
-    --hover-bot:#718292c0;
-
-    /* Text & UI */
-    --title:#ffffff;
-    --muted:#d5e2f3;
-    --bullet:#b8c8dc;
-
-    --btn-chip:#6d8eae;
-    --btn-chip-hover:#67A4E7;
-    --wsp:#079853;
-    --wsp-hover:#08b764;
-    --wsp-press:#05904c;
-
-    /* Shadows */
+    --bg-top:#22405a92; --bg-bot:#12324f8e;
+    --title:#ffffff; --muted:#d5e2f3; --bullet:#b8c8dc;
+    --btn-chip:#6d8eae; --btn-chip-hover:#67A4E7; --wsp:#079853; --wsp-hover:#08b764;
     --btn-shadow:0 12px 24px rgba(0,0,0,.18);
+
+    --topbarH: 82px;
+    --footerH: 26px;
+    --gridGap: 22px;
   }
 
-  /* ====== Background image + fixed overlay tints ====== */
-  html{
-    height:100%;
-    background:#0b2340;           /* fallback */
-    overscroll-behavior-y: none;
-  }
-  .bg-fixed{
-    position: fixed; inset: 0; z-index: -3;
-    background: url('assets/t.jpg') center / cover no-repeat;
-    will-change: transform; transform: translateZ(0);
-  }
+  html{ height:100%; background:#0b2340; overscroll-behavior-y:none; }
   body::before{
-    content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
     background:
       radial-gradient(1200px 620px at 18% 6%, rgba(255,255,255,.016), transparent 60%),
       radial-gradient(1300px 620px at 82% 12%, rgba(255,255,255,.07), transparent 60%),
       linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%);
   }
+  .bg-fixed{ position:fixed; inset:0; z-index:-3; background:url('assets/t.jpg') center/cover no-repeat; }
 
-  html, body{
-    min-height:100%; margin:0;
-    font-family:Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
-    color:#e9f2ff;
-  }
-  body{ background:transparent; }
+  html, body{ min-height:100%; margin:0; font-family:Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif; color:#e9f2ff; background:transparent; }
 
-  /* ====== HERO HEADER (Centered logo + big title) ====== */
-  .hero-header{
-    padding:48px 0 12px;          /* top space like screenshot */
-    text-align:center;
-  }
-  .hero-logo{
-    height:86px; width:auto;      /* adjust if you want larger/smaller */
-    filter: drop-shadow(0 8px 20px rgba(0,0,0,.35));
-  }
+  /* ======= Top bar ======= */
+  .topbar{ position:relative; padding:10px 16px 0; height:var(--topbarH); }
+  .brand{ position:absolute; inset-block-start:6px; inset-inline-start:12px; display:flex; align-items:center; }
+  .brand img{ height:100px; width:auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.35)); }
   .hero-title{
-    font-family: Montserrat, Inter, sans-serif;
-    font-weight: 800;
-    color: var(--title);
-    text-shadow: 0 8px 22px rgba(0,0,0,.5);
-    font-size: clamp(28px, 6vw, 56px);   /* big title */
-    letter-spacing: .06em;
-    margin: 10px 0 0 0;
+    margin:6px 0 0; text-align:center;
+    font-family: Montserrat, Inter, sans-serif; font-weight:800; color:var(--title);
+    text-shadow: 0 6px 18px rgba(0,0,0,.5);
+    font-size: clamp(26px, 5.5vw, 46px);
+    letter-spacing:.06em;
   }
 
-  /* ====== Cards layout ====== */
-  .main-content{ padding-top: 16px; }
-  .cards-wrap{ padding:32px 0 64px; }
-  .col-card{ padding:20px; display:flex; justify-content:center; }
-
-  /* Card – glass + round corners + bottom-only shadow */
-  .help-card{
-    width:300px; max-width:400px; height:380px;
-    display:flex; flex-direction:column; text-align:center;
-
-    border-radius:22px;
-    border:1px solid var(--card-stroke);
-    padding:26px 50px 28px;
-    background:linear-gradient(180deg, var(--card-top), var(--card-bot));
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-    box-shadow:0 22px 36px -14px rgba(0,0,0,.77);
-
-    transition: transform .28s cubic-bezier(.22,.61,.36,1),
-                box-shadow .28s ease, background .28s ease, opacity .28s ease;
-    transform-origin:center; will-change:transform, box-shadow, background, opacity;
-    border-color: rgba(0,0,0,.288);
+  /* ======= Content wrapper ======= */
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 16px 8px;
+    min-height: calc(100vh - var(--topbarH) - var(--footerH));
+    display:flex; align-items:center;
   }
-  .help-card:hover, .help-card.is-active{
-    transform:scale(1.02);
-    box-shadow:0 26px 44px -16px rgba(0,0,0,.65);
-    background:linear-gradient(180deg, var(--hover-top), var(--hover-bot));
-  }
+  .row.g-tight{ --bs-gutter-x: 18px; --bs-gutter-y: var(--gridGap); width:100%; }
+  .col-card{ display:flex; justify-content:center; }
 
-  /* Titles in cards */
-  .card-title-text{
-    font-family: Montserrat, sans-serif;
-    font-weight: 400;
-    font-size: clamp(18px, 3.6vw, 28px);
-    line-height: 1.2;
-    text-transform: uppercase;
-    margin: 0 0 6px 0;
-    text-align: center;
+  /* ===== Flip Card (image fills, no frame) ===== */
+  .flip-card{
+    position: relative;
     width: 100%;
-    white-space: normal; word-break: break-word; hyphens: auto;
+    max-width: 320px;             /* smaller card */
+    aspect-ratio: 16 / 11;        /* proportion */
+    border-radius: 16px;
+    background: transparent;
+    border: none;
+    box-shadow: 0 14px 34px rgba(0,0,0,.45);
+    overflow:hidden; perspective:1000px;
+    transition: transform .45s cubic-bezier(.175,.885,.32,1.275),
+                box-shadow .45s cubic-bezier(.175,.885,.32,1.275);
   }
-  .muted{
-    text-transform:uppercase; color:var(--muted);
-    letter-spacing:.08em; font-weight:800; font-size:14px; margin-bottom:20px;
+  .flip-card:hover{ transform: translateY(-2px) scale(1.02); box-shadow:0 22px 48px rgba(0,0,0,.55); }
+
+  .flip-front{ position:absolute; inset:0; display:grid; place-items:center; border-radius:inherit; }
+  .flip-front img{
+    width:75%; height:75%;
+    border-radius:inherit; display:block;
+    transition: transform .45s cubic-bezier(.175,.885,.32,1.275), opacity .3s ease;
   }
 
-  /* Bullet list */
-  .bullet-list{ list-style:none; padding:0; margin:6px 0 22px; }
-  .bullet{
-    display:flex; gap:10px; align-items:flex-start; justify-content:flex-start;
-    margin:10px 0; font-size:11px; text-align:left;
+  /* icon-style images (transparent background): never crop, nudge up a bit */
+  .img-contain{
+    object-fit: contain;
+    object-position: center 40%;
+    transform: translateY(-3%);            /* move slightly upward */
   }
-  .bullet i{ color:var(--bullet); margin-top:3px; flex:0 0 16px; text-align:center; }
+  .flip-card:hover .img-contain,
+  .flip-card.is-open .img-contain{
+    transform: translateY(-3%) scale(0.94);
+    opacity: .06;
+  }
 
-  /* Buttons (centered at bottom) */
-  .holo-content{ display:flex; flex-direction:column; height:100%; }
-  .holo-content > .d-grid{
-    margin-top:auto; display:flex; flex-direction:column;
-    align-items:center; gap:12px;
+  /* photo-style images (need full bleed): keep cover */
+  .img-cover{
+    object-fit: cover;
+    object-position: center;
   }
-  .btn-pill{
-    border-radius:999px; border:0; font-weight:500; letter-spacing:.02em; padding:10px 18px;
-    box-shadow:var(--btn-shadow); width:180px;
-    color:white; display:inline-flex; align-items:center; justify-content:center;
-    margin:0 auto;
+  .flip-card:hover .img-cover,
+  .flip-card.is-open .img-cover{
+    transform: scale(0.96);
+    opacity:.06;
   }
-  .btn-chip{ background:var(--btn-chip); color:#fff; }
-  .btn-chip:hover{ background:var(--btn-chip-hover); color:#fff; }
-  .btn-wsp{ background:var(--wsp); color:#fff; }
-  .btn-wsp:hover{ background:var(--wsp-hover); color:#131337; }
-  .btn-wsp:active{ background:var(--wsp-press); transform:translateY(1px); }
-  .btn{ position:relative; overflow:hidden; transition:transform .25s ease, box-shadow .25s ease, background .25s ease; }
-  .btn:hover{ transform:scale(1.05); box-shadow:0 6px 18px rgba(0,0,0,.25); color:white; }
-  .btn:active{ transform:scale(.95); box-shadow:0 2px 8px rgba(0,0,0,.2); }
-  .btn::after{
-    content:""; position:absolute; left:50%; top:50%;
-    width:0; height:0; background:rgba(255,255,255,.4); border-radius:50%;
-    transform:translate(-50%,-50%); opacity:0; transition:width .6s ease, height .6s ease, opacity .8s ease;
+
+  /* Glass content (sits flush to edges) */
+  .flip-card__content{
+    position:absolute; inset:0;
+    padding:14px 16px 12px; box-sizing:border-box;
+    border-radius:inherit;
+    background: linear-gradient(180deg, rgba(20,34,54,.36), rgba(20,34,54,.28));
+    backdrop-filter: blur(6px);
+    transform: rotateX(-90deg); transform-origin: bottom;
+    transition: transform .45s cubic-bezier(.175,.885,.32,1.275);
+    display:flex; flex-direction:column;
+    border: 1px solid rgba(255,255,255,.10);
   }
-  .btn:active::after{ width:220%; height:220%; opacity:0; transition:0s; }
+  .flip-card:hover .flip-card__content,
+  .flip-card.is-open .flip-card__content{ transform: rotateX(0deg); }
+
+  /* Typography */
+  .flip-card__title{
+    margin:0 0 2px 0;
+    font-family: Montserrat, Inter, sans-serif; font-weight:800; letter-spacing:.06em;
+    font-size: clamp(.95rem, 1.6vw, 1.05rem); color:#fff;
+  }
+  .flip-card__sub{
+    margin:0 0 10px 0; text-transform:uppercase; color:var(--muted);
+    letter-spacing:.08em; font-weight:800; font-size: clamp(.56rem, 1.1vw, .62rem);
+  }
+  .flip-card__list{ list-style:none; padding:0; margin:0 0 12px 0; }
+  .flip-card__list li{
+    display:flex; gap:9px; align-items:flex-start; margin:4px 0;
+    font-size: clamp(.85rem, 1.8vw, .78rem); color:#eef5ff; line-height:1.3;
+  }
+  .flip-card__list i{ color:var(--bullet); margin-top:3px; flex:0 0 15px; }
+
+  /* Actions */
+  .flip-card__actions{
+    margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;
+    justify-content:center; align-items:center; padding-bottom:6px;
+    opacity:0; transform: translateY(6px); pointer-events:none;
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .flip-card:hover .flip-card__actions,
+  .flip-card.is-open .flip-card__actions{ opacity:1; transform: translateY(0); pointer-events:auto; }
+
+  .flip-btn{
+    flex:0 0 auto; border:0; border-radius:999px;
+    min-height:44px; min-width:120px; padding:10px 18px;
+    font-size:.95rem; font-weight:700; line-height:1; letter-spacing:.02em; color:#fff;
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    text-decoration:none !important; box-shadow:var(--btn-shadow);
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .flip-btn:hover{ transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.28); }
+  .flip-btn--chip{ background: var(--btn-chip); }
+  .flip-btn--chip:hover{ background: var(--btn-chip-hover); }
+  .flip-btn--wsp{ background: var(--wsp); }
+  .flip-btn--wsp:hover{ background: var(--wsp-hover); color:#f5f5f6; }
 
   /* Footer */
-  .site-footer{
-    background-color:#001f3f14; color:#fff; text-align:center; padding:14px 20px; font-size:14px;
-  }
+  .site-footer{ text-align:center; padding:6px 10px; font-size:12px; color:#fff; opacity:.8; height:var(--footerH); display:flex; align-items:center; justify-content:center; }
 
-  /* ====== Mobile (≤576px) ====== */
+  /* ======= Responsive ======= */
+  @media (max-width: 991.98px){
+    .wrap{ align-items:stretch; }
+    .flip-card{ max-width: 360px; aspect-ratio: 16 / 11; }
+  }
   @media (max-width:575.98px){
-    html, body{ overflow-x:hidden; }
-    .hero-header{ padding:36px 0 6px; }
-    .hero-logo{ height:64px; }
-    .hero-title{ font-size: 1.6rem; letter-spacing:.06em; }
-    .cards-wrap{ padding:16px 0 28px; }
-    .help-card{ width:340px; max-width:100%; margin:0 auto 14px; padding:16px; height:auto; transform:none !important; }
-    .bullet-list{ width:max-content; margin:0 auto 24px; }
-    .bullet{ justify-content:flex-start; align-items:center; text-align:left; font-size:.9rem; }
-    .btn-pill{ width:70%; padding:12px 14px; white-space:normal; }
+    :root{ --topbarH: 70px; }
+    .brand img{ height:48px; }
+    .hero-title{ font-size: clamp(22px, 6.2vw, 28px); letter-spacing:.04em; margin-top:10px; }
+    .wrap{ min-height:auto; display:block; padding-bottom:10px; }
+    .row.g-tight{ --bs-gutter-x:14px; --bs-gutter-y:16px; }
+    .flip-card{ max-width:none; width:100%; aspect-ratio: 16 / 11; }
+    .flip-card__content{ padding:12px 12px 10px; }
+    .flip-card__list li{ gap:8px; }
+    .flip-btn{ min-width:120px; }
+  }
+  @media (max-width:360px){
+    .hero-title{ font-size:20px; }
+    .flip-card{ aspect-ratio: 16 / 12; }
+    .flip-btn{ min-width:110px; padding:8px 14px; }
   }
 
-  /* Respect reduced motion */
-  @media (prefers-reduced-motion: reduce){
-    * { animation: none !important; transition: none !important; }
-  }
-
-  /* ======================= HOLO EFFECT (pure CSS) ======================= */
-  .holo-card{
-    position: relative; transform-style: preserve-3d; will-change: transform, filter;
-    --mx: 50%; --my: 50%; --rx: 0deg; --ry: 0deg; --b: .95; --c: 1.05; --s: 1.02; --shine: .18;
-    --grain: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii44IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbHRlcj0idXJsKCNuKSIgb3BhY2l0eT0iLjI1Ii8+PC9zdmc+");
-    transition: transform .3s ease, filter .3s ease, box-shadow .3s ease;
-  }
-  .holo-card:hover{ transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s)); filter: brightness(var(--b)) contrast(var(--c)); }
-  .holo-card::after{
-    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
-    mix-blend-mode:color-dodge; opacity:.9;
-    background-image:
-      repeating-linear-gradient(
-        calc(120deg + (var(--mx) - 50%) * .6 + (var(--my) - 50%) * .4),
-        rgba(255,120,120,.6) 0%,
-        rgba(255,255,120,.6) 10%,
-        rgba(120,255,160,.6) 20%,
-        rgba(120,220,255,.6) 30%,
-        rgba(200,140,255,.6) 40%,
-        rgba(255,120,200,.6) 50%,
-        rgba(255,120,120,.6) 60%
-      ), var(--grain);
-    background-size: 220% 220%, 180% 180%;
-    background-position: calc(var(--mx)) calc(var(--my)), center;
-    filter: saturate(1.2) brightness(.9) contrast(1.25);
-    transition: opacity .25s ease; border-radius:22px;
-  }
-  .holo-card::before{
-    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
-    mix-blend-mode:screen; opacity:var(--shine);
-    background: radial-gradient(350px 220px at var(--mx) var(--my),
-      rgba(255,255,255,.55) 0%,
-      rgba(255,255,255,.25) 25%,
-      rgba(255,255,255,.10) 40%,
-      rgba(255,255,255,0) 60%);
-    transition: opacity .2s ease; border-radius:22px;
-  }
-  .holo-card .holo-content{ position:relative; transform: translateZ(20px); }
-  .holo-card[data-rarity="vmax"]::after{
-    background-image: repeating-linear-gradient(135deg,
-      rgba(255,120,120,.6) 0 6%, rgba(120,255,210,.6) 6% 12%,
-      rgba(120,180,255,.6) 12% 18%, rgba(200,140,255,.6) 18% 24%,
-      rgba(255,120,200,.6) 24% 30%), var(--grain);
-  }
-  .holo-card[data-rarity="gold"]::after{
-    background-image: repeating-linear-gradient(110deg,
-      rgba(255,235,165,.9) 0 6%, rgba(210,170,70,.8) 6% 12%,
-      rgba(160,120,40,.8) 12% 18%, rgba(255,220,120,.9) 18% 24%), var(--grain);
-    mix-blend-mode: color-burn; filter: brightness(.95) contrast(1.4) saturate(.9);
-  }
-
-/* Center the bullet list block inside each card */
-.help-card .bullet-list{
-  width: max-content;      /* shrink to content width */
-  margin: 0 auto 16px;     /* center the block */
-}
-
-/* Keep each bullet row left-aligned within that centered block */
-.help-card .bullet{
-  justify-content: flex-start;
-  text-align: left;
-}
-
-
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; animation:none !important; } }
   </style>
 </head>
 <body>
 
-  <!-- Background image -->
   <div class="bg-fixed" aria-hidden="true"></div>
 
-  <!-- HERO header (centered logo + title) -->
-  <header class="hero-header">
-    <img src="assets/ff.png" alt="Coldwell Banker UAE logo" class="hero-logo" loading="eager">
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/ff.png" alt="Coldwell Banker UAE logo" loading="eager">
+    </div>
     <h1 class="hero-title">CB - HELPDESK</h1>
   </header>
 
-  <main class="main-content" role="main">
-    <div class="container">
-      <div class="cards-wrap">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-3 g-4 justify-content-center">
+  <main class="wrap" role="main">
+    <div class="row g-tight row-cols-1 row-cols-sm-2 row-cols-lg-3 justify-content-center">
 
-          <!-- ADMIN -->
-          <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="0" data-aos-anchor-placement="top-bottom">
-            <div class="help-card holo-card" data-rarity="rare-holo">
-              <div class="holo-content">
-                <div class="card-title-text">ADMIN</div>
-                <div class="muted">SUPPORT</div>
-                <ul class="bullet-list">
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Listing Support</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>CRM Closings</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Documentation</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Portals Support</li>
-                </ul>
-                <div class="d-grid">
-                  <a class="btn btn-pill btn-wsp" target="_blank" href="https://wa.me/971529236871" rel="noopener">
-                    <i class="fab fa-whatsapp me-2" aria-hidden="true"></i><span>WhatsApp</span>
-                  </a>
-                  <a class="btn btn-pill btn-chip" target="_blank" href="raise-ticket.html" rel="noopener">Raise Ticket</a>
-                </div>
-              </div>
+      <!-- ADMIN -->
+      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="0">
+        <div class="flip-card" aria-label="Admin Support">
+          <div class="flip-front">
+            <img class="img-contain" src="assets/admin.png" alt="Admin support" loading="lazy" decoding="async">
+          </div>
+          <div class="flip-card__content">
+            <p class="flip-card__title">ADMIN</p>
+            <p class="flip-card__sub">SUPPORT</p>
+            <ul class="flip-card__list">
+              <li><i class="fa-solid fa-circle-check"></i>Listing Support</li>
+              <li><i class="fa-solid fa-circle-check"></i>CRM Closings</li>
+              <li><i class="fa-solid fa-circle-check"></i>Documentation</li>
+              <li><i class="fa-solid fa-circle-check"></i>Portals Support</li>
+            </ul>
+            <div class="flip-card__actions">
+              <a class="flip-btn flip-btn--wsp" href="https://wa.me/971529236871" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+              </a>
+              <a class="flip-btn flip-btn--chip" href="raise-ticket.html" target="_blank" rel="noopener">Raise Ticket</a>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- IT -->
-          <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="120" data-aos-anchor-placement="top-bottom">
-            <div class="help-card holo-card" data-rarity="rare-holo">
-              <div class="holo-content">
-                <div class="card-title-text">IT</div>
-                <div class="muted">SUPPORT</div>
-                <ul class="bullet-list">
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Setup and Accounts</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Device Support</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>CRM and Platforms</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Technical Support</li>
-                </ul>
-                <div class="d-grid">
-                  <a class="btn btn-pill btn-wsp" target="_blank" href="https://wa.me/971554479709" rel="noopener">
-                    <i class="fab fa-whatsapp me-2" aria-hidden="true"></i><span>WhatsApp</span>
-                  </a>
-                  <a class="btn btn-pill btn-chip" target="_blank" href="https://cbae.freshservice.com/support/home" rel="noopener">Raise Ticket</a>
-                </div>
-              </div>
+      <!-- IT -->
+      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="80">
+        <div class="flip-card" aria-label="IT Support">
+          <div class="flip-front">
+            <img class="img-contain" src="assets/it.png" alt="IT support" loading="lazy" decoding="async">
+          </div>
+          <div class="flip-card__content">
+            <p class="flip-card__title">IT</p>
+            <p class="flip-card__sub">SUPPORT</p>
+            <ul class="flip-card__list">
+              <li><i class="fa-solid fa-circle-check"></i>Setup and Accounts</li>
+              <li><i class="fa-solid fa-circle-check"></i>Device Support</li>
+              <li><i class="fa-solid fa-circle-check"></i>CRM and Platforms</li>
+              <li><i class="fa-solid fa-circle-check"></i>Technical Support</li>
+            </ul>
+            <div class="flip-card__actions">
+              <a class="flip-btn flip-btn--wsp" href="https://wa.me/971554479709" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+              </a>
+              <a class="flip-btn flip-btn--chip" href="https://cbae.freshservice.com/support/home" target="_blank" rel="noopener">Raise Ticket</a>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- MARKETING -->
-          <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="240" data-aos-anchor-placement="top-bottom">
-            <div class="help-card holo-card" data-rarity="rare-holo">
-              <div class="holo-content">
-                <div class="card-title-text">MARKETING</div>
-                <div class="muted">SUPPORT</div>
-                <ul class="bullet-list">
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Photoshoots</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Videography</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Edits &amp; Enhancing</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Campaign Support</li>
-                </ul>
-                <div class="d-grid">
-                  <a class="btn btn-pill btn-chip" target="_blank" href="https://www.mycbverse.com/" rel="noopener">Raise Ticket</a>
-                </div>
-              </div>
+      <!-- MARKETING -->
+      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="160">
+        <div class="flip-card" aria-label="Marketing Support">
+          <div class="flip-front">
+            <img class="img-contain" src="assets/marketing.png" alt="Marketing" loading="lazy" decoding="async">
+          </div>
+          <div class="flip-card__content">
+            <p class="flip-card__title">MARKETING</p>
+            <p class="flip-card__sub">SUPPORT</p>
+            <ul class="flip-card__list">
+              <li><i class="fa-solid fa-circle-check"></i>Photoshoots</li>
+              <li><i class="fa-solid fa-circle-check"></i>Videography</li>
+              <li><i class="fa-solid fa-circle-check"></i>Edits &amp; Enhancing</li>
+              <li><i class="fa-solid fa-circle-check"></i>Campaign Support</li>
+            </ul>
+            <div class="flip-card__actions">
+              <a class="flip-btn flip-btn--chip" href="https://www.mycbverse.com/" target="_blank" rel="noopener">Raise Ticket</a>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- POLICIES -->
-          <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="360" data-aos-anchor-placement="top-bottom">
-            <div class="help-card holo-card" data-rarity="rare-holo">
-              <div class="holo-content">
-                <div class="card-title-text">POLICIES</div>
-                <div class="muted">&nbsp;</div>
-                <ul class="bullet-list">
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Leads Policies</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Listing Policies</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>General Office Policies</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Transaction Closing</li>
-                </ul>
-                <div class="d-grid">
-                  <a class="btn btn-pill btn-chip" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" rel="noopener">Get Started</a>
-                </div>
-              </div>
+      <!-- POLICIES (photo-style, keep full bleed) -->
+      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="240">
+        <div class="flip-card" aria-label="Policies">
+          <div class="flip-front">
+            <img class="img-cover" src="assets/policy.jpg" alt="Policies" loading="lazy" decoding="async">
+          </div>
+          <div class="flip-card__content">
+            <p class="flip-card__title">POLICIES</p>
+            <p class="flip-card__sub">&nbsp;</p>
+            <ul class="flip-card__list">
+              <li><i class="fa-solid fa-circle-check"></i>Leads Policies</li>
+              <li><i class="fa-solid fa-circle-check"></i>Listing Policies</li>
+              <li><i class="fa-solid fa-circle-check"></i>General Office Policies</li>
+              <li><i class="fa-solid fa-circle-check"></i>Transaction Closing</li>
+            </ul>
+            <div class="flip-card__actions">
+              <a class="flip-btn flip-btn--chip" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" rel="noopener">Get Started</a>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- HR PORTAL -->
-          <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="480" data-aos-anchor-placement="top-bottom">
-            <div class="help-card holo-card" data-rarity="rare-holo">
-              <div class="holo-content">
-                <div class="card-title-text">HR PORTAL</div>
-                <div class="muted">PORTAL</div>
-                <ul class="bullet-list">
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Leave Requests</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Onboarding &amp; Offboarding</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Payroll &amp; Letters</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>HR Policies</li>
-                </ul>
-                <div class="d-grid">
-                  <a class="btn btn-pill btn-chip" target="_blank" href="https://cbemirates.keka.com/" rel="noopener">Open HR</a>
-                </div>
-              </div>
+      <!-- HR PORTAL -->
+      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="320">
+        <div class="flip-card" aria-label="HR Portal">
+          <div class="flip-front">
+            <img class="img-contain" src="assets/hr.png" alt="HR portal" loading="lazy" decoding="async">
+          </div>
+          <div class="flip-card__content">
+            <p class="flip-card__title">HR PORTAL</p>
+            <p class="flip-card__sub">PORTAL</p>
+            <ul class="flip-card__list">
+              <li><i class="fa-solid fa-circle-check"></i>Leave Requests</li>
+              <li><i class="fa-solid fa-circle-check"></i>Onboarding &amp; Offboarding</li>
+              <li><i class="fa-solid fa-circle-check"></i>Payroll &amp; Letters</li>
+              <li><i class="fa-solid fa-circle-check"></i>HR Policies</li>
+            </ul>
+            <div class="flip-card__actions">
+              <a class="flip-btn flip-btn--chip" href="https://cbemirates.keka.com/" target="_blank" rel="noopener">Open HR</a>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- KNOWLEDGE BASE -->
-          <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="600" data-aos-anchor-placement="top-bottom">
-            <div class="help-card holo-card" data-rarity="rare-holo">
-              <div class="holo-content">
-                <div class="card-title-text">KNOWLEDGE BASE</div>
-                <div class="muted">GUIDES</div>
-                <ul class="bullet-list">
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>How-to Articles</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>FAQs</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Troubleshooting</li>
-                  <li class="bullet"><i class="fa-solid fa-circle-check"></i>Best Practices</li>
-                </ul>
-                <div class="d-grid">
-                  <a class="btn btn-pill btn-chip" target="_blank" href="https://cbae.freshservice.com/support/solutions" rel="noopener">Open KB</a>
-                </div>
-              </div>
+      <!-- KNOWLEDGE BASE -->
+      <div class="col col-card" data-aos="zoom-in-up" data-aos-delay="400">
+        <div class="flip-card" aria-label="Knowledge Base">
+          <div class="flip-front">
+            <img class="img-contain" src="assets/kb.png" alt="Knowledge base" loading="lazy" decoding="async">
+          </div>
+          <div class="flip-card__content">
+            <p class="flip-card__title">KNOWLEDGE BASE</p>
+            <p class="flip-card__sub">GUIDES</p>
+            <ul class="flip-card__list">
+              <li><i class="fa-solid fa-circle-check"></i>How-to Articles</li>
+              <li><i class="fa-solid fa-circle-check"></i>FAQs</li>
+              <li><i class="fa-solid fa-circle-check"></i>Troubleshooting</li>
+              <li><i class="fa-solid fa-circle-check"></i>Best Practices</li>
+            </ul>
+            <div class="flip-card__actions">
+              <a class="flip-btn flip-btn--chip" href="https://cbae.freshservice.com/support/solutions" target="_blank" rel="noopener">Open KB</a>
             </div>
           </div>
+        </div>
+      </div>
 
-        </div><!-- /.row -->
-      </div><!-- /.cards-wrap -->
-    </div><!-- /.container -->
+    </div>
   </main>
 
-  <footer class="site-footer" role="contentinfo">
-    © 2025 Coldwell Banker UAE | Helpdesk
-  </footer>
+  <footer class="site-footer">© 2025 Coldwell Banker UAE | Helpdesk</footer>
 
-  <!-- AOS JS -->
+  <!-- CSS-only floating chatbot for SharePoint Embed web part -->
+<style>
+  :root{
+    --cb-color: #2563eb;        /* launcher color */
+    --cb-w: 380px;               /* panel width (desktop) */
+    --cb-h: 560px;               /* panel height (desktop) */
+    --cb-radius: 16px;
+    --cb-z: 2147483000;          /* very high to sit above page UI */
+  }
+
+  #cb-wrap { position: fixed; right: 18px; bottom: 18px; z-index: var(--cb-z); }
+
+  /* Hidden checkbox toggles visibility (no JS) */
+  #cb-toggle { position: fixed; right: 18px; bottom: 18px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+  /* Launcher button */
+  #cb-btn{
+    position: fixed; right: 18px; bottom: 18px;
+    display: grid; place-items: center;
+    width: 56px; height: 56px; border-radius: 999px;
+    background: var(--cb-color); color: #fff; cursor: pointer;
+    font: 600 18px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    box-shadow: 0 12px 30px rgba(0,0,0,.24);
+    user-select: none;
+  }
+  #cb-btn:active { transform: translateY(1px); }
+
+  /* Panel */
+  #cb-panel{
+    position: fixed; right: 18px; bottom: 86px;
+    width: var(--cb-w); height: var(--cb-h);
+    background: #fff; border-radius: var(--cb-radius);
+    box-shadow: 0 18px 60px rgba(0,0,0,.28);
+    overflow: hidden; display: grid; grid-template-rows: 44px 1fr;
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  #cb-toggle:checked ~ #cb-panel{
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+  }
+
+  /* Panel header (close button is a <label> that unchecks the checkbox) */
+  .cb-hdr{
+    display: flex; align-items: center; gap: 10px; padding: 0 10px;
+    background: #0f172a; color: #fff; font: 600 14px/44px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+  .cb-close{
+    margin-left: auto; color: #fff; text-decoration: none; cursor: pointer;
+    display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px;
+  }
+  .cb-close:hover{ background: rgba(255,255,255,.12); }
+
+  /* iFrame area */
+  .cb-frame{ width: 100%; height: 100%; border: 0; display: block; background: #f8fafc; }
+
+  /* Mobile: full-height sheet */
+  @media (max-width: 520px){
+    #cb-panel{
+      right: 0; left: 0; bottom: 0; width: 100vw; height: 85vh; border-radius: 12px 12px 0 0;
+    }
+    #cb-btn{ right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0)); }
+  }
+</style>
+
+<div id="cb-wrap" aria-live="polite">
+  <input type="checkbox" id="cb-toggle" />
+  <label id="cb-btn" for="cb-toggle" aria-controls="cb-panel" aria-expanded="false" title="Open chat">💬</label>
+
+  <div id="cb-panel" role="dialog" aria-label="Policy Assistant">
+    <div class="cb-hdr">
+      <span>Assistant</span>
+      <label class="cb-close" for="cb-toggle" title="Close">✕</label>
+    </div>
+    <iframe
+      class="cb-frame"
+      title="Policy Assistant"
+      src="https://chatbot-y9yw.onrender.com/static/chat.html?embed=1&api=https://chatbot-y9yw.onrender.com"
+      allow="clipboard-read; clipboard-write"
+      referrerpolicy="no-referrer-when-downgrade"
+      loading="lazy">
+    </iframe>
+  </div>
+</div>
+
+
   <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
     window.addEventListener('load', function(){
       if (window.AOS){
-        AOS.init({ duration: 750, easing: 'ease-out-cubic', offset: 80, once: false, mirror: true });
+        AOS.init({ duration: 600, easing: 'ease-out-cubic', offset: 50, once: false, mirror: true });
         AOS.refreshHard();
       }
     });
-  </script>
 
-  <script>
-  // Card “holo” effect (mouse/touch + optional device orientation)
-  (function(){
-    const cards = document.querySelectorAll('.holo-card');
-
-    function setVars(el, x, y, rect){
-      const mx = ((x - rect.left) / rect.width ) * 100;
-      const my = ((y - rect.top)  / rect.height) * 100;
-      const ry = ((mx - 50) / 50) * 12;
-      const rx = ((50 - my) / 50) * 12;
-      el.style.setProperty('--mx', mx + '%');
-      el.style.setProperty('--my', my + '%');
-      el.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-      el.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-      el.style.setProperty('--s', '1.04');
-      el.style.setProperty('--shine', '.32');
-    }
-    function resetVars(el){
-      el.style.setProperty('--rx', '0deg');
-      el.style.setProperty('--ry', '0deg');
-      el.style.setProperty('--s', '1.02');
-      el.style.setProperty('--shine', '.18');
-      el.style.setProperty('--mx', '50%');
-      el.style.setProperty('--my', '50%');
-    }
-
-    cards.forEach(el=>{
-      el.addEventListener('mousemove', (e)=>{
-        const rect = el.getBoundingClientRect();
-        setVars(el, e.clientX, e.clientY, rect);
-      }, {passive:true});
-      el.addEventListener('mouseleave', ()=> resetVars(el), {passive:true});
-      el.addEventListener('touchmove', (e)=>{
-        const t = e.touches[0]; if(!t) return;
-        const rect = el.getBoundingClientRect();
-        setVars(el, t.clientX, t.clientY, rect);
-      }, {passive:true});
-      el.addEventListener('touchend', ()=> resetVars(el), {passive:true});
-    });
-
-    function hookOrientation(){
-      window.addEventListener('deviceorientation', (ev)=>{
-        const gamma = Math.max(-30, Math.min(30, ev.gamma || 0));
-        const beta  = Math.max(-30, Math.min(30, ev.beta  || 0));
-        cards.forEach(el=>{
-          const ry = (gamma / 30) * 12;
-          const rx = (-beta / 30) * 12;
-          el.style.setProperty('--ry', ry.toFixed(2)+'deg');
-          el.style.setProperty('--rx', rx.toFixed(2)+'deg');
-          const mx = 50 + (gamma/30)*25;
-          const my = 50 + (-beta/30)*25;
-          el.style.setProperty('--mx', mx + '%');
-          el.style.setProperty('--my', my + '%');
-          el.style.setProperty('--s', '1.04');
-          el.style.setProperty('--shine', '.3');
-        });
-      }, {passive:true});
-    }
-
-    if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') {
-      document.addEventListener('click', async function once(){
-        try{
-          const p = await DeviceOrientationEvent.requestPermission();
-          if (p === 'granted') hookOrientation();
-        }catch(_){}
-        document.removeEventListener('click', once);
-      });
-    } else if (window.DeviceOrientationEvent){
-      hookOrientation();
-    }
-  })();
-  </script>
-
-  <!-- Zoho widget -->
-  <script type="text/javascript">
-    window.ZOHOIM=window.ZOHOIM||function(a,b){ZOHOIM[a]=b;};
-    window.ZOHOIM.prefilledMessage="";
+    // Tap-to-open for touch devices
     (function(){
-      var d=document;var s=d.createElement('script');
-      s.type='text/javascript';s.defer=true;s.async=true;
-      s.src="https://im.zoho.com/api/v1/public/channel/9d54007e042a5fda8f169afb3f0f2836/widget";
-      d.head.appendChild(s);
+      const cards = document.querySelectorAll('.flip-card');
+      cards.forEach(card => {
+        let primed = false;
+        card.addEventListener('click', (e)=>{
+          if(!card.classList.contains('is-open')){
+            e.preventDefault();
+            card.classList.add('is-open');
+            primed = true;
+            cards.forEach(c=>{ if(c!==card) c.classList.remove('is-open'); });
+          } else if(primed){ primed = false; }
+        }, true);
+        document.addEventListener('click', (e)=>{
+          if(!card.contains(e.target)) card.classList.remove('is-open');
+        });
+      });
     })();
   </script>
-
 </body>
 </html>

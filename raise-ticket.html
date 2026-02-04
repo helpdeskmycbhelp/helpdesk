@@ -88,6 +88,7 @@
       max-width:720px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.10);
       animation: fadeIn .8s ease-in-out;
+      text-align:left;
     }
 
     label{
@@ -97,6 +98,7 @@
       color:#1d1d1d;
       font-weight:800;
       text-shadow: rgba(255,255,255,.268) 2px 2px;
+      text-align:left !important;
     }
     .req{ color:#ff0000; margin-left:6px; font-weight:800; }
 
@@ -110,6 +112,7 @@
       color:#181717;
       font-size:15px;
       transition: all .3s ease;
+      text-align:left;
     }
     select{
       background-color:#f9f9f996;
@@ -137,6 +140,7 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
       transition:border .3s ease;
       margin-bottom:20px;
+      text-align:left;
     }
 
     /* Attach UI (still uses your original Zoho attachment logic) */
@@ -195,13 +199,6 @@
       white-space:nowrap;
       max-width: 100%;
     }
-    .fileRemove{
-      color:#fe6767;
-      font-weight:900;
-      cursor:pointer;
-      text-decoration:none;
-      flex:0 0 auto;
-    }
 
     .btn-group{
       display:flex;
@@ -256,6 +253,11 @@
     /* Keep original file inputs hidden; we use the span button */
     .wtcuploadinput{ display:none !important; }
 
+    #zohoSupportWebToCase,
+    #zohoSupportWebToCase form{
+      text-align:left !important;
+    }
+
     @media (max-width: 768px){
       .form-card{ padding:30px 20px; }
       .hero h1{ font-size: 2.2rem; }
@@ -266,33 +268,11 @@
       .btn-submit, .btn-reset{ width:100%; }
       .btn-group{ flex-direction:column; gap:10px; }
     }
-    /* Keep the page title centered, but make form labels/fields left-aligned */
-.form-card{
-  text-align: left;
-}
-
-#zohoSupportWebToCase,
-#zohoSupportWebToCase form{
-  text-align: left !important;
-}
-
-/* Labels left */
-#zohoSupportWebToCase label{
-  text-align: left !important;
-}
-
-/* Optional: keep inputs/selects normal (not centered) */
-#zohoSupportWebToCase input,
-#zohoSupportWebToCase select,
-#zohoSupportWebToCase textarea{
-  text-align: left;
-}
-
   </style>
 
   <script src="https://static.zohocdn.com/zohodeskstatic/app/js/jqueryandencoder.ef05974972bf3bca1b87.js"></script>
 
-  <!-- ✅ KEEP YOUR ORIGINAL ZOHO SCRIPT EXACTLY (unchanged) -->
+  <!-- ✅ KEEP YOUR ORIGINAL ZOHO SCRIPT (we only ADD the removeDataRequestOption() calls) -->
   <script>
     window.addEventListener('pageshow', function () {
       const submitButton = document.getElementById('zsSubmitButton_1143387000001276021');
@@ -306,6 +286,20 @@
     });
 
     function trimBoth(str){return jQuery.trim(str);}
+
+    /* ✅ NEW: remove "Data Request" from Select Request (CASECF1) */
+    function removeDataRequestOption(){
+      const req = document.getElementById("CASECF1");
+      if(!req) return;
+      [...req.options].forEach(opt => {
+        const t = (opt.text || "").trim();
+        const v = (opt.value || "").trim();
+        if(t === "Data Request" || v === "Data Request"){
+          opt.remove();
+        }
+      });
+    }
+
     function setAllDependancyFieldsMapping(){
       var mapDependancyLabels = getMapDependenySelectValues(jQuery("[id='property(module)']").val(), "JSON_MAP_DEP_LABELS");
       if(mapDependancyLabels){
@@ -315,12 +309,16 @@
           if(obj){ setDependent(obj, true); }
         }
       }
+      /* ✅ NEW: ensure removed after initial map */
+      removeDataRequestOption();
     }
+
     function getMapDependenySelectValues(module, key){
       var dependencyObj = jQuery.parseJSON( jQuery("[id='dependent_field_values_" + module + "']").val() );
       if(dependencyObj == undefined){return dependencyObj;}
       return dependencyObj[key];
     }
+
     function setDependent(obj, isload){
       var name = obj.id || (obj[0] && obj[0].id) || "";
       var module = jQuery("[id='property(module)']").val();
@@ -397,6 +395,8 @@
           }
         }
       }
+      /* ✅ NEW: always remove after any dependent rebuild */
+      removeDataRequestOption();
     }
 
     var zsWebFormMandatoryFields = new Array("Contact Name","Email","Mobile Number","Select Your Request","Subject","Description");
@@ -521,12 +521,14 @@
       jQuery('#zsFileBrowseAttachments').html('');
       const list = document.getElementById("filesList");
       if(list) list.innerHTML = "";
+      removeDataRequestOption();
     }
 
     document.addEventListener('readystatechange',function(){
       if(document.readyState === 'complete'){
         setAllDependancyFieldsMapping();
         document.getElementById('zsSubmitButton_1143387000001276021').removeAttribute('disabled');
+        removeDataRequestOption();
       }
     });
   </script>
@@ -543,7 +545,6 @@
   <div class="form-card" data-aos="fade-up">
     <div id="zohoSupportWebToCase" align="center">
 
-      <!-- ✅ KEEP YOUR ORIGINAL FORM + TOKENS + FIELD NAMES -->
       <form name="zsWebToCase_1143387000001276021"
             id="zsWebToCase_1143387000001276021"
             action="https://desk.zoho.com/support/WebToCase"
@@ -559,7 +560,6 @@
         <input type="hidden" id="dependent_field_values_Cases" value="{&#34;JSON_VALUES&#34;:{&#34;CASECF2&#34;:{&#34;CASECF1&#34;:{&#34;Praveen Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Off Plan Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Ayman Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Global Luxury&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Conveyancing&#34;:[&#34;Conveyancing :: Transfer property with Conveyancing&#34;,&#34;Conveyancing :: NOC&#34;,&#34;Conveyancing :: Deal Cancellation&#34;,&#34;Conveyancing :: Form F Creation ( Exclusive Project )&#34;,&#34;Conveyancing :: Others&#34;],&#34;Business Bay Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Commercial Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Dubai Marina Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;]}}},&#34;JSON_SELECT_VALUES&#34;:{&#34;CASECF1&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;,&#34;Conveyancing :: Transfer property with Conveyancing&#34;,&#34;Conveyancing :: NOC&#34;,&#34;Conveyancing :: Deal Cancellation&#34;,&#34;Conveyancing :: Form F Creation ( Exclusive Project )&#34;,&#34;Conveyancing :: Others&#34;],&#34;CASECF2&#34;:[&#34;Off Plan Team&#34;,&#34;Commercial Team&#34;,&#34;Praveen Team&#34;,&#34;Ayman Team&#34;,&#34;Business Bay Team&#34;,&#34;Global Luxury&#34;,&#34;Dubai Marina Team&#34;,&#34;Conveyancing&#34;]},&#34;JSON_MAP_DEP_LABELS&#34;:[&#34;CASECF2&#34;]}"/>
         <input type='hidden' name='returnURL' value='https://mycbhelp.com/'/>
 
-        <!-- ✅ NEW MODERN UI FIELDS (same field names) -->
         <label>Contact Name <span class="req">*</span></label>
         <input type="text" maxlength="120" name="Contact Name" placeholder="Enter your full name"/>
 
@@ -599,7 +599,6 @@
           <div class="file-note">Each file must be less than 20MB</div>
         </div>
 
-        <!-- ✅ KEEP ZOHO’S attachment_1..5 inputs + their onchange handlers -->
         <input class="wtcuploadinput" type="file" name="attachment_1" id="zsattachment_1" style="display:block;"
                onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
         <input class="wtcuploadinput" type="file" name="attachment_2" id="zsattachment_2" style="display:none;"
@@ -611,10 +610,8 @@
         <input class="wtcuploadinput" type="file" name="attachment_5" id="zsattachment_5" style="display:none;"
                onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
 
-        <!-- Zoho original files list (kept for their remove logic) -->
         <div id="zsFileBrowseAttachments" style="display:none;"></div>
 
-        <!-- Our pretty list -->
         <div id="filesList" class="filesList"></div>
 
         <div class="btn-group">
@@ -636,12 +633,10 @@
   <script>AOS.init();</script>
 
   <script>
-    // Make the pretty Attach button trigger the next visible Zoho input
     document.addEventListener("DOMContentLoaded", () => {
       const attachBtn = document.getElementById("zsBrowseAttachment");
       if (attachBtn){
         attachBtn.addEventListener("click", () => {
-          // click the currently visible input (Zoho shows 1, then 2, etc.)
           const inputs = [
             document.getElementById("zsattachment_1"),
             document.getElementById("zsattachment_2"),
@@ -654,8 +649,11 @@
           if (visible) visible.click();
         });
       }
+
       // Ensure request dropdown is built on load based on default selection
       setAllDependancyFieldsMapping();
+      // ✅ remove Data Request on first load too
+      removeDataRequestOption();
     });
   </script>
 </body>

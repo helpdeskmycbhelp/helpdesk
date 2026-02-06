@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Raise a Ticket</title>
 
+  <!-- Font (same vibe as your old design) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <link rel="icon" href="data:,">
 
@@ -18,8 +18,8 @@
       padding:40px 20px;
       font-family:'Inter', sans-serif;
 
-      /* change to your bg */
-      background: url("/assets/image.jpg") no-repeat center center fixed;
+      /* your background */
+      background: url("./assets/image.jpg") no-repeat center center fixed;
       background-size: cover;
 
       color:#333;
@@ -38,29 +38,37 @@
       z-index:-1;
     }
 
+    /* Home button */
     .home-btn{
       position:fixed;
       top:20px; left:20px;
-      background: rgba(255,255,255,0.8);
-      padding:10px 20px;
+      background: rgba(255,255,255,0.86);
+      padding:10px 18px;
       border-radius:30px;
       border:1px solid #ccc;
       color:#333;
       text-decoration:none;
-      font-weight:500;
-      transition: all .3s ease;
+      font-weight:600;
+      transition: all .25s ease;
       z-index:10;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
     .home-btn:hover{
       background:#007bff;
       color:#fff;
-      box-shadow:0 0 12px rgba(0,123,255,.5);
+      box-shadow:0 10px 26px rgba(0,123,255,.25);
+      border-color: rgba(0,123,255,.25);
     }
 
+    /* Title */
     .hero{
       text-align:center;
       margin-top:30px;
-      margin-bottom:20px;
+      margin-bottom:18px;
       width:100%;
     }
     .hero h1{
@@ -68,119 +76,119 @@
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
       background-clip:text;
-      font-weight:700;
-      font-size:50px;
-      text-shadow:10px 2px 8px rgba(0,0,0,.121);
+      font-weight:800;
+      letter-spacing: .3px;
+      font-size:52px;
+      text-shadow:10px 2px 8px rgba(0,0,0,.10);
       margin:0;
-      animation: fadeIn 1.2s ease-in-out;
+      animation: fadeIn 0.9s ease-in-out;
     }
     @keyframes fadeIn{
-      0%{opacity:0; transform: translateY(-10px);}
+      0%{opacity:0; transform: translateY(-8px);}
       100%{opacity:1; transform: translateY(0);}
     }
 
+    /* Card */
     .form-card{
-      background: rgba(255,255,255,0.623);
+      background: rgba(255,255,255,0.62);
       border-radius:20px;
       border:1px solid #60d9fb;
-      padding:35px 30px;
+      padding:34px 30px;
       width:100%;
-      max-width:720px;
+      max-width:760px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.10);
-      animation: fadeIn .8s ease-in-out;
-      text-align:left;
+      animation: fadeIn .7s ease-in-out;
+      text-align:left;            /* ✅ keep everything left */
+    }
+
+    /* Modern field layout */
+    .field{
+      margin-bottom:18px;
     }
 
     label{
       display:block;
-      margin-bottom:6px;
+      margin-bottom:7px;
       font-size:16px;
       color:#1d1d1d;
       font-weight:800;
-      text-shadow: rgba(255,255,255,.268) 2px 2px;
-      text-align:left !important;
+      text-shadow: rgba(255,255,255,.22) 2px 2px;
+      text-align:left;            /* ✅ */
     }
-    .req{ color:#ff0000; margin-left:6px; font-weight:800; }
+    .req{ color:#ff0000; margin-left:6px; font-weight:900; }
 
-    input, select{
+    input[type="text"], select, textarea{
       width:100%;
       padding:14px 16px;
-      margin-bottom:20px;
       background:#f9f9f99f;
       border:1px solid #00b4db;
       border-radius:12px;
       color:#181717;
       font-size:15px;
-      transition: all .3s ease;
-      text-align:left;
+      transition: all .2s ease;
+      text-align:left;            /* ✅ */
     }
+
     select{
       background-color:#f9f9f996;
       color:#333;
       border:1px solid #118dfa;
     }
 
-    input:focus, textarea:focus, select:focus{
+    input[type="text"]:focus, textarea:focus, select:focus{
       outline:none;
       border-color:#007bff;
       background-color:#ffffff;
       box-shadow:0 0 0 2px rgba(0,123,255,0.2);
     }
 
-    .custom-textarea{
-      width:100%;
-      height:150px;
-      padding:12px;
-      font-size:16px;
-      border:1px solid #00b4db;
-      border-radius:12px;
+    textarea{
+      min-height:150px;
       resize: vertical;
-      background:#fefeffab;
-      color:#333;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      transition:border .3s ease;
-      margin-bottom:20px;
-      text-align:left;
     }
 
-    /* Attach UI (still uses your original Zoho attachment logic) */
+    /* Attach area */
+    .attachWrap{
+      margin-top:6px;
+      margin-bottom:8px;
+    }
     .attachRow{
       display:flex;
       align-items:center;
       gap:12px;
       flex-wrap:wrap;
-      margin-bottom:10px;
     }
     .attachBtn{
-      display:inline-block;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
       padding:12px 18px;
-      border:none;
       border-radius:30px;
       font-size:14px;
-      font-weight:700;
+      font-weight:800;
       cursor:pointer;
-      transition:.3s ease;
-      background: rgba(255,255,255,0.85);
+      transition:.2s ease;
+      background: rgba(255,255,255,0.90);
       border: 1px solid #00b4db;
       color:#004e92;
       user-select:none;
     }
     .attachBtn:hover{
-      box-shadow:0 0 15px rgba(0,29,59,0.18);
-      transform: scale(1.01);
+      box-shadow:0 0 15px rgba(0,29,59,0.14);
+      transform: translateY(-1px);
     }
     .file-note{
       font-size:12px;
       color:#101010;
-      margin-top:-10px;
-      margin-bottom:15px;
+      opacity:.9;
     }
 
     .filesList{
       display:flex;
       flex-direction:column;
       gap:10px;
-      margin-bottom:20px;
+      margin-top:12px;
+      margin-bottom:18px;
     }
     .fileItem{
       display:flex;
@@ -199,7 +207,22 @@
       white-space:nowrap;
       max-width: 100%;
     }
+    .fileRemove{
+      color:#fe6767;
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none;
+      flex:0 0 auto;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(254,103,103,.35);
+      background: rgba(255,255,255,.75);
+    }
+    .fileRemove:hover{
+      background: rgba(254,103,103,.10);
+    }
 
+    /* Buttons */
     .btn-group{
       display:flex;
       justify-content:center;
@@ -212,18 +235,18 @@
       border:none;
       border-radius:30px;
       font-size:15px;
-      font-weight:bold;
+      font-weight:800;
       cursor:pointer;
-      transition:.3s ease;
-      min-width:120px;
+      transition:.2s ease;
+      min-width:130px;
     }
     .btn-submit{
       background: linear-gradient(90deg, #0101cf,#024dbf, #5757f7);
       color:#fff;
     }
     .btn-submit:hover{
-      box-shadow:0 0 15px rgba(0,29,59,0.5);
-      transform: scale(1.02);
+      box-shadow:0 0 15px rgba(0,29,59,0.35);
+      transform: translateY(-1px);
     }
     .btn-reset{
       background:#f0f0f0;
@@ -231,8 +254,8 @@
       border:1px solid #ddd;
     }
     .btn-reset:hover{
-      background:#e0e0e0;
-      transform: scale(1.02);
+      background:#e8e8e8;
+      transform: translateY(-1px);
     }
 
     .powered{
@@ -247,32 +270,44 @@
     }
     .powered img{ width:16px; height:16px; display:block; }
 
-    /* Hide original Zoho table layout (we will build our own UI) */
+    /* ✅ Hide Zoho's default table UI completely */
     #zohoSupportWebToCase table.zsFormClass{ display:none !important; }
 
-    /* Keep original file inputs hidden; we use the span button */
-    .wtcuploadinput{ display:none !important; }
-
-    #zohoSupportWebToCase,
-    #zohoSupportWebToCase form{
-      text-align:left !important;
+    /* ✅ Hide the native "Choose File" button completely (but keep inputs usable via JS click) */
+    .wtcuploadinput{
+      position:absolute !important;
+      left:-9999px !important;
+      width:1px !important;
+      height:1px !important;
+      opacity:0 !important;
+      overflow:hidden !important;
     }
+    /* hide Zoho's attach text too (we use our own) */
+    #zsBrowseAttachment{ display:none !important; }
+
+    /* Keep Zoho list hidden (we mirror it) */
+    #zsFileBrowseAttachments{ display:none !important; }
+
+    /* Keep everything left aligned even if Zoho wrapper uses align=center */
+    #zohoSupportWebToCase, #zohoSupportWebToCase form{ text-align:left !important; }
 
     @media (max-width: 768px){
-      .form-card{ padding:30px 20px; }
+      .form-card{ padding:28px 18px; }
       .hero h1{ font-size: 2.2rem; }
     }
     @media (max-width: 480px){
-      .form-card{ padding:25px 15px; }
-      input, select, textarea{ font-size:14px; padding:12px; }
+      .form-card{ padding:22px 14px; }
+      input[type="text"], select, textarea{ font-size:14px; padding:12px; }
       .btn-submit, .btn-reset{ width:100%; }
       .btn-group{ flex-direction:column; gap:10px; }
+      .home-btn{ left:12px; top:12px; }
     }
   </style>
 
+  <!-- Zoho dependency + encoder lib -->
   <script src="https://static.zohocdn.com/zohodeskstatic/app/js/jqueryandencoder.ef05974972bf3bca1b87.js"></script>
 
-  <!-- ✅ KEEP YOUR ORIGINAL ZOHO SCRIPT (we only ADD the removeDataRequestOption() calls) -->
+  <!-- ✅ YOUR ORIGINAL ZOHO SCRIPT (kept, only 2 small safe additions at the bottom: mirror files + attach button click) -->
   <script>
     window.addEventListener('pageshow', function () {
       const submitButton = document.getElementById('zsSubmitButton_1143387000001276021');
@@ -287,19 +322,6 @@
 
     function trimBoth(str){return jQuery.trim(str);}
 
-    /* ✅ NEW: remove "Data Request" from Select Request (CASECF1) */
-    function removeDataRequestOption(){
-      const req = document.getElementById("CASECF1");
-      if(!req) return;
-      [...req.options].forEach(opt => {
-        const t = (opt.text || "").trim();
-        const v = (opt.value || "").trim();
-        if(t === "Data Request" || v === "Data Request"){
-          opt.remove();
-        }
-      });
-    }
-
     function setAllDependancyFieldsMapping(){
       var mapDependancyLabels = getMapDependenySelectValues(jQuery("[id='property(module)']").val(), "JSON_MAP_DEP_LABELS");
       if(mapDependancyLabels){
@@ -309,16 +331,12 @@
           if(obj){ setDependent(obj, true); }
         }
       }
-      /* ✅ NEW: ensure removed after initial map */
-      removeDataRequestOption();
     }
-
     function getMapDependenySelectValues(module, key){
       var dependencyObj = jQuery.parseJSON( jQuery("[id='dependent_field_values_" + module + "']").val() );
       if(dependencyObj == undefined){return dependencyObj;}
       return dependencyObj[key];
     }
-
     function setDependent(obj, isload){
       var name = obj.id || (obj[0] && obj[0].id) || "";
       var module = jQuery("[id='property(module)']").val();
@@ -395,8 +413,6 @@
           }
         }
       }
-      /* ✅ NEW: always remove after any dependent rebuild */
-      removeDataRequestOption();
     }
 
     var zsWebFormMandatoryFields = new Array("Contact Name","Email","Mobile Number","Select Your Request","Subject","Description");
@@ -495,20 +511,68 @@
             return;
           }
 
-          // show in our nice list too:
-          const list = document.getElementById("filesList");
-          if(list){
-            const row = document.createElement("div");
-            row.className = "fileItem";
-            const nm = document.createElement("div");
-            nm.className = "fileName";
-            nm.textContent = zsFileName;
-            row.appendChild(nm);
-            list.appendChild(row);
-          }
+          var zsCurrentAttachmentIdTokens = jQuery(zsAttachmentDetails).attr('id').split('_');
+          var zsCurrentAttachmentId = parseInt(zsCurrentAttachmentIdTokens[1]);
+          var zsAttachmentIdToBeRemoved = jQuery.inArray(zsCurrentAttachmentId, zsAttachmentFileBrowserIdsList);
+          zsAttachmentFileBrowserIdsList.splice(zsAttachmentIdToBeRemoved, 1);
+          var zsNextAttachmentId = zsAttachmentFileBrowserIdsList[0];
+          var zsnextAttachment = 'zsattachment_'+zsNextAttachmentId;
+
+          jQuery('#zsattachment_'+zsCurrentAttachmentId).hide();
+          jQuery('#'+zsnextAttachment).show();
+
+          jQuery('#zsFileBrowseAttachments').append(
+            '<div class="filenamecls zsFontClass" id="file_'+zsCurrentAttachmentId+'">'+
+              ZSEncoder.encodeForHTML(zsFileName) +
+              '<a class="zsfilebrowseAttachment" style="margin-left:10px;" href="javascript:;" id="fileclose_'+zsCurrentAttachmentId+'">X</a>'+
+            '</div>'
+          );
 
           zsAttachedAttachmentsCount = zsAttachedAttachmentsCount + 1;
         }
+      }
+      zsChangeMousePointer();
+      // ✅ mirror list into our modern UI
+      setTimeout(syncPrettyFilesFromZoho, 0);
+    }
+
+    jQuery(document).off('click.fba').on('click.fba', '.zsfilebrowseAttachment', function(){
+      var currentlyDeletedElement = jQuery(this).attr('id').split('_')[1];
+      jQuery('#zsattachment_'+currentlyDeletedElement).val('');
+      jQuery('#zsattachment_'+currentlyDeletedElement).replaceWith(jQuery('#zsattachment_'+currentlyDeletedElement).clone());
+      jQuery(this).parent().remove();
+      zsAttachedAttachmentsCount = zsAttachedAttachmentsCount - 1;
+      zsAttachmentFileBrowserIdsList.push(parseInt(currentlyDeletedElement));
+      zsRearrangeFileBrowseAttachments();
+      zsChangeMousePointer();
+      // ✅ mirror list into our modern UI
+      setTimeout(syncPrettyFilesFromZoho, 0);
+    });
+
+    function zsRearrangeFileBrowseAttachments(){
+      jQuery.each(jQuery('input[type = file]'), function(fileIndex, fileObject){
+        fileIndex = fileIndex + 1;
+        if(fileIndex == zsAttachmentFileBrowserIdsList[0]){
+          jQuery('#zsattachment_'+fileIndex).show();
+        }else{
+          jQuery('#zsattachment_'+fileIndex).hide();
+        }
+      });
+    }
+
+    function zsOpenFileBrowseAttachment(clickEvent){
+      if(zsAttachedAttachmentsCount >= 5){
+        clickEvent.preventDefault();
+      }
+    }
+
+    function zsChangeMousePointer(){
+      if(zsAttachedAttachmentsCount >= 5){
+        jQuery('#zsMaxLimitMessage').show();
+        jQuery('#zsattachment_1,#zsattachment_2,#zsattachment_3,#zsattachment_4,#zsattachment_5').hide();
+      }else{
+        jQuery('#zsMaxLimitMessage').hide();
+        zsRearrangeFileBrowseAttachments();
       }
     }
 
@@ -519,32 +583,77 @@
       zsAttachedAttachmentsCount = 0;
       zsAttachmentFileBrowserIdsList = [1, 2, 3, 4, 5];
       jQuery('#zsFileBrowseAttachments').html('');
-      const list = document.getElementById("filesList");
-      if(list) list.innerHTML = "";
-      removeDataRequestOption();
+      zsRearrangeFileBrowseAttachments();
+      zsChangeMousePointer();
+      // ✅ clear pretty list
+      setTimeout(syncPrettyFilesFromZoho, 0);
     }
 
     document.addEventListener('readystatechange',function(){
       if(document.readyState === 'complete'){
         setAllDependancyFieldsMapping();
         document.getElementById('zsSubmitButton_1143387000001276021').removeAttribute('disabled');
-        removeDataRequestOption();
+        zsAttachedAttachmentsCount = 0;
+        zsAttachmentFileBrowserIdsList = [1, 2, 3, 4, 5];
+        jQuery('#zsFileBrowseAttachments').html('');
+        zsRearrangeFileBrowseAttachments();
+        zsChangeMousePointer();
+        setTimeout(syncPrettyFilesFromZoho, 0);
       }
     });
+
+    /* =========================
+       ✅ ADDED: Pretty files mirror (so you get the nice list + remove works)
+       ========================= */
+    function syncPrettyFilesFromZoho(){
+      const pretty = document.getElementById('prettyFiles');
+      const zoho = document.getElementById('zsFileBrowseAttachments');
+      if(!pretty || !zoho) return;
+
+      pretty.innerHTML = '';
+      const items = zoho.querySelectorAll('.filenamecls');
+
+      items.forEach((row) => {
+        const nameText = (row.childNodes[0] && row.childNodes[0].textContent) ? row.childNodes[0].textContent.trim() : row.textContent.trim();
+        const closeA = row.querySelector('a.zsfilebrowseAttachment');
+
+        const wrap = document.createElement('div');
+        wrap.className = 'fileItem';
+
+        const nm = document.createElement('div');
+        nm.className = 'fileName';
+        nm.textContent = nameText;
+
+        const rm = document.createElement('a');
+        rm.className = 'fileRemove';
+        rm.textContent = 'Remove';
+        rm.href = 'javascript:;';
+        rm.addEventListener('click', () => {
+          // trigger Zoho remove
+          if(closeA) closeA.click();
+        });
+
+        wrap.appendChild(nm);
+        wrap.appendChild(rm);
+        pretty.appendChild(wrap);
+      });
+    }
   </script>
 </head>
 
 <body>
 
-  <a href="/" class="home-btn">← Return to Home</a>
+  <!-- ✅ FIX: Use relative home link so it doesn't open C:\ index when testing locally -->
+  <a id="returnHome" href="./index.html" class="home-btn">← Return to Home</a>
 
-  <div class="hero" data-aos="fade-down">
+  <div class="hero">
     <h1>Raise a Ticket</h1>
   </div>
 
-  <div class="form-card" data-aos="fade-up">
+  <div class="form-card">
     <div id="zohoSupportWebToCase" align="center">
 
+      <!-- ✅ KEEP YOUR ORIGINAL FORM TOKENS + FIELD NAMES -->
       <form name="zsWebToCase_1143387000001276021"
             id="zsWebToCase_1143387000001276021"
             action="https://desk.zoho.com/support/WebToCase"
@@ -552,67 +661,97 @@
             onsubmit="return zsValidateMandatoryFields()"
             enctype="multipart/form-data">
 
+        <!-- ✅ unchanged tokens -->
         <input type='hidden' name='xnQsjsdp' value='edbsn09a4f85ea235bc86c8c4c895589a8df4'/>
         <input type='hidden' name='xmIwtLD' value='edbsnc270b248fbbf8316722a8888f6d0717a7e3dde56f571d36f14269f97cf36f418'/>
         <input type='hidden' name='xJdfEaS' value=''/>
         <input type='hidden' name='actionType' value='Q2FzZXM='/>
         <input type="hidden" id="property(module)" value="Cases"/>
-        <input type="hidden" id="dependent_field_values_Cases" value="{&#34;JSON_VALUES&#34;:{&#34;CASECF2&#34;:{&#34;CASECF1&#34;:{&#34;Praveen Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Off Plan Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Ayman Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Global Luxury&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Conveyancing&#34;:[&#34;Conveyancing :: Transfer property with Conveyancing&#34;,&#34;Conveyancing :: NOC&#34;,&#34;Conveyancing :: Deal Cancellation&#34;,&#34;Conveyancing :: Form F Creation ( Exclusive Project )&#34;,&#34;Conveyancing :: Others&#34;],&#34;Business Bay Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Commercial Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Dubai Marina Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;]}}},&#34;JSON_SELECT_VALUES&#34;:{&#34;CASECF1&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Data Request&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;,&#34;Conveyancing :: Transfer property with Conveyancing&#34;,&#34;Conveyancing :: NOC&#34;,&#34;Conveyancing :: Deal Cancellation&#34;,&#34;Conveyancing :: Form F Creation ( Exclusive Project )&#34;,&#34;Conveyancing :: Others&#34;],&#34;CASECF2&#34;:[&#34;Off Plan Team&#34;,&#34;Commercial Team&#34;,&#34;Praveen Team&#34;,&#34;Ayman Team&#34;,&#34;Business Bay Team&#34;,&#34;Global Luxury&#34;,&#34;Dubai Marina Team&#34;,&#34;Conveyancing&#34;]},&#34;JSON_MAP_DEP_LABELS&#34;:[&#34;CASECF2&#34;]}"/>
+        <input type="hidden" id="dependent_field_values_Cases" value="{&#34;JSON_VALUES&#34;:{&#34;CASECF2&#34;:{&#34;CASECF1&#34;:{&#34;Praveen Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Off Plan Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Ayman Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Global Luxury&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Conveyancing&#34;:[&#34;Conveyancing :: Transfer property with Conveyancing&#34;,&#34;Conveyancing :: NOC&#34;,&#34;Conveyancing :: Deal Cancellation&#34;,&#34;Conveyancing :: Form F Creation ( Exclusive Project )&#34;,&#34;Conveyancing :: Others&#34;],&#34;Business Bay Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Commercial Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;],&#34;Dubai Marina Team&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;]}}},&#34;JSON_SELECT_VALUES&#34;:{&#34;CASECF1&#34;:[&#34;Listing :: Create&#34;,&#34;Listing :: Update&#34;,&#34;Listing :: Publish&#34;,&#34;Opportunity :: Create&#34;,&#34;Opportunity :: Update&#34;,&#34;Opportunity :: Close/Reserve&#34;,&#34;Opportunity :: Update Closing&#34;,&#34;Form :: Create&#34;,&#34;Form :: Create A-A Form&#34;,&#34;Form :: Print A-A Form&#34;,&#34;Form :: Update&#34;,&#34;Invoice :: Create&#34;,&#34;Acknowledgement Voucher&#34;,&#34;Tenancy Contract&#34;,&#34;Contract A&#34;,&#34;Escalations / Others&#34;,&#34;Conveyancing :: Transfer property with Conveyancing&#34;,&#34;Conveyancing :: NOC&#34;,&#34;Conveyancing :: Deal Cancellation&#34;,&#34;Conveyancing :: Form F Creation ( Exclusive Project )&#34;,&#34;Conveyancing :: Others&#34;],&#34;CASECF2&#34;:[&#34;Off Plan Team&#34;,&#34;Commercial Team&#34;,&#34;Praveen Team&#34;,&#34;Ayman Team&#34;,&#34;Business Bay Team&#34;,&#34;Global Luxury&#34;,&#34;Dubai Marina Team&#34;,&#34;Conveyancing&#34;]},&#34;JSON_MAP_DEP_LABELS&#34;:[&#34;CASECF2&#34;]}"/>
         <input type='hidden' name='returnURL' value='https://mycbhelp.com/'/>
 
-        <label>Contact Name <span class="req">*</span></label>
-        <input type="text" maxlength="120" name="Contact Name" placeholder="Enter your full name"/>
-
-        <label>Email <span class="req">*</span></label>
-        <input type="text" maxlength="120" name="Email" placeholder="you@example.com"/>
-
-        <label>Mobile Number <span class="req">*</span></label>
-        <input type="text" maxlength="120" name="Mobile Number" placeholder="05XXXXXXXX"/>
-
-        <label>Select Team <span class="req">*</span></label>
-        <select name="Select Your Team" id="CASECF2" onchange="setDependent(this,false)">
-          <option value="">-- Select Team --</option>
-          <option value="Off Plan Team">Off Plan Team</option>
-          <option value="Commercial Team">Commercial Team</option>
-          <option value="Praveen Team">Praveen Team</option>
-          <option value="Ayman Team">Ayman Team</option>
-          <option value="Business Bay Team">Business Bay Team</option>
-          <option value="Global Luxury">Global Luxury</option>
-          <option value="Dubai Marina Team">Dubai Marina Team</option>
-          <option value="Conveyancing">Conveyancing</option>
-        </select>
-
-        <label>Select Request <span class="req">*</span></label>
-        <select name="Select Your Request" id="CASECF1">
-          <option value="">-- Select Request --</option>
-        </select>
-
-        <label>Subject <span class="req">*</span></label>
-        <input type="text" maxlength="255" name="Subject" placeholder="Brief summary of your request"/>
-
-        <label>Description <span class="req">*</span></label>
-        <textarea name="Description" maxlength="3000" class="custom-textarea" placeholder="Detailed description ..."></textarea>
-
-        <label>Attachment (Max 5 files)</label>
-        <div class="attachRow">
-          <span class="attachBtn" id="zsBrowseAttachment">Attach files</span>
-          <div class="file-note">Each file must be less than 20MB</div>
+        <!-- ✅ Your modern UI fields (same Zoho names) -->
+        <div class="field">
+          <label>Contact Name <span class="req">*</span></label>
+          <input type="text" maxlength="120" name="Contact Name" placeholder="Enter your full name">
         </div>
 
-        <input class="wtcuploadinput" type="file" name="attachment_1" id="zsattachment_1" style="display:block;"
-               onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
-        <input class="wtcuploadinput" type="file" name="attachment_2" id="zsattachment_2" style="display:none;"
-               onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
-        <input class="wtcuploadinput" type="file" name="attachment_3" id="zsattachment_3" style="display:none;"
-               onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
-        <input class="wtcuploadinput" type="file" name="attachment_4" id="zsattachment_4" style="display:none;"
-               onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
-        <input class="wtcuploadinput" type="file" name="attachment_5" id="zsattachment_5" style="display:none;"
-               onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="text" maxlength="120" name="Email" placeholder="you@example.com">
+        </div>
 
-        <div id="zsFileBrowseAttachments" style="display:none;"></div>
+        <div class="field">
+          <label>Mobile Number <span class="req">*</span></label>
+          <input type="text" maxlength="120" name="Mobile Number" placeholder="05XXXXXXXX">
+        </div>
 
-        <div id="filesList" class="filesList"></div>
+        <div class="field">
+          <label>Select Team <span class="req">*</span></label>
+          <select name="Select Your Team" id="CASECF2" onchange="setDependent(this,false)">
+            <option value="">-- Select Team --</option>
+            <option value="Off Plan Team">Off Plan Team</option>
+            <option value="Commercial Team">Commercial Team</option>
+            <option value="Praveen Team">Praveen Team</option>
+            <option value="Ayman Team">Ayman Team</option>
+            <option value="Business Bay Team">Business Bay Team</option>
+            <option value="Global Luxury">Global Luxury</option>
+            <option value="Dubai Marina Team">Dubai Marina Team</option>
+            <option value="Conveyancing">Conveyancing</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Select Request <span class="req">*</span></label>
+          <select name="Select Your Request" id="CASECF1">
+            <option value="">-- Select Request --</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Subject <span class="req">*</span></label>
+          <input type="text" maxlength="255" name="Subject" placeholder="Brief summary of your request">
+        </div>
+
+        <div class="field">
+          <label>Description <span class="req">*</span></label>
+          <textarea name="Description" maxlength="3000" placeholder="Detailed description ..."></textarea>
+        </div>
+
+        <!-- ✅ Attachment section: ONE working button, no "Choose File" visible -->
+        <div class="field attachWrap">
+          <label>Attachment (Max 5 files)</label>
+          <div class="attachRow">
+            <button type="button" class="attachBtn" id="attachBtn">Attach files</button>
+            <div class="file-note">Each file must be less than 20MB</div>
+          </div>
+
+          <!-- keep Zoho span (hidden by CSS) -->
+          <span class="zsFontClass wtcuploadfile" id="zsBrowseAttachment">Attach files</span>
+
+          <!-- ✅ MUST keep Zoho inputs + handlers -->
+          <input class="wtcuploadinput" type="file" name="attachment_1" id="zsattachment_1" style="display:block;"
+                 onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
+          <input class="wtcuploadinput" type="file" name="attachment_2" id="zsattachment_2" style="display:none;"
+                 onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
+          <input class="wtcuploadinput" type="file" name="attachment_3" id="zsattachment_3" style="display:none;"
+                 onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
+          <input class="wtcuploadinput" type="file" name="attachment_4" id="zsattachment_4" style="display:none;"
+                 onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
+          <input class="wtcuploadinput" type="file" name="attachment_5" id="zsattachment_5" style="display:none;"
+                 onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)"/>
+
+          <div style="display:flex; gap:10px; margin-top:8px; font-size:12px; opacity:.9;">
+            <span id="zsMaxSizeMessage" style="color:black;">Each file can be up to 20MB.</span>
+            <span id="zsMaxLimitMessage" style="color:black; display:none;">You can attach up to 5 files.</span>
+          </div>
+
+          <!-- Zoho original list (hidden) -->
+          <div id="zsFileBrowseAttachments"></div>
+
+          <!-- Pretty list -->
+          <div id="prettyFiles" class="filesList"></div>
+        </div>
 
         <div class="btn-group">
           <button type="submit" id="zsSubmitButton_1143387000001276021" class="btn-submit">Submit</button>
@@ -625,36 +764,48 @@
             <img src="https://static.zohocdn.com/zohodeskstatic/app/images/portalLogo.de847024ebc0131731a3.png" alt="Zoho Desk">
           </a>
         </div>
+
       </form>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>AOS.init();</script>
-
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const attachBtn = document.getElementById("zsBrowseAttachment");
-      if (attachBtn){
-        attachBtn.addEventListener("click", () => {
+    // ✅ Make Home work both locally and when hosted
+    (function fixHomeLink(){
+      const a = document.getElementById('returnHome');
+      if(!a) return;
+      if(location.protocol === 'file:'){
+        a.href = './index.html';
+      } else {
+        // if you host on a domain root, you can use '/'.
+        // if hosted in a subfolder, keep './index.html'
+        a.href = './index.html';
+      }
+    })();
+
+    // ✅ ONE working attach button
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('attachBtn');
+      if(btn){
+        btn.addEventListener('click', () => {
+          // pick the next visible Zoho input (it will be display:block)
           const inputs = [
-            document.getElementById("zsattachment_1"),
-            document.getElementById("zsattachment_2"),
-            document.getElementById("zsattachment_3"),
-            document.getElementById("zsattachment_4"),
-            document.getElementById("zsattachment_5"),
+            document.getElementById('zsattachment_1'),
+            document.getElementById('zsattachment_2'),
+            document.getElementById('zsattachment_3'),
+            document.getElementById('zsattachment_4'),
+            document.getElementById('zsattachment_5'),
           ].filter(Boolean);
 
-          const visible = inputs.find(i => i.style.display !== "none");
-          if (visible) visible.click();
+          const visible = inputs.find(i => i.style.display !== 'none');
+          if(visible) visible.click();
         });
       }
 
-      // Ensure request dropdown is built on load based on default selection
+      // build request dropdown mapping on load
       setAllDependancyFieldsMapping();
-      // ✅ remove Data Request on first load too
-      removeDataRequestOption();
     });
   </script>
+
 </body>
 </html>

@@ -6,695 +6,531 @@
   <title>CB – Helpdesk</title>
 
   <link rel="icon" href="data:,">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700;800;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-  :root{
-    --bg-top:#22405a92; --bg-bot:#12324f8e;
-    --card-top:#fcfeff27; --card-bot:#f2f6fa20; --card-stroke:rgba(255,255,255,.12);
-    --hover-top:#718292b9; --hover-bot:#718292c0;
-    --title:#ffffff; --muted:#d5e2f3; --bullet:#b8c8dc;
-    --btn-chip:#6d8eae; --btn-chip-hover:#67A4E7;
-    --wsp:#079853; --wsp-hover:#08b764; --wsp-press:#05904c;
-    --btn-shadow:0 12px 24px rgba(0,0,0,.18);
-    --slides-gap:24px; --per:4;
-  }
+    :root{
+      --bg:#08223b;
+      --bg-top:#24465f86;
+      --bg-bot:#0b2c4a;
+      --card:rgba(255,255,255,.105);
+      --card-2:rgba(255,255,255,.055);
+      --card-border:rgba(213,230,248,.15);
+      --card-border-hover:rgba(213,230,248,.28);
+      --text:#f6fbff;
+      --text-soft:#d7e7f7;
+      --muted:#a8bed5;
+      --button:#83a9ca;
+      --button-hover:#9bc2e5;
+      --whatsapp:#08a558;
+      --whatsapp-hover:#0ebb68;
+      --shadow:0 22px 54px -28px rgba(0,0,0,.88);
+      --shadow-hover:0 34px 70px -36px rgba(0,0,0,.94);
+      --radius:22px;
+    }
 
-  html{ height:100%; background:#0b2340; overscroll-behavior-y:none; }
-  .bg-fixed{ position:fixed; inset:0; z-index:-3; background:url('assets/t.jpg') center/cover no-repeat; will-change:transform; transform:translateZ(0); }
-  body::before{
-    content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
-    background:
-      radial-gradient(1200px 620px at 18% 6%, rgba(255,255,255,.016), transparent 60%),
-      radial-gradient(1300px 620px at 82% 12%, rgba(255,255,255,.07), transparent 60%),
-      linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%);
-  }
-  html,body{ min-height:100%; margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#e9f2ff; }
-  body{ background:transparent; }
+    *{ box-sizing:border-box; }
+    html{ min-height:100%; background:var(--bg); overscroll-behavior-y:none; }
+    body{
+      margin:0;
+      min-height:100svh;
+      overflow-x:hidden;
+      font-family:'Plus Jakarta Sans','Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:transparent;
+    }
 
-  /* HERO */
-  .hero-header{ padding:48px 0 12px; text-align:center; }
-  .hero-logo{ height:86px; width:auto; filter:drop-shadow(0 8px 20px rgba(0,0,0,.35)); }
-  .hero-title{
-    font-family:Montserrat,Inter,sans-serif; font-weight:800; color:var(--title);
-    text-shadow:0 8px 22px rgba(0,0,0,.5); font-size:clamp(28px,6vw,56px); letter-spacing:.06em; margin:10px 0 0;
-  }
+    .bg-fixed{
+      position:fixed;
+      inset:0;
+      z-index:-4;
+      background:url('assets/t.jpg') center/cover no-repeat;
+      transform:translateZ(0);
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      pointer-events:none;
+      background:
+        radial-gradient(820px 380px at 18% 6%, rgba(159,204,244,.10), transparent 64%),
+        radial-gradient(760px 360px at 78% 8%, rgba(255,255,255,.075), transparent 64%),
+        radial-gradient(720px 320px at 50% 92%, rgba(53,111,160,.16), transparent 62%),
+        linear-gradient(180deg,var(--bg-top) 0%,var(--bg-bot) 100%);
+    }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+      opacity:.22;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size:72px 72px;
+      mask-image:radial-gradient(circle at 50% 42%, #000 0 45%, transparent 72%);
+    }
 
-  .main-content{ padding-top:16px; }
-  .cards-wrap{ padding:32px 0 64px; }
+    .page{
+      width:min(100%, 1480px);
+      min-height:100svh;
+      margin:0 auto;
+      padding:18px clamp(34px,4.3vw,70px) 14px;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+    }
 
-  /* CARD */
-  /* Equal height cards and bottom-aligned buttons */
-.help-card {
-  width: 250px;
-  max-width: 400px;
-  height: 400px !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
-  border-radius: 22px;
-  border: 1px solid var(--card-stroke);
-  padding: 22px 28px 24px; /* slightly reduced padding for balance */
-  background: linear-gradient(180deg, var(--card-top), var(--card-bot));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 22px 36px -14px rgba(0, 0, 0, 0.77);
-  transition: transform 0.28s cubic-bezier(.22, .61, .36, 1), box-shadow 0.28s ease;
-}
+    .hero-header{
+      text-align:center;
+      padding:0 0 16px;
+    }
+    .hero-logo{
+      height:34px;
+      width:auto;
+      display:block;
+      margin:0 auto 8px;
+      filter:drop-shadow(0 7px 18px rgba(0,0,0,.42));
+    }
+    .hero-title{
+      margin:0;
+      font-size:clamp(20px,2.2vw,32px);
+      line-height:1.1;
+      letter-spacing:.18em;
+      font-weight:700;
+      color:rgba(255,255,255,.94);
+      text-shadow:0 5px 18px rgba(0,0,0,.45);
+    }
+    .hero-rule{
+      width:min(520px,54vw);
+      height:1px;
+      margin:13px auto 0;
+      background:linear-gradient(90deg,transparent,rgba(206,226,245,.34),transparent);
+    }
 
-  .help-card:hover,.help-card.is-active{ transform:scale(1.02); box-shadow:0 26px 44px -16px rgba(0,0,0,.65); background:linear-gradient(180deg,var(--hover-top),var(--hover-bot)); }
+    .dashboard{
+      align-self:center;
+      width:100%;
+      display:grid;
+      gap:clamp(52px,5.2vw,78px);
+    }
+    .primary-grid,
+    .quick-grid{
+      width:100%;
+      display:grid;
+      grid-template-columns:repeat(5, minmax(0, 1fr));
+      align-items:stretch;
+      gap:clamp(18px,2.1vw,30px);
+    }
 
-  .card-title-text{
-    font-family:Montserrat,sans-serif; font-weight:700; font-size:clamp(18px,2.4vw,25px); line-height:1.15;
-    text-transform:uppercase; margin:0 0 6px; text-align:center; white-space:normal; word-break:break-word; hyphens:auto;
-  }
-  .muted{ text-transform:uppercase; color:var(--muted); letter-spacing:.08em; font-weight:800; font-size:14px; margin-bottom:20px; }
+    .service-card,
+    .quick-card{
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      color:var(--text);
+      text-decoration:none;
+      border:1px solid var(--card-border);
+      background:linear-gradient(180deg,var(--card),var(--card-2));
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+      transform-style:preserve-3d;
+      transition:transform .28s cubic-bezier(.22,.61,.36,1), border-color .28s ease, background .28s ease, box-shadow .28s ease;
+      --mx:50%; --my:50%; --rx:0deg; --ry:0deg; --s:1.01; --shine:.12;
+    }
+    .service-card{
+      min-height:282px;
+      border-radius:var(--radius);
+      padding:24px 20px 20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+    }
+    .quick-card{
+      min-height:98px;
+      border-radius:17px;
+      padding:16px 14px 14px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
 
-  .bullet-list{ list-style:none; padding:0; margin:6px 0 22px; min-height:140px; }
-  .bullet{ display:flex; gap:10px; align-items:flex-start; justify-content:flex-start; margin:10px 0; font-size:11px; text-align:left; }
-  .bullet i{ color:var(--bullet); margin-top:3px; flex:0 0 16px; text-align:center; }
+    .service-card:hover,
+    .quick-card:hover{
+      transform:perspective(950px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s));
+      border-color:var(--card-border-hover);
+      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.078));
+      box-shadow:var(--shadow-hover);
+    }
+    .service-card::before,
+    .quick-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:var(--shine);
+      background:radial-gradient(260px 180px at var(--mx) var(--my), rgba(255,255,255,.56), rgba(255,255,255,.18) 34%, transparent 66%);
+      transition:opacity .2s ease;
+    }
+    .service-card::after,
+    .quick-card::after{
+      content:"";
+      position:absolute;
+      left:17px;
+      right:17px;
+      top:0;
+      height:2px;
+      border-radius:999px;
+      background:linear-gradient(90deg,transparent,var(--accent,#8bb8ef),transparent);
+      opacity:.78;
+    }
+    .admin{ --accent:#7db6eb; }
+    .it{ --accent:#9f9af5; }
+    .marketing{ --accent:#80d4c6; }
+    .database{ --accent:#d6b255; }
+    .assistant-card{ --accent:#8fd8ff; }
+    .hr{ --accent:#7fb3e8; }
+    .docs{ --accent:#aa93ff; }
+    .manager{ --accent:#d2aa4c; }
+    .policies{ --accent:#81d8cb; }
+    .kb{ --accent:#9ccfe9; }
 
-  /* Content fills card; button block sits at bottom */
-  .holo-content{ display:flex; flex-direction:column; flex:1 1 auto; min-height:0; height:100%; }
-  .holo-content > .d-grid{
-    margin-top:auto;        /* anchor at bottom area */
-    margin-bottom:24px;     /* default lift for ALL cards */
-    display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:12px;
-  }
+    .kicker,
+    .quick-kicker{
+      margin:0;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.20em;
+      font-size:10px;
+      line-height:1;
+      font-weight:600;
+      opacity:.82;
+    }
+    .service-title{
+      margin:8px 0 15px;
+      color:#fff;
+      font-size:clamp(19px,1.5vw,24px);
+      line-height:1.08;
+      letter-spacing:-.035em;
+      font-weight:700;
+      text-align:center;
+    }
+    .features{
+      list-style:none;
+      padding:0;
+      margin:0 auto 16px;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      gap:7px;
+      color:var(--text-soft);
+      font-size:12px;
+      line-height:1.35;
+      font-weight:500;
+      letter-spacing:.005em;
+      text-align:center;
+    }
+    .features li{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      max-width:190px;
+    }
+    .features li::before{
+      content:"";
+      width:5px;
+      height:5px;
+      border-radius:999px;
+      background:#98b7d5;
+      opacity:.8;
+      box-shadow:0 0 0 3px rgba(152,183,213,.06);
+      flex:0 0 auto;
+    }
+    .actions{
+      margin-top:auto;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+    }
+    .btn-pill{
+      width:100%;
+      max-width:168px;
+      min-height:36px;
+      border-radius:999px;
+      border:0;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      padding:0 13px;
+      color:#fff;
+      text-decoration:none;
+      background:var(--button);
+      font-size:13px;
+      line-height:1;
+      font-weight:650;
+      box-shadow:0 12px 24px rgba(0,0,0,.18);
+      transition:transform .22s ease, background .22s ease, box-shadow .22s ease;
+    }
+    .btn-pill:hover{
+      color:#fff;
+      background:var(--button-hover);
+      transform:translateY(-2px);
+      box-shadow:0 16px 30px rgba(0,0,0,.25);
+    }
+    .btn-wsp{ background:var(--whatsapp); }
+    .btn-wsp:hover{ background:var(--whatsapp-hover); }
+    .btn-assist{
+      background:linear-gradient(135deg,#e6f6ff 0%,#7ec9ff 42%,#3b9df0 100%);
+      color:#06233d;
+      font-weight:750;
+      box-shadow:0 16px 32px rgba(76,169,245,.34), 0 0 0 1px rgba(255,255,255,.35) inset, 0 0 22px rgba(126,201,255,.22);
+    }
+    .btn-assist:hover{
+      color:#061f36;
+      background:linear-gradient(135deg,#ffffff 0%,#96d8ff 42%,#4aa9f5 100%);
+      transform:translateY(-2px);
+      box-shadow:0 20px 40px rgba(76,169,245,.46), 0 0 0 1px rgba(255,255,255,.46) inset, 0 0 28px rgba(126,201,255,.32);
+    }
 
-  /* Per-card adjustments (only change this section to re-align) */
-  .admin-card .holo-content > .d-grid{ margin-bottom:300px; }  /* ADMIN */
-  .it-card    .holo-content > .d-grid{ margin-bottom:0px; }   /* IT    */
-  /* Example for others if needed:
-     .marketing-card .holo-content > .d-grid{ margin-bottom:24px; }
-     .policies-card  .holo-content > .d-grid{ margin-bottom:24px; } */
-
-  /* Buttons */
-  .btn-pill{
-    border-radius:999px; border:0; font-weight:600; letter-spacing:.02em;
-    padding:10px 15px; box-shadow:var(--btn-shadow); width:200px; color:#fff;
-    display:inline-flex; align-items:center; justify-content:center; margin:0 auto;
-  }
-  .btn-chip{ background:var(--btn-chip); }
-  .btn-chip:hover{ background:var(--btn-chip-hover); color:#fff; }
-  .btn-wsp{ background:var(--wsp); }
-  .btn-wsp:hover{ background:var(--wsp-hover); color:#131337; }
-  .btn-wsp:active{ background:var(--wsp-press); transform:translateY(1px); }
-  .btn{ position:relative; overflow:hidden; transition:transform .25s ease, box-shadow .25s ease, background .25s ease; }
-  .btn:hover{ transform:scale(1.05); box-shadow:0 6px 18px rgba(0,0,0,.25); color:#fff; }
-  .btn:active{ transform:scale(.95); box-shadow:0 2px 8px rgba(0,0,0,.2); }
-  .btn::after{
-    content:""; position:absolute; left:50%; top:50%; width:0; height:0; background:rgba(255,255,255,.4); border-radius:50%;
-    transform:translate(-50%,-50%); opacity:0; transition:width .6s ease, height .6s ease, opacity .8s ease;
-  }
-  .btn:active::after{ width:220%; height:220%; opacity:0; transition:0s; }
-
-  .site-footer{ background-color:#001f3f14; color:#fff; text-align:center; padding:14px 20px; font-size:14px; }
-
-  /* Carousel */
-  .cb-carousel{ position:relative; width:100%; margin:0 auto 48px; padding:0 56px; }
-  .cb-carousel .viewport{ overflow-x:hidden; overflow-y:visible; padding-top:28px; margin-top:-28px; padding-bottom:22px; -ms-overflow-style:none; scrollbar-width:none; scrollbar-gutter:stable both-edges; }
-  .cb-carousel .viewport::-webkit-scrollbar{ display:none; }
-  .cb-carousel .track{ list-style:none; margin:0; padding:0; display:flex; gap:var(--slides-gap); overflow:visible; }
-  .cb-carousel .slide{ box-sizing:border-box; flex:0 0 calc((100% - (var(--slides-gap) * (var(--per) - 1)) - 1px) / var(--per)); display:flex; justify-content:center; overflow:visible; }
-  .cb-carousel .nav{
-    position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:999px; border:0;
-    display:grid; place-items:center; background:rgba(0,0,0,.35); color:#fff; box-shadow:var(--btn-shadow); cursor:pointer;
-    transition:transform .18s ease, background .18s ease, opacity .2s ease; z-index:3;
-  }
-  .cb-carousel .nav:hover{ transform:translateY(-50%) scale(1.06); background:rgba(0,0,0,.48); }
-  .cb-carousel .nav:disabled{ opacity:.35; cursor:not-allowed; }
-  .cb-carousel .prev{ left:6px; } .cb-carousel .next{ right:6px; }
-
-  @media (max-width:991.98px){ :root{ --per:2; } }
-  @media (max-width:575.98px){
-    :root{ --per:1; }
-    .cb-carousel{ padding:0 48px; }
-    .help-card{ width:340px; max-width:100%; margin:0 auto 14px; padding:16px; height:auto; transform:none!important; }
-    .bullet-list{ width:max-content; margin:0 auto 24px; min-height:unset; }
-    .bullet{ justify-content:flex-start; align-items:center; text-align:left; font-size:.95rem; }
-    .btn-pill{ width:70%; padding:12px 14px; white-space:normal; }
-    /* mobile offsets if needed
-       .admin-card .holo-content > .d-grid{ margin-bottom:60px; }
-       .it-card    .holo-content > .d-grid{ margin-bottom:24px; } */
-  }
-
-  @media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } }
-
-  /* HOLO EFFECT (unchanged visuals) */
-  .holo-card{ position:relative; transform-style:preserve-3d; will-change:transform,filter;
-    --mx:50%; --my:50%; --rx:0deg; --ry:0deg; --b:.95; --c:1.05; --s:1.02; --shine:.18;
-    --grain:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii44IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbHRlcj0idXJsKCNuKSIgb3BhY2l0eT0iLjI1Ii8+PC9zdmc+"); transition:transform .3s ease, filter .3s ease, box-shadow .3s ease;
-  }
-  .holo-card:hover{ transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s)); filter:brightness(var(--b)) contrast(var(--c)); }
-  .holo-card::after{
-    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; mix-blend-mode:color-dodge; opacity:.9;
-    background-image:repeating-linear-gradient(calc(120deg + (var(--mx)-50%)*.6 + (var(--my)-50%)*.4),
-      rgba(255,120,120,.6) 0%, rgba(255,255,120,.6) 10%, rgba(120,255,160,.6) 20%, rgba(120,220,255,.6) 30%,
-      rgba(200,140,255,.6) 40%, rgba(255,120,200,.6) 50%, rgba(255,120,120,.6) 60%), var(--grain);
-    background-size:220% 220%, 180% 180%; background-position:calc(var(--mx)) calc(var(--my)), center;
-    filter:saturate(1.2) brightness(.9) contrast(1.25); transition:opacity .25s ease; border-radius:22px;
-  }
-  .holo-card::before{
-    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; mix-blend-mode:screen; opacity:var(--shine);
-    background:radial-gradient(350px 220px at var(--mx) var(--my), rgba(255,255,255,.55) 0%, rgba(255,255,255,.25) 25%, rgba(255,255,255,.10) 40%, rgba(255,255,255,0) 60%);
-    transition:opacity .2s ease; border-radius:22px;
-  }
-  .holo-card .holo-content{ position:relative; transform:translateZ(20px); }
-
-  /* Equal height cards and bottom-aligned buttons */
-.help-card {
-  width: 250px;
-  max-width: 400px;
-  height: 420px; /* slightly taller for balance */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* space between title and buttons */
-  text-align: center;
-  border-radius: 22px;
-  border: 1px solid var(--card-stroke);
-  padding: 26px 32px 28px;
-  background: linear-gradient(180deg, var(--card-top), var(--card-bot));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 22px 36px -14px rgba(0, 0, 0, 0.77);
-  transition: transform 0.28s cubic-bezier(.22, .61, .36, 1), box-shadow 0.28s ease;
-}
-
-/* Remove per-card offsets */
-.admin-card .holo-content > .d-grid,
-.it-card .holo-content > .d-grid {
-  margin-bottom: 0 !important;
-}
-
-/* Ensure content fills card and buttons stay anchored */
-.holo-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.holo-content > .d-grid {
-  margin-top: auto;  /* pushes buttons to bottom */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-bottom: 0;
-}
-
-/* Center the list as a block, keep left-aligned text */
-.bullet-list{
-  list-style:none;
-  padding:0;
-  margin: 6px auto 4px;   /* centers the whole list */
-  width: max-content;      /* shrink to content so centering is exact */
-  text-align:left;         /* keep lines left-aligned */
-  display:block;
-}
-
-/* Make icon + text line up in neat columns */
-.bullet{
-  display: grid;
-  grid-template-columns: 18px auto;  /* fixed icon column, fluid text */
-  gap: 4px;
-  align-items: start;
-  margin: 12px 0;
-  font-size: 12px;
-}
-
-/* Keep the check icon column perfectly aligned */
-.bullet i{
-  width:18px;              /* same as the first grid column */
-  text-align:center;
-  margin-top: 2px;         /* small optical lift */
-  color: var(--bullet);
-}
-/* === MOBILE STACK VIEW: one card below another === */
-@media (max-width: 600px){
-  /* remove carousel behaviour */
-  .cb-carousel .viewport {
-    overflow: visible !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  .cb-carousel .track {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 18px !important; /* space between cards */
-    align-items: center !important; /* center cards */
-  }
-  .cb-carousel .slide {
-    width: 100% !important;
-    justify-content: center !important;
-  }
-  .cb-carousel .nav {
-    display: none !important; /* hide arrows */
-  }
-  .cb-carousel {
-    padding: 0 16px !important;
-  }
-
-  /* card sizing */
-  .help-card {
-    width: 100% !important;
-    max-width: 380px !important;
-    height: auto !important;
-    padding: 16px !important;
-    transform: none !important;
-    margin: 0 auto !important;
-  }
-
-  /* bullets perfectly centered block, straight column */
-  .bullet-list {
-    width: max-content;
-    margin: 8px auto 10px;
-    text-align: left;
-  }
-  .bullet {
-    display: grid;
-    grid-template-columns: 18px auto;
-    gap: 8px;
-    align-items: start;
-    margin: 8px 0;
-    font-size: .95rem;
-  }
-  .bullet i {
-    width: 18px;
-    text-align: center;
-    margin-top: 2px;
-    color: var(--bullet);
-  }
-
-  /* buttons centered */
-  .holo-content {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-  }
-  .holo-content > .d-grid {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  .btn-pill {
-    width: 92% !important;
-    max-width: 360px;
-    padding: 12px 14px;
-    margin: 0 auto;
-  }
-}
-/* === DOUBLE BUTTON SIDE-BY-SIDE FIX FOR MOBILE === */
-@media (max-width: 800px){
-  /* Arrange WhatsApp + Raise Ticket side by side */
-  .holo-content > .d-grid {
-    margin-top: auto;
-    display: flex;
-    flex-direction: row;            /* side by side */
-    justify-content: center;        /* center both buttons */
-    align-items: center;
-    gap: 10px;                      /* space between buttons */
-    flex-wrap: nowrap;              /* keep same row */
-    width: 100%;
-  }
-
-  /* Make buttons equal width */
-  .btn-pill {
-    flex: 1 1 48%;                  /* 2 buttons take equal width */
-    max-width: 200px;
-    min-width: 140px;
-    padding: 12px 0;
-    margin: 0;
-    text-align: center;
-  }
-
-  /* Center single-button cards (like HR, Policies) */
-  .holo-content > .d-grid:only-child,
-  .holo-content > .d-grid:has(:only-child) {
-    justify-content: center;
-  }
-}
-
-/* === MOBILE: two buttons side-by-side, single button centered === */
-@media (max-width: 600px){
-
-  /* Button group layout */
-  .holo-content > .d-grid{
-    margin-top: auto;
-    display: flex !important;
-    flex-direction: row !important;     /* side-by-side */
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 12px !important;
-    flex-wrap: nowrap !important;       /* keep in one row */
-    width: 100%;
-  }
-
-  /* Make each button take half width; override any previous width:92% */
-  .holo-content > .d-grid .btn-pill{
-    width: auto !important;
-    flex: 1 1 48% !important;           /* equal halves */
-    min-width: 0;
-    max-width: 200px;
-    padding: 12px 10px;
-    margin: 0 !important;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  /* If there's only ONE button in the group, center it and make it wide */
-  .holo-content > .d-grid .btn-pill:only-child{
-    flex: 0 1 92% !important;           /* wide single button */
-    max-width: 360px;
-  }
-}
+    .assistant-card{
+      border-color:rgba(143,216,255,.26);
+      box-shadow:0 22px 36px -18px rgba(0,0,0,.72), 0 0 26px rgba(76,169,245,.08);
+    }
+    .assistant-card::after{
+      height:3px;
+      opacity:.95;
+      background:linear-gradient(90deg,transparent,#bfe8ff 20%,#5cb9ff 50%,#bfe8ff 80%,transparent);
+    }
 
 
+    .quick-kicker{ margin-bottom:7px; font-size:9.6px; }
+    .quick-title{
+      margin:0 0 10px;
+      color:#fff;
+      font-size:clamp(13px,1.05vw,16px);
+      line-height:1.16;
+      letter-spacing:-.025em;
+      font-weight:650;
+      text-align:center;
+    }
+    .quick-button{
+      min-width:94px;
+      min-height:26px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 14px;
+      color:#0e2740;
+      background:#a9c4dc;
+      text-decoration:none;
+      font-size:11px;
+      font-weight:700;
+      box-shadow:0 8px 18px rgba(0,0,0,.12);
+      transition:background .2s ease, transform .2s ease;
+    }
+    .quick-card:hover .quick-button{ background:#bad7f1; transform:translateY(-1px); }
+
+    .site-footer{
+      text-align:center;
+      color:rgba(217,231,248,.72);
+      font-size:12px;
+      line-height:1.2;
+      font-weight:500;
+      letter-spacing:.035em;
+      padding-top:18px;
+    }
+
+    @media (min-width:1301px) and (max-height:760px){
+      .page{ padding-top:14px; padding-bottom:10px; }
+      .hero-logo{ height:30px; margin-bottom:7px; }
+      .hero-title{ font-size:clamp(18px,2vw,28px); }
+      .hero-rule{ margin-top:11px; }
+      .dashboard{ gap:28px; }
+      .service-card{ min-height:258px; padding:21px 18px 18px; }
+      .quick-card{ min-height:88px; padding:14px 12px 12px; }
+      .service-title{ margin-bottom:13px; font-size:clamp(18px,1.4vw,22px); }
+      .features{ gap:6px; font-size:11.5px; margin-bottom:13px; }
+      .btn-pill{ max-width:158px; min-height:34px; font-size:12.5px; }
+      .site-footer{ padding-top:13px; }
+    }
+
+    @media (max-width:1300px){
+      .page{ display:block; min-height:auto; padding:18px 36px 24px; }
+      .primary-grid,.quick-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+      .service-card,.quick-card{ width:100%; }
+      .dashboard{ margin-top:8px; }
+    }
+    @media (max-width:820px){
+      .page{ padding-left:24px; padding-right:24px; }
+      .primary-grid,.quick-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+      .service-card{ min-height:250px; }
+    }
+    @media (max-width:560px){
+      .page{ padding:16px 18px 22px; }
+      .hero-logo{ height:30px; }
+      .hero-title{ font-size:18px; letter-spacing:.14em; }
+      .primary-grid,.quick-grid{ grid-template-columns:1fr; gap:12px; }
+      .service-card,.quick-card{ max-width:420px; margin:0 auto; }
+      .actions.double{ flex-direction:row; gap:8px; }
+      .actions.double .btn-pill{ min-width:0; font-size:12px; }
+    }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{ animation:none!important; transition:none!important; }
+      .service-card:hover,.quick-card:hover{ transform:none!important; }
+    }
   </style>
 </head>
 <body>
-
   <div class="bg-fixed" aria-hidden="true"></div>
 
-  <header class="hero-header">
-    <img src="assets/ff.png" alt="Coldwell Banker UAE logo" class="hero-logo" loading="eager">
-    <h1 class="hero-title">CB - HELPDESK</h1>
-  </header>
+  <div class="page">
+    <header class="hero-header">
+      <img src="assets/ff.png" alt="Coldwell Banker UAE logo" class="hero-logo" loading="eager">
+      <h1 class="hero-title">CB - HELPDESK</h1>
+      <div class="hero-rule" aria-hidden="true"></div>
+    </header>
 
-  <main class="main-content" role="main">
-    <div class="container">
-      <div class="cards-wrap">
+    <main class="dashboard" role="main">
+      <section class="primary-grid" aria-label="Primary support services">
+        <article class="service-card holo-card assistant-card">
+          <div class="kicker">Assistant</div>
+          <h2 class="service-title">How May I<br>Help You</h2>
+          <ul class="features"><li>How to do Listing</li><li>Form A</li><li>Form B</li><li>Form F</li></ul>
+          <div class="actions"><a class="btn-pill btn-assist" target="_blank" href="assist-request.html" rel="noopener">Request Assist</a></div>
+        </article>
 
-        <!-- ===== CAROUSEL START ===== -->
-        <div class="cb-carousel" data-aos="zoom-in-up">
-          <button class="nav prev" aria-label="Previous">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
+        <article class="service-card holo-card admin">
+          <div class="kicker">Support</div>
+          <h2 class="service-title">Admin</h2>
+          <ul class="features"><li>Listing Support</li><li>CRM Closings</li><li>Documentation</li><li>Conveyancing</li></ul>
+          <div class="actions double"><a class="btn-pill btn-wsp" target="_blank" href="https://wa.me/971529236871" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i>WhatsApp</a><a class="btn-pill" target="_blank" href="raise-ticket.html" rel="noopener">Raise Ticket</a></div>
+        </article>
 
-          <div class="viewport">
-            <ul class="track">
+        <article class="service-card holo-card it">
+          <div class="kicker">Support</div>
+          <h2 class="service-title">IT</h2>
+          <ul class="features"><li>Setup and Accounts</li><li>Device Support</li><li>CRM and Platforms</li><li>Technical Support</li></ul>
+          <div class="actions double"><a class="btn-pill btn-wsp" target="_blank" href="https://wa.me/971554479709" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i>WhatsApp</a><a class="btn-pill" target="_blank" href="https://cbae.freshservice.com/support/home" rel="noopener">Raise Ticket</a></div>
+        </article>
 
-              <!-- ADMIN -->
-              <li class="slide admin-card">
-                <div class="help-card holo-card" data-rarity="rare-holo">
-                  <div class="holo-content">
-                    <div class="card-title-text">ADMIN</div>
-                    <div class="muted">SUPPORT</div>
-                    <ul class="bullet-list">
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Listing Support</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>CRM Closings</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Documentation</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Portals Support</li>
-                    </ul>
-                    <div class="d-grid">
-                      <a class="btn btn-pill btn-wsp" target="_blank" href="https://wa.me/971529236871" rel="noopener">
-                        <i class="fab fa-whatsapp me-2" aria-hidden="true"></i><span>WhatsApp</span>
-                      </a>
-                      <a class="btn btn-pill btn-chip" target="_blank" href="raise-ticket.html" rel="noopener">Raise Ticket</a>
-                    </div>
-                  </div>
-                </div>
-              </li>
+        <article class="service-card holo-card marketing">
+          <div class="kicker">Support</div>
+          <h2 class="service-title">Marketing</h2>
+          <ul class="features"><li>Photoshoots</li><li>Videography</li><li>Edits &amp; Enhancing</li><li>Campaign Support</li></ul>
+          <div class="actions"><a class="btn-pill" target="_blank" href="https://www.mycbverse.com/" rel="noopener">Raise Ticket</a></div>
+        </article>
 
-              <!-- IT -->
-              <li class="slide it-card">
-                <div class="help-card holo-card" data-rarity="rare-holo">
-                  <div class="holo-content">
-                    <div class="card-title-text">IT</div>
-                    <div class="muted">SUPPORT</div>
-                    <ul class="bullet-list">
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Setup and Accounts</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Device Support</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>CRM and Platforms</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Technical Support</li>
-                    </ul>
-                    <div class="d-grid">
-                      <a class="btn btn-pill btn-wsp" target="_blank" href="https://wa.me/971554479709" rel="noopener">
-                        <i class="fab fa-whatsapp me-2" aria-hidden="true"></i><span>WhatsApp</span>
-                      </a>
-                      <a class="btn btn-pill btn-chip" target="_blank" href="https://cbae.freshservice.com/support/home" rel="noopener">Raise Ticket</a>
-                    </div>
-                  </div>
-                </div>
-              </li>
+        <article class="service-card holo-card database">
+          <div class="kicker">Request</div>
+          <h2 class="service-title">Database</h2>
+          <ul class="features"><li>Property Data</li><li>Owner Records</li><li>Transaction Details</li></ul>
+          <div class="actions"><a class="btn-pill" target="_blank" href="https://forms.office.com/Pages/ResponsePage.aspx?id=FU7WuVni9kewI6CLXerb9LqtFKdo_AtBqCrLGMMVQGVUNThBMFpHOU1TQlNVSUZESkpQRzg4RVZYOS4u" rel="noopener">Request Data</a></div>
+        </article>
+      </section>
 
-              <!-- MARKETING -->
-              <li class="slide marketing-card">
-                <div class="help-card holo-card" data-rarity="rare-holo">
-                  <div class="holo-content">
-                    <div class="card-title-text">MARKETING</div>
-                    <div class="muted">SUPPORT</div>
-                    <ul class="bullet-list">
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Photoshoots</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Videography</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Edits &amp; Enhancing</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Campaign Support</li>
-                    </ul>
-                    <div class="d-grid">
-                      <a class="btn btn-pill btn-chip" target="_blank" href="https://www.mycbverse.com/" rel="noopener">Raise Ticket</a>
-                    </div>
-                  </div>
-                </div>
-              </li>
+      <section class="quick-grid" aria-label="Quick access links">
+        <a class="quick-card holo-card policies" target="_blank" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" rel="noopener"><div class="quick-kicker">Guidelines</div><h3 class="quick-title">Policies</h3><span class="quick-button">Get Started</span></a>
+        <a class="quick-card holo-card manager" target="_blank" href="https://coldwellbankeruae.sharepoint.com/sites/CBManagersMarketingRequestPortal" rel="noopener"><div class="quick-kicker">Access</div><h3 class="quick-title">Manager's Portal</h3><span class="quick-button">Open Portal</span></a>
+        <a class="quick-card holo-card hr" target="_blank" href="https://cbemirates.keka.com/" rel="noopener"><div class="quick-kicker">Portal</div><h3 class="quick-title">HR</h3><span class="quick-button">Open HR</span></a>
+        <a class="quick-card holo-card docs" target="_blank" href="#" rel="noopener"><div class="quick-kicker">Forms</div><h3 class="quick-title">Document Center</h3><span class="quick-button">Open Center</span></a>
+        <a class="quick-card holo-card kb" target="_blank" href="https://cbae.freshservice.com/support/solutions" rel="noopener"><div class="quick-kicker">Guides</div><h3 class="quick-title">Knowledgebase</h3><span class="quick-button">Open KB</span></a>
+      </section>
+    </main>
 
-              <!-- POLICIES -->
-              <li class="slide policies-card">
-                <div class="help-card holo-card" data-rarity="rare-holo">
-                  <div class="holo-content">
-                    <div class="card-title-text">POLICIES</div>
-                    <div class="muted">&nbsp;</div>
-                    <ul class="bullet-list">
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Leads Policies</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Listing Policies</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>General Office Policies</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Transaction Closing</li>
-                    </ul>
-                    <div class="d-grid">
-                      <a class="btn btn-pill btn-chip" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" rel="noopener">Get Started</a>
-                    </div>
-                  </div>
-                </div>
-              </li>
+    <footer class="site-footer" role="contentinfo">© 2026 Coldwell Banker UAE | Helpdesk</footer>
+  </div>
 
-              <!-- HR -->
-              <li class="slide hr-card">
-                <div class="help-card holo-card" data-rarity="rare-holo">
-                  <div class="holo-content">
-                    <div class="card-title-text">HR PORTAL</div>
-                    <div class="muted">PORTAL</div>
-                    <ul class="bullet-list">
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Leave Requests</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Onboarding &amp; Offboarding</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Payroll &amp; Letters</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>HR Policies</li>
-                    </ul>
-                    <div class="d-grid">
-                      <a class="btn btn-pill btn-chip" target="_blank" href="https://cbemirates.keka.com/" rel="noopener">Open HR</a>
-                    </div>
-                  </div>
-                </div>
-              </li>
-
-              <!-- KB -->
-              <li class="slide kb-card">
-                <div class="help-card holo-card" data-rarity="rare-holo">
-                  <div class="holo-content">
-                    <div class="card-title-text">KNOWLEDGE BASE</div>
-                    <div class="muted">GUIDES</div>
-                    <ul class="bullet-list">
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>How-to Articles</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>FAQs</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Troubleshooting</li>
-                      <li class="bullet"><i class="fa-solid fa-circle-check"></i>Best Practices</li>
-                    </ul>
-                    <div class="d-grid">
-                      <a class="btn btn-pill btn-chip" target="_blank" href="https://cbae.freshservice.com/support/solutions" rel="noopener">Open KB</a>
-                    </div>
-                  </div>
-                </div>
-              </li>
-
-            </ul>
-          </div>
-
-          <button class="nav next" aria-label="Next">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-        <!-- ===== CAROUSEL END ===== -->
-
-      </div>
-    </div>
-  </main>
-
-  <footer class="site-footer" role="contentinfo">
-    © 2026 Coldwell Banker UAE | Helpdesk
-  </footer>
-
-  <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    window.addEventListener('load', function(){
-      if (window.AOS){
-        AOS.init({ duration: 750, easing: 'ease-out-cubic', offset: 80, once: false, mirror: true });
-        AOS.refreshHard();
-      }
-    });
-  </script>
-
-  <!-- Holo tilt -->
   <script>
   (function(){
     const cards=document.querySelectorAll('.holo-card');
     function setVars(el,x,y,rect){
-      const mx=((x-rect.left)/rect.width)*100, my=((y-rect.top)/rect.height)*100;
-      const ry=((mx-50)/50)*12, rx=((50-my)/50)*12;
-      el.style.setProperty('--mx',mx+'%'); el.style.setProperty('--my',my+'%');
-      el.style.setProperty('--rx',rx.toFixed(2)+'deg'); el.style.setProperty('--ry',ry.toFixed(2)+'deg');
-      el.style.setProperty('--s','1.04'); el.style.setProperty('--shine','.32');
+      const mx=((x-rect.left)/rect.width)*100;
+      const my=((y-rect.top)/rect.height)*100;
+      const ry=((mx-50)/50)*6;
+      const rx=((50-my)/50)*6;
+      el.style.setProperty('--mx',mx+'%');
+      el.style.setProperty('--my',my+'%');
+      el.style.setProperty('--rx',rx.toFixed(2)+'deg');
+      el.style.setProperty('--ry',ry.toFixed(2)+'deg');
+      el.style.setProperty('--s','1.018');
+      el.style.setProperty('--shine','.20');
     }
     function resetVars(el){
-      el.style.setProperty('--rx','0deg'); el.style.setProperty('--ry','0deg');
-      el.style.setProperty('--s','1.02'); el.style.setProperty('--shine','.18');
-      el.style.setProperty('--mx','50%'); el.style.setProperty('--my','50%');
+      el.style.setProperty('--rx','0deg');
+      el.style.setProperty('--ry','0deg');
+      el.style.setProperty('--s','1.01');
+      el.style.setProperty('--shine','.12');
+      el.style.setProperty('--mx','50%');
+      el.style.setProperty('--my','50%');
     }
     cards.forEach(el=>{
       el.addEventListener('mousemove',e=>{ const r=el.getBoundingClientRect(); setVars(el,e.clientX,e.clientY,r); },{passive:true});
       el.addEventListener('mouseleave',()=>resetVars(el),{passive:true});
-      el.addEventListener('touchmove',e=>{ const t=e.touches[0]; if(!t)return; const r=el.getBoundingClientRect(); setVars(el,t.clientX,t.clientY,r); },{passive:true});
-      el.addEventListener('touchend',()=>resetVars(el),{passive:true});
     });
-    function hookOrientation(){
-      window.addEventListener('deviceorientation',ev=>{
-        const gamma=Math.max(-30,Math.min(30,ev.gamma||0));
-        const beta =Math.max(-30,Math.min(30,ev.beta ||0));
-        cards.forEach(el=>{
-          const ry=(gamma/30)*12, rx=(-beta/30)*12;
-          el.style.setProperty('--ry',ry.toFixed(2)+'deg');
-          el.style.setProperty('--rx',rx.toFixed(2)+'deg');
-          const mx=50+(gamma/30)*25, my=50+(-beta/30)*25;
-          el.style.setProperty('--mx',mx+'%'); el.style.setProperty('--my',my+'%');
-          el.style.setProperty('--s','1.04'); el.style.setProperty('--shine','.3');
-        });
-      },{passive:true});
-    }
-    if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission==='function'){
-      document.addEventListener('click',async function once(){
-        try{ const p=await DeviceOrientationEvent.requestPermission(); if(p==='granted') hookOrientation(); }catch(_){}
-        document.removeEventListener('click',once);
-      });
-    } else if (window.DeviceOrientationEvent){ hookOrientation(); }
-  })();
-  </script>
-
-  <!-- Carousel JS -->
-  <script>
-  (function(){
-    const carousel=document.querySelector('.cb-carousel');
-    if(!carousel) return;
-    const viewport=carousel.querySelector('.viewport');
-    const prevBtn=carousel.querySelector('.prev');
-    const nextBtn=carousel.querySelector('.next');
-
-    function updateArrows(){
-      const max=Math.max(0,viewport.scrollWidth-viewport.clientWidth);
-      prevBtn.disabled=viewport.scrollLeft<=2;
-      nextBtn.disabled=viewport.scrollLeft>=(max-2);
-    }
-    function pageRight(){ viewport.scrollBy({left:viewport.clientWidth,behavior:'smooth'}); }
-    function pageLeft(){  viewport.scrollBy({left:-viewport.clientWidth,behavior:'smooth'}); }
-
-    nextBtn.addEventListener('click',pageRight);
-    prevBtn.addEventListener('click',pageLeft);
-    viewport.addEventListener('scroll',updateArrows,{passive:true});
-
-    function init(){ viewport.scrollLeft=0; updateArrows(); }
-    window.addEventListener('load',init);
-    window.addEventListener('resize',init);
   })();
   </script>
 
   <!-- Zoho widget -->
   <style>
   :root{
-    --cb-color: #2563eb;
-    --cb-w: 380px;
-    --cb-h: 560px;
-    --cb-radius: 16px;
-    --cb-z: 2147483000;
+    --cb-color:#2563eb;
+    --cb-w:380px;
+    --cb-h:560px;
+    --cb-radius:16px;
+    --cb-z:2147483000;
   }
-
-  #cb-wrap { position: fixed; right: 18px; bottom: 18px; z-index: var(--cb-z); }
-  #cb-toggle { position: fixed; right: 18px; bottom: 18px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-
+  #cb-wrap{ position:fixed; right:18px; bottom:18px; z-index:var(--cb-z); }
+  #cb-toggle{ position:fixed; right:18px; bottom:18px; width:1px; height:1px; opacity:0; pointer-events:none; }
   #cb-btn{
-    position: fixed; right: 18px; bottom: 18px;
-    display: grid; place-items: center;
-    width: 56px; height: 56px; border-radius: 999px;
-    background: var(--cb-color); color: #fff; cursor: pointer;
-    font: 600 18px system-ui,-apple-system,Segoe UI,Roboto,Arial;
-    box-shadow: 0 12px 30px rgba(0,0,0,.24);
-    user-select: none;
+    position:fixed; right:18px; bottom:18px;
+    display:grid; place-items:center;
+    width:56px; height:56px; border-radius:999px;
+    background:var(--cb-color); color:#fff; cursor:pointer;
+    font:600 18px system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    box-shadow:0 12px 30px rgba(0,0,0,.24);
+    user-select:none;
   }
-  #cb-btn:active { transform: translateY(1px); }
-
+  #cb-btn:active{ transform:translateY(1px); }
   #cb-panel{
-    position: fixed; right: 18px; bottom: 86px;
-    width: var(--cb-w); height: var(--cb-h);
-    background: #fff; border-radius: var(--cb-radius);
-    box-shadow: 0 18px 60px rgba(0,0,0,.28);
-    overflow: hidden; display: grid; grid-template-rows: auto 1fr;
-    opacity: 0; transform: translateY(8px); pointer-events: none;
-    transition: opacity .18s ease, transform .18s ease;
+    position:fixed; right:18px; bottom:86px;
+    width:var(--cb-w); height:var(--cb-h);
+    background:#fff; border-radius:var(--cb-radius);
+    box-shadow:0 18px 60px rgba(0,0,0,.28);
+    overflow:hidden; display:grid; grid-template-rows:auto 1fr;
+    opacity:0; transform:translateY(8px); pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease;
   }
   #cb-toggle:checked ~ #cb-panel{ opacity:1; transform:translateY(0); pointer-events:auto; }
-
-  /* Header / Close strip */
-  .cb-hdr{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:6px 10px; background:#0f172a; color:#fff;
-    font:600 14px system-ui; height:44px;
-  }
+  .cb-hdr{ display:flex; align-items:center; justify-content:space-between; padding:6px 10px; background:#0f172a; color:#fff; font:600 14px system-ui; height:44px; }
   .cb-close{ cursor:pointer; color:#fff; background:none; border:0; font-size:20px; line-height:1; }
-
   .cb-frame{ width:100%; height:100%; border:0; display:block; background:#f8fafc; }
-
-  /* Mobile full-sheet + always-visible close bar */
   @media (max-width:520px){
-    #cb-panel{
-      right:0; left:0; bottom:0; width:100vw; height:100svh;
-      border-radius:0; grid-template-rows:44px 1fr;
-    }
+    #cb-panel{ right:0; left:0; bottom:0; width:100vw; height:100svh; border-radius:0; grid-template-rows:44px 1fr; }
     #cb-btn{ right:12px; bottom:calc(12px + env(safe-area-inset-bottom,0)); }
   }
-</style>
+  </style>
 
-<div id="cb-wrap" aria-live="polite">
-  <input type="checkbox" id="cb-toggle" />
-  <label id="cb-btn" for="cb-toggle" aria-controls="cb-panel" aria-expanded="false" title="Open chat">💬</label>
-
-  <div id="cb-panel" role="dialog" aria-label="Policy Assistant">
-    <div class="cb-hdr">
-      <span>Assistant</span>
-      <label for="cb-toggle" class="cb-close" title="Close">✕</label>
+  <div id="cb-wrap" aria-live="polite">
+    <input type="checkbox" id="cb-toggle" />
+    <label id="cb-btn" for="cb-toggle" aria-controls="cb-panel" aria-expanded="false" title="Open chat">💬</label>
+    <div id="cb-panel" role="dialog" aria-label="Policy Assistant">
+      <div class="cb-hdr"><span>Assistant</span><label for="cb-toggle" class="cb-close" title="Close">✕</label></div>
+      <iframe class="cb-frame" title="Policy Assistant" src="https://chatbot-y9yw.onrender.com/static/chat.html?embed=1&api=https://chatbot-y9yw.onrender.com" allow="clipboard-read; clipboard-write" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
     </div>
-    <iframe
-      class="cb-frame"
-      title="Policy Assistant"
-      src="https://chatbot-y9yw.onrender.com/static/chat.html?embed=1&api=https://chatbot-y9yw.onrender.com"
-      allow="clipboard-read; clipboard-write"
-      referrerpolicy="no-referrer-when-downgrade"
-      loading="lazy">
-    </iframe>
   </div>
-</div>
-
 </body>
 </html>

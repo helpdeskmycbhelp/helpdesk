@@ -109,6 +109,32 @@
       margin:13px auto 0;
       background:linear-gradient(90deg,transparent,rgba(206,226,245,.34),transparent);
     }
+    .support-search{
+      width:min(520px,100%);
+      margin:18px auto 0;
+      position:relative;
+    }
+    .support-search input{
+      width:100%;
+      min-height:44px;
+      border:1px solid rgba(213,230,248,.20);
+      border-radius:999px;
+      outline:0;
+      padding:0 20px;
+      color:var(--text);
+      background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.065));
+      box-shadow:0 18px 42px -28px rgba(0,0,0,.86), 0 0 0 1px rgba(255,255,255,.045) inset;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      font:600 14px/1 'Plus Jakarta Sans','Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      transition:border-color .22s ease, background .22s ease, box-shadow .22s ease;
+    }
+    .support-search input::placeholder{ color:rgba(215,231,247,.62); }
+    .support-search input:focus{
+      border-color:rgba(143,216,255,.42);
+      background:linear-gradient(180deg,rgba(255,255,255,.17),rgba(255,255,255,.08));
+      box-shadow:0 20px 46px -28px rgba(0,0,0,.9), 0 0 0 1px rgba(143,216,255,.16) inset, 0 0 28px rgba(126,201,255,.12);
+    }
 
     .dashboard{
       align-self:start;
@@ -121,10 +147,11 @@
     .quick-grid{
       width:100%;
       display:grid;
-      grid-template-columns:repeat(5, minmax(0, 1fr));
       align-items:stretch;
       gap:clamp(18px,2.1vw,30px);
     }
+    .primary-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)); }
+    .quick-grid{ grid-template-columns:repeat(5, minmax(0, 1fr)); }
 
     .service-card,
     .quick-card{
@@ -354,6 +381,15 @@
       letter-spacing:.035em;
       padding-top:18px;
     }
+    .no-results{
+      margin:0;
+      text-align:center;
+      color:rgba(215,231,247,.76);
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:.01em;
+    }
+    [hidden]{ display:none!important; }
 
     @media (min-width:1301px) and (max-height:760px){
       .page{ padding-top:14px; padding-bottom:10px; }
@@ -384,6 +420,8 @@
       .page{ padding:16px 18px 22px; }
       .hero-logo{ height:30px; }
       .hero-title{ font-size:18px; letter-spacing:.14em; }
+      .support-search{ width:100%; margin-top:16px; }
+      .support-search input{ min-height:42px; font-size:13px; padding:0 16px; }
       .primary-grid,.quick-grid{ grid-template-columns:1fr; gap:12px; }
       .service-card,.quick-card{ max-width:420px; margin:0 auto; }
       .actions.double{ flex-direction:row; gap:8px; }
@@ -403,53 +441,50 @@
       <img src="assets/ff.png" alt="Coldwell Banker UAE logo" class="hero-logo" loading="eager">
       <h1 class="hero-title">CB - HELPDESK</h1>
       <div class="hero-rule" aria-hidden="true"></div>
+      <div class="support-search">
+        <input id="supportSearch" type="search" placeholder="Search support, forms, IT, HR, database..." aria-label="Search support options" autocomplete="off">
+      </div>
     </header>
 
     <main class="dashboard" role="main">
       <section class="primary-grid" aria-label="Primary support services">
-        <article class="service-card holo-card assistant-card">
-          <div class="kicker">Assistant</div>
-          <h2 class="service-title">How May I<br>Help You</h2>
-          <ul class="features"><li>How to do Listing</li><li>Form A</li><li>Form B</li><li>Form F</li></ul>
-          <div class="actions"><a class="btn-pill btn-assist" target="_blank" href="assist-request.html" rel="noopener">Request Assist</a></div>
-        </article>
-
-        <article class="service-card holo-card admin">
+        <article class="service-card holo-card admin" data-keywords="admin, admin support, listing, listings, property listing, create listing, update listing, publish listing, bulk listing, bayut listing, bayut hot, bayut signature, crm, crm support, closing, closings, crm closing, documentation, document support, conveyancing, form, forms, form a, form b, form f, aa form, create form, update form, print form, form request, form support, admin forms, opportunity, opportunity create, opportunity update, reserve, reservation, cancellation, invoice, voucher, acknowledgement voucher, tenancy, tenancy contract, contract a, contract, deal, deal closing, sales support, property publish, listing issue, portal listing, listing approval, approval, approvals, approve, request approval, admin approval, sales approval, department approval, team approval, image upload, photo upload, listing image, listing images, upload image, upload photos, property image, property photos, bayut image, portal image">
           <div class="kicker">Support</div>
           <h2 class="service-title">Admin</h2>
           <ul class="features"><li>Listing Support</li><li>CRM Closings</li><li>Documentation</li><li>Conveyancing</li></ul>
           <div class="actions double"><a class="btn-pill btn-wsp" target="_blank" href="https://wa.me/971529236871" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i>WhatsApp</a><a class="btn-pill" target="_blank" href="raise-ticket.html" rel="noopener">Raise Ticket</a></div>
         </article>
 
-        <article class="service-card holo-card it">
-          <div class="kicker">Support</div>
-          <h2 class="service-title">IT</h2>
-          <ul class="features"><li>Setup and Accounts</li><li>Device Support</li><li>CRM and Platforms</li><li>Technical Support</li></ul>
-          <div class="actions double"><a class="btn-pill btn-wsp" target="_blank" href="https://wa.me/971554479709" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i>WhatsApp</a><a class="btn-pill" target="_blank" href="https://cbae.freshservice.com/support/tickets/new" rel="noopener">Raise Ticket</a></div>
-        </article>
-
-        <article class="service-card holo-card marketing">
+        <article class="service-card holo-card marketing" data-keywords="marketing, marketing support, photoshoot, photoshoots, photography, photographer, video, videos, videography, edit, edits, editing, enhancing, image edit, photo edit, campaign, campaigns, social media, instagram, facebook, linkedin, post, posts, creative, design, designer, brochure, flyer, poster, reels, reel, content, branding, advertisement, ads, property video, property photoshoot, media request, marketing request, listing photos, listing video">
           <div class="kicker">Support</div>
           <h2 class="service-title">Marketing</h2>
           <ul class="features"><li>Photoshoots</li><li>Videography</li><li>Edits &amp; Enhancing</li><li>Campaign Support</li></ul>
           <div class="actions"><a class="btn-pill" target="_blank" href="https://www.mycbverse.com/" rel="noopener">Raise Ticket</a></div>
         </article>
 
-        <article class="service-card holo-card database">
+        <article class="service-card holo-card database" data-keywords="database, data, property data, owner, owners, owner records, transaction, transactions, transaction details, unit, units, unit number, building, tower, area, community, contact, contacts, landlord, landlords, property owner, records, mobile number, phone number, owner number, property details, database request, data request, broker data, agent data, availability, property availability, apartment data, villa data, townhouse data, lead data, buyer data, seller data">
           <div class="kicker">Request</div>
           <h2 class="service-title">Database</h2>
           <ul class="features"><li>Property Data</li><li>Owner Records</li><li>Transaction Details</li></ul>
           <div class="actions"><a class="btn-pill" target="_blank" href="https://forms.office.com/Pages/ResponsePage.aspx?id=FU7WuVni9kewI6CLXerb9LqtFKdo_AtBqCrLGMMVQGVUNThBMFpHOU1TQlNVSUZESkpQRzg4RVZYOS4u" rel="noopener">Request Data</a></div>
         </article>
+
+        <article class="service-card holo-card it" data-keywords="it, it support, technical, technical support, device, laptop, computer, pc, desktop, monitor, email, outlook, password, reset password, account, accounts, setup, user setup, crm, platform, platforms, internet, wifi, network, printer, scanner, access, login, sign in, freshservice, software, hardware, microsoft, office 365, o365, teams, sharepoint, onedrive, vpn, system issue, website issue, slow computer, email issue, outlook issue, license, license issue, mobile app, authenticator, mfa, otp, browser issue, salesforce, cold calling, error, errors, system error, login error, salesforce error, crm error, network error, authentication, microsoft authenticator">
+          <div class="kicker">Support</div>
+          <h2 class="service-title">IT</h2>
+          <ul class="features"><li>Setup and Accounts</li><li>Device Support</li><li>CRM and Platforms</li><li>Technical Support</li></ul>
+          <div class="actions double"><a class="btn-pill btn-wsp" target="_blank" href="https://wa.me/971554479709" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i>WhatsApp</a><a class="btn-pill" target="_blank" href="https://cbae.freshservice.com/support/tickets/new" rel="noopener">Raise Ticket</a></div>
+        </article>
       </section>
 
       <section class="quick-grid" aria-label="Quick access links">
-        <a class="quick-card holo-card policies" target="_blank" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" rel="noopener"><div class="quick-kicker">Guidelines</div><h3 class="quick-title">Policies</h3><span class="quick-button">Get Started</span></a>
-        <a class="quick-card holo-card manager" target="_blank" href="https://coldwellbankeruae.sharepoint.com/sites/CBManagersMarketingRequestPortal" rel="noopener"><div class="quick-kicker">Access</div><h3 class="quick-title">Manager's Portal</h3><span class="quick-button">Open Portal</span></a>
-        <a class="quick-card holo-card hr" target="_blank" href="https://cbemirates.keka.com/" rel="noopener"><div class="quick-kicker">Portal</div><h3 class="quick-title">HR</h3><span class="quick-button">Open HR</span></a>
-        <a class="quick-card holo-card docs" target="_blank" href="https://coldwellbankeruae-my.sharepoint.com/my?id=%2Fpersonal%2Fzubair%5Fcbemirates%5Fae%2FDocuments%2FColdwell%20Banker%20Share%2FSales%20Forms&viewid=fc5427bf%2Dea1e%2D449d%2D9578%2D63de2e9d86f8" rel="noopener"><div class="quick-kicker">Forms</div><h3 class="quick-title">Document Center</h3><span class="quick-button">Open Center</span></a>
-        <a class="quick-card holo-card kb" target="_blank" href="https://cbae.freshservice.com/support/solutions" rel="noopener"><div class="quick-kicker">Guides</div><h3 class="quick-title">Knowledgebase</h3><span class="quick-button">Open KB</span></a>
+        <a class="quick-card holo-card policies" target="_blank" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" rel="noopener" data-keywords="policy, policies, guidelines, rules, company policy, procedure, procedures, compliance, handbook, staff rules, employee rules, office rules, company guidelines, hr policy, it policy, sales policy, process, process document, standard procedure, sop, terms, internal policy"><div class="quick-kicker">Guidelines</div><h3 class="quick-title">Policies</h3><span class="quick-button">Get Started</span></a>
+        <a class="quick-card holo-card manager" target="_blank" href="https://coldwellbankeruae.sharepoint.com/sites/CBManagersMarketingRequestPortal" rel="noopener" data-keywords="manager, managers, portal, manager portal, marketing request, team request, manager request, team portal, manager access, manager dashboard, request status, sales manager, line manager"><div class="quick-kicker">Access</div><h3 class="quick-title">Manager's Portal</h3><span class="quick-button">Open Portal</span></a>
+        <a class="quick-card holo-card hr" target="_blank" href="https://cbemirates.keka.com/" rel="noopener" data-keywords="hr, human resources, keka, leave, leaves, leave request, attendance, salary, payroll, payslip, employee, employees, onboarding, offboarding, joining, resignation, visa, visa status, labour, labor, insurance, medical insurance, employee document, hr document, hr support, hr request, annual leave, sick leave, attendance issue, keka issue, employee profile, employee letter, salary certificate, noc, hr form"><div class="quick-kicker">Portal</div><h3 class="quick-title">HR</h3><span class="quick-button">Open HR</span></a>
+        <a class="quick-card holo-card docs" target="_blank" href="https://coldwellbankeruae-my.sharepoint.com/my?id=%2Fpersonal%2Fzubair%5Fcbemirates%5Fae%2FDocuments%2FColdwell%20Banker%20Share%2FSales%20Forms&viewid=fc5427bf%2Dea1e%2D449d%2D9578%2D63de2e9d86f8" rel="noopener" data-keywords="document, documents, document center, forms, sales forms, templates, template, agreement, agreements, contract, contracts, files, file, download, sales document, property document, form template, company document, admin forms, hr forms, marketing templates, sharepoint, sales forms library, document library, pdf, word file, excel file, letterhead, invoice template, receipt template, agreement template"><div class="quick-kicker">Forms</div><h3 class="quick-title">Document Center</h3><span class="quick-button">Open Center</span></a>
+        <a class="quick-card holo-card assistant-card" target="_blank" href="assist-request.html" rel="noopener" data-keywords="help, assist, assistance, request assist, how may i help, how may i help you, listing help, listing guidance, how to do listing, form a, form b, form f, guidance, guide, support guidance, need help, how to, how to create listing, how to create form a, how to create form b, how to create form f, conveyancing help, sales help, admin guidance, process help, step by step, training, explain, instruction, support request"><div class="quick-kicker">Assistant</div><h3 class="quick-title">How May I Help You</h3><span class="quick-button btn-assist">Request Assist</span></a>
       </section>
+      <p class="no-results" id="noSupportResults" hidden>No matching support option found.</p>
     </main>
 
     <footer class="site-footer" role="contentinfo">© 2026 Coldwell Banker UAE | Helpdesk</footer>
@@ -482,6 +517,29 @@
       el.addEventListener('mousemove',e=>{ const r=el.getBoundingClientRect(); setVars(el,e.clientX,e.clientY,r); },{passive:true});
       el.addEventListener('mouseleave',()=>resetVars(el),{passive:true});
     });
+
+    const search=document.getElementById('supportSearch');
+    const noResults=document.getElementById('noSupportResults');
+    const groups=document.querySelectorAll('.primary-grid,.quick-grid');
+    function updateSearch(){
+      const query=search.value.trim().toLowerCase();
+      let matches=0;
+      cards.forEach(card=>{
+        const haystack=(card.textContent+' '+(card.dataset.keywords||'')).toLowerCase();
+        const visible=!query || haystack.includes(query);
+        card.hidden=!visible;
+        if(visible) matches++;
+      });
+      groups.forEach(group=>{
+        const hasVisible=Array.from(group.querySelectorAll('.holo-card')).some(card=>!card.hidden);
+        group.hidden=query && !hasVisible;
+      });
+      noResults.hidden=!query || matches>0;
+    }
+    if(search){
+      search.addEventListener('input',updateSearch);
+      updateSearch();
+    }
   })();
   </script>
 

@@ -1,595 +1,543 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CB – Helpdesk</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CB Helpdesk | Coldwell Banker UAE</title>
 
-  <link rel="icon" href="data:,">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#08223b;
-      --bg-top:#24465f86;
-      --bg-bot:#0b2c4a;
-      --card:rgba(255,255,255,.105);
-      --card-2:rgba(255,255,255,.055);
-      --card-border:rgba(213,230,248,.15);
-      --card-border-hover:rgba(213,230,248,.28);
-      --text:#f6fbff;
-      --text-soft:#d7e7f7;
-      --muted:#a8bed5;
-      --button:#83a9ca;
-      --button-hover:#9bc2e5;
-      --whatsapp:#08a558;
-      --whatsapp-hover:#0ebb68;
-      --shadow:0 22px 54px -28px rgba(0,0,0,.88);
-      --shadow-hover:0 34px 70px -36px rgba(0,0,0,.94);
-      --radius:22px;
+    :root {
+      --cb-blue:#00263E;
+      --cb-blue-2:#0A4973;
+      --cb-blue-3:#0E5F92;
+      --page:#EDF3F8;
+      --card:#FFFFFF;
+      --line:#D5E1EC;
+      --text:#1E2D40;
+      --muted:#6B7A8D;
+      --soft-blue:#E8F2F8;
+      --green:#18BE6C;
+      --green-dark:#079455;
+      --amber:#C5A059;
+      --amber-soft:#FFF6DF;
+      --shadow:0 22px 55px rgba(0,38,62,.13);
+      --soft-shadow:0 9px 24px rgba(0,38,62,.08);
+      --radius:24px;
     }
 
-    *{ box-sizing:border-box; }
-    html{ min-height:100%; background:var(--bg); overscroll-behavior-y:none; }
-    body{
+    * {
+      box-sizing:border-box;
       margin:0;
-      min-height:100svh;
-      overflow-x:hidden;
-      font-family:'Plus Jakarta Sans','Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--text);
-      background:transparent;
-    }
-
-    .bg-fixed{
-      position:fixed;
-      inset:0;
-      z-index:-4;
-      background:url('assets/t.jpg') center/cover no-repeat;
-      transform:translateZ(0);
-    }
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      z-index:-3;
-      pointer-events:none;
-      background:
-        radial-gradient(820px 380px at 18% 6%, rgba(159,204,244,.10), transparent 64%),
-        radial-gradient(760px 360px at 78% 8%, rgba(255,255,255,.075), transparent 64%),
-        radial-gradient(720px 320px at 50% 92%, rgba(53,111,160,.16), transparent 62%),
-        linear-gradient(180deg,var(--bg-top) 0%,var(--bg-bot) 100%);
-    }
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
-      opacity:.22;
-      background-image:
-        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size:72px 72px;
-      mask-image:radial-gradient(circle at 50% 42%, #000 0 45%, transparent 72%);
-    }
-
-    .page{
-      width:min(100%, 1480px);
-      min-height:100svh;
-      margin:0 auto;
-      padding:18px clamp(34px,4.3vw,70px) 14px;
-      display:grid;
-      grid-template-rows:auto 1fr auto;
-    }
-
-    .hero-header{
-      text-align:center;
-      padding:0 0 16px;
-    }
-    .hero-logo{
-      height:34px;
-      width:auto;
-      display:block;
-      margin:0 auto 8px;
-      filter:drop-shadow(0 7px 18px rgba(0,0,0,.42));
-    }
-    .hero-title{
-      margin:0;
-      font-size:clamp(20px,2.2vw,32px);
-      line-height:1.1;
-      letter-spacing:.18em;
-      font-weight:700;
-      color:rgba(255,255,255,.94);
-      text-shadow:0 5px 18px rgba(0,0,0,.45);
-    }
-    .hero-rule{
-      width:min(520px,54vw);
-      height:1px;
-      margin:13px auto 0;
-      background:linear-gradient(90deg,transparent,rgba(206,226,245,.34),transparent);
-    }
-    .support-search{
-      width:min(520px,100%);
-      margin:18px auto 0;
-      position:relative;
-    }
-    .support-search input{
-      width:100%;
-      min-height:44px;
-      border:1px solid rgba(213,230,248,.20);
-      border-radius:999px;
-      outline:0;
-      padding:0 20px;
-      color:var(--text);
-      background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.065));
-      box-shadow:0 18px 42px -28px rgba(0,0,0,.86), 0 0 0 1px rgba(255,255,255,.045) inset;
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
-      font:600 14px/1 'Plus Jakarta Sans','Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      transition:border-color .22s ease, background .22s ease, box-shadow .22s ease;
-    }
-    .support-search input::placeholder{ color:rgba(215,231,247,.62); }
-    .support-search input:focus{
-      border-color:rgba(143,216,255,.42);
-      background:linear-gradient(180deg,rgba(255,255,255,.17),rgba(255,255,255,.08));
-      box-shadow:0 20px 46px -28px rgba(0,0,0,.9), 0 0 0 1px rgba(143,216,255,.16) inset, 0 0 28px rgba(126,201,255,.12);
-    }
-
-    .dashboard{
-      align-self:start;
-      width:100%;
-      display:grid;
-      gap:clamp(76px,6.4vw,104px);
-      padding-top:clamp(150px,14vh,172px);
-    }
-    .primary-grid,
-    .quick-grid{
-      width:100%;
-      display:grid;
-      align-items:stretch;
-      gap:clamp(18px,2.1vw,30px);
-    }
-    .primary-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)); }
-    .quick-grid{ grid-template-columns:repeat(5, minmax(0, 1fr)); }
-
-    .service-card,
-    .quick-card{
-      position:relative;
-      isolation:isolate;
-      overflow:hidden;
-      color:var(--text);
-      text-decoration:none;
-      border:1px solid var(--card-border);
-      background:linear-gradient(180deg,var(--card),var(--card-2));
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
-      box-shadow:var(--shadow);
-      transform-style:preserve-3d;
-      transition:transform .28s cubic-bezier(.22,.61,.36,1), border-color .28s ease, background .28s ease, box-shadow .28s ease;
-      --mx:50%; --my:50%; --rx:0deg; --ry:0deg; --s:1.01; --shine:.12;
-    }
-    .service-card{
-      min-height:282px;
-      border-radius:var(--radius);
-      padding:24px 20px 20px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      text-align:center;
-    }
-    .quick-card{
-      min-height:118px;
-      border-radius:18px;
-      padding:20px 16px 18px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-    }
-
-    .service-card:hover,
-    .quick-card:hover{
-      transform:perspective(950px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s));
-      border-color:var(--card-border-hover);
-      background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.078));
-      box-shadow:var(--shadow-hover);
-    }
-    .service-card::before,
-    .quick-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-      opacity:var(--shine);
-      background:radial-gradient(260px 180px at var(--mx) var(--my), rgba(255,255,255,.56), rgba(255,255,255,.18) 34%, transparent 66%);
-      transition:opacity .2s ease;
-    }
-    .service-card::after,
-    .quick-card::after{
-      content:"";
-      position:absolute;
-      left:17px;
-      right:17px;
-      top:0;
-      height:2px;
-      border-radius:999px;
-      background:linear-gradient(90deg,transparent,var(--accent,#8bb8ef),transparent);
-      opacity:.78;
-    }
-    .admin{ --accent:#7db6eb; }
-    .it{ --accent:#9f9af5; }
-    .marketing{ --accent:#80d4c6; }
-    .database{ --accent:#d6b255; }
-    .assistant-card{ --accent:#8fd8ff; }
-    .hr{ --accent:#7fb3e8; }
-    .docs{ --accent:#aa93ff; }
-    .manager{ --accent:#d2aa4c; }
-    .policies{ --accent:#81d8cb; }
-    .kb{ --accent:#9ccfe9; }
-
-    .kicker,
-    .quick-kicker{
-      margin:0;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:.20em;
-      font-size:10px;
-      line-height:1;
-      font-weight:600;
-      opacity:.82;
-    }
-    .service-title{
-      margin:8px 0 15px;
-      color:#fff;
-      font-size:clamp(19px,1.5vw,24px);
-      line-height:1.08;
-      letter-spacing:-.035em;
-      font-weight:700;
-      text-align:center;
-    }
-    .features{
-      list-style:none;
       padding:0;
-      margin:0 auto 16px;
-      width:100%;
+    }
+
+    html, body {
+      min-height:100%;
+      background:var(--page);
+    }
+
+    body {
+      height:100vh;
+      overflow:hidden;
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(10,73,115,.16), transparent 31%),
+        radial-gradient(circle at 100% 4%, rgba(197,160,89,.14), transparent 28%),
+        linear-gradient(180deg, #FAFCFE 0%, #EEF4F8 52%, #E6EEF5 100%);
+    }
+
+    body::before {
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(0,38,62,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,38,62,.028) 1px, transparent 1px);
+      background-size:86px 86px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.46), transparent 94%);
+    }
+
+    a {
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .page {
+      position:relative;
+      z-index:1;
+      width:min(1530px, calc(100% - 24px));
+      height:100vh;
+      margin:0 auto;
+      padding:10px 0;
+      display:grid;
+      grid-template-rows:66px 1fr;
+      gap:12px;
+    }
+
+    .topbar {
       display:flex;
-      flex-direction:column;
       align-items:center;
       justify-content:flex-start;
-      gap:7px;
-      color:var(--text-soft);
-      font-size:12px;
-      line-height:1.35;
-      font-weight:500;
-      letter-spacing:.005em;
-      text-align:center;
+      padding:0 20px;
+      border:1px solid rgba(0,38,62,.10);
+      border-radius:24px;
+      background:rgba(255,255,255,.86);
+      box-shadow:var(--soft-shadow);
+      backdrop-filter:blur(18px);
     }
-    .features li{
+
+    .brand {
       display:flex;
       align-items:center;
-      justify-content:center;
-      gap:7px;
-      max-width:190px;
+      gap:13px;
+      min-width:0;
     }
-    .features li::before{
-      content:"";
-      width:5px;
-      height:5px;
-      border-radius:999px;
-      background:#98b7d5;
-      opacity:.8;
-      box-shadow:0 0 0 3px rgba(152,183,213,.06);
+
+    .logo-mark {
+      width:42px;
+      height:42px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      background:
+        linear-gradient(145deg, var(--cb-blue), #063653);
+      color:#fff;
+      font-family:"Plus Jakarta Sans", Inter, sans-serif;
+      font-weight:900;
+      letter-spacing:-1.3px;
+      position:relative;
+      box-shadow:0 11px 25px rgba(0,38,62,.22);
       flex:0 0 auto;
     }
-    .actions{
-      margin-top:auto;
-      width:100%;
+
+    .logo-mark::after {
+      content:"";
+      position:absolute;
+      inset:7px;
+      border:1px solid rgba(255,255,255,.30);
+      border-radius:11px;
+    }
+
+    .brand h1 {
+      font-family:"Plus Jakarta Sans", Inter, sans-serif;
+      color:var(--cb-blue);
+      font-size:21px;
+      font-weight:900;
+      letter-spacing:.11em;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .brand small {
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .workspace {
+      min-height:0;
+      display:grid;
+      grid-template-columns:minmax(900px, 1.34fr) minmax(370px, .46fr);
+      gap:12px;
+    }
+
+    .form-card {
+      min-height:0;
+      border-radius:var(--radius);
+      border:1px solid rgba(0,38,62,.10);
+      background:#fff;
+      box-shadow:var(--shadow);
+      overflow:hidden;
       display:flex;
       flex-direction:column;
-      align-items:center;
-      gap:8px;
+      position:relative;
     }
-    .btn-pill{
-      width:100%;
-      max-width:168px;
-      min-height:36px;
-      border-radius:999px;
+
+    .form-card::before {
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:6px;
+      background:linear-gradient(90deg, var(--cb-blue), var(--cb-blue-3), var(--amber));
+      z-index:2;
+    }
+
+    .iframe-wrap {
+      min-height:0;
+      flex:1;
+      background:#E7ECF4;
+      overflow:hidden;
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-start;
+      padding-top:0;
+    }
+
+    iframe {
+      width:113%;
+      height:860px;
       border:0;
-      display:inline-flex;
+      background:#E7ECF4;
+      display:block;
+      transform:scale(.89);
+      transform-origin:top left;
+    }
+
+    .side {
+      min-height:0;
+      display:grid;
+      grid-template-rows:1.08fr .92fr;
+      gap:12px;
+    }
+
+    .panel {
+      min-height:0;
+      border-radius:var(--radius);
+      border:1px solid rgba(0,38,62,.10);
+      background:rgba(255,255,255,.88);
+      box-shadow:var(--soft-shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-rows:52px 1fr;
+      backdrop-filter:blur(10px);
+    }
+
+    .panel-title {
+      height:52px;
+      display:flex;
       align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:0 18px;
+      background:
+        linear-gradient(90deg, #fff, #F4F8FB);
+      border-bottom:1px solid var(--line);
+      color:var(--cb-blue);
+      font-size:15px;
+      font-weight:900;
+    }
+
+    .panel-title small {
+      color:var(--muted);
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .buttons {
+      min-height:0;
+      padding:10px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      align-content:stretch;
+    }
+
+    .btn-card {
+      min-height:76px;
+      border:1px solid #D1DFEA;
+      border-radius:18px;
+      background:
+        linear-gradient(145deg, #fff, #F8FBFD);
+      padding:13px;
+      display:flex;
+      flex-direction:column;
       justify-content:center;
-      gap:7px;
-      padding:0 13px;
-      color:#fff;
-      text-decoration:none;
-      background:var(--button);
-      font-size:13px;
-      line-height:1;
-      font-weight:650;
-      box-shadow:0 12px 24px rgba(0,0,0,.18);
-      transition:transform .22s ease, background .22s ease, box-shadow .22s ease;
+      transition:.18s ease;
+      box-shadow:0 8px 16px rgba(0,38,62,.035);
+      position:relative;
+      overflow:hidden;
     }
-    .btn-pill:hover{
-      color:#fff;
-      background:var(--button-hover);
+
+    .btn-card::before {
+      content:"";
+      position:absolute;
+      top:12px;
+      right:12px;
+      width:24px;
+      height:24px;
+      border-radius:9px;
+      background:rgba(10,73,115,.06);
+    }
+
+    .btn-card:hover {
       transform:translateY(-2px);
-      box-shadow:0 16px 30px rgba(0,0,0,.25);
+      background:var(--soft-blue);
+      border-color:rgba(10,73,115,.22);
+      box-shadow:0 16px 30px rgba(0,38,62,.12);
     }
-    .btn-wsp{ background:var(--whatsapp); }
-    .btn-wsp:hover{ background:var(--whatsapp-hover); }
-    .btn-assist{
-      background:linear-gradient(135deg,#e6f6ff 0%,#7ec9ff 42%,#3b9df0 100%);
-      color:#06233d;
+
+    .btn-card.dark {
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255,255,255,.16), transparent 34%),
+        linear-gradient(145deg, var(--cb-blue), #043653);
+      border-color:var(--cb-blue);
+    }
+
+    .btn-card.green {
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255,255,255,.18), transparent 34%),
+        linear-gradient(145deg, var(--green), var(--green-dark));
+      border-color:var(--green);
+    }
+
+    .btn-card.dark::before,
+    .btn-card.green::before {
+      background:rgba(255,255,255,.15);
+    }
+
+    .btn-card strong {
+      color:var(--cb-blue);
+      font-size:12.5px;
+      font-weight:900;
+      line-height:1.12;
+      position:relative;
+      z-index:1;
+    }
+
+    .btn-card span {
+      color:var(--muted);
+      font-size:10px;
       font-weight:750;
-      box-shadow:0 16px 32px rgba(76,169,245,.34), 0 0 0 1px rgba(255,255,255,.35) inset, 0 0 22px rgba(126,201,255,.22);
-    }
-    .btn-assist:hover{
-      color:#061f36;
-      background:linear-gradient(135deg,#ffffff 0%,#96d8ff 42%,#4aa9f5 100%);
-      transform:translateY(-2px);
-      box-shadow:0 20px 40px rgba(76,169,245,.46), 0 0 0 1px rgba(255,255,255,.46) inset, 0 0 28px rgba(126,201,255,.32);
+      margin-top:5px;
+      line-height:1.22;
+      position:relative;
+      z-index:1;
     }
 
-    .assistant-card{
-      border-color:rgba(143,216,255,.26);
-      box-shadow:0 22px 36px -18px rgba(0,0,0,.72), 0 0 26px rgba(76,169,245,.08);
-    }
-    .assistant-card::after{
-      height:3px;
-      opacity:.95;
-      background:linear-gradient(90deg,transparent,#bfe8ff 20%,#5cb9ff 50%,#bfe8ff 80%,transparent);
-    }
-
-
-    .quick-kicker{ margin-bottom:7px; font-size:9.6px; }
-    .quick-title{
-      margin:0 0 10px;
+    .btn-card.dark strong,
+    .btn-card.dark span,
+    .btn-card.green strong,
+    .btn-card.green span {
       color:#fff;
-      font-size:clamp(13px,1.05vw,16px);
-      line-height:1.16;
-      letter-spacing:-.025em;
-      font-weight:650;
-      text-align:center;
     }
-    .quick-button{
-      min-width:94px;
-      min-height:26px;
-      border-radius:999px;
-      display:inline-flex;
+
+    .wide {
+      grid-column:span 2;
+      min-height:72px;
+    }
+
+    .list {
+      min-height:0;
+      padding:10px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      align-content:start;
+    }
+
+    .small-btn {
+      min-height:78px;
+      border:1px solid #D1DFEA;
+      border-radius:17px;
+      background:
+        linear-gradient(145deg, #fff, #F8FBFD);
+      padding:12px;
+      display:flex;
       align-items:center;
-      justify-content:center;
-      padding:0 14px;
-      color:#0e2740;
-      background:#a9c4dc;
-      text-decoration:none;
-      font-size:11px;
-      font-weight:700;
-      box-shadow:0 8px 18px rgba(0,0,0,.12);
-      transition:background .2s ease, transform .2s ease;
+      gap:10px;
+      transition:.18s ease;
+      box-shadow:0 8px 16px rgba(0,38,62,.03);
     }
-    .quick-card:hover .quick-button{ background:#bad7f1; transform:translateY(-1px); }
 
-    .site-footer{
-      text-align:center;
-      color:rgba(217,231,248,.72);
+    .small-btn:hover {
+      transform:translateY(-2px);
+      background:var(--soft-blue);
+      border-color:rgba(10,73,115,.20);
+    }
+
+    .tag {
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:#EEF4F8;
+      color:var(--cb-blue-2);
+      font-size:10px;
+      font-weight:900;
+      flex:0 0 auto;
+      box-shadow:inset 0 0 0 1px rgba(0,38,62,.03);
+    }
+
+    .small-btn strong {
+      display:block;
+      color:var(--cb-blue);
       font-size:12px;
+      line-height:1.12;
+      font-weight:900;
+    }
+
+    .small-btn span.meta {
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:10px;
       line-height:1.2;
-      font-weight:500;
-      letter-spacing:.035em;
-      padding-top:18px;
-    }
-    .no-results{
-      margin:0;
-      text-align:center;
-      color:rgba(215,231,247,.76);
-      font-size:13px;
-      font-weight:600;
-      letter-spacing:.01em;
-    }
-    [hidden]{ display:none!important; }
-
-    @media (min-width:1301px) and (max-height:760px){
-      .page{ padding-top:14px; padding-bottom:10px; }
-      .hero-logo{ height:30px; margin-bottom:7px; }
-      .hero-title{ font-size:clamp(18px,2vw,28px); }
-      .hero-rule{ margin-top:11px; }
-      .dashboard{ gap:46px; padding-top:64px; }
-      .service-card{ min-height:258px; padding:21px 18px 18px; }
-      .quick-card{ min-height:104px; padding:17px 14px 15px; }
-      .service-title{ margin-bottom:13px; font-size:clamp(18px,1.4vw,22px); }
-      .features{ gap:6px; font-size:11.5px; margin-bottom:13px; }
-      .btn-pill{ max-width:158px; min-height:34px; font-size:12.5px; }
-      .site-footer{ padding-top:13px; }
+      font-weight:750;
     }
 
-    @media (max-width:1300px){
-      .page{ display:block; min-height:auto; padding:18px 36px 24px; }
-      .primary-grid,.quick-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
-      .service-card,.quick-card{ width:100%; }
-      .dashboard{ margin-top:10px; gap:34px; padding-top:0; }
+    @media (max-width:1180px) {
+      body {
+        height:auto;
+        overflow:auto;
+      }
+
+      .page {
+        height:auto;
+        min-height:100vh;
+        grid-template-rows:auto auto;
+      }
+
+      .lookup-reminder {
+        display:none;
+      }
+
+      .workspace {
+        grid-template-columns:1fr;
+      }
+
+      .side {
+        grid-template-columns:1fr 1fr;
+        grid-template-rows:auto;
+      }
+
+      .search-callout {
+        display:none;
+      }
+
+      iframe {
+        width:100%;
+        height:820px;
+        transform:none;
+      }
     }
-    @media (max-width:820px){
-      .page{ padding-left:24px; padding-right:24px; }
-      .primary-grid,.quick-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
-      .service-card{ min-height:250px; }
-    }
-    @media (max-width:560px){
-      .page{ padding:16px 18px 22px; }
-      .hero-logo{ height:30px; }
-      .hero-title{ font-size:18px; letter-spacing:.14em; }
-      .support-search{ width:100%; margin-top:16px; }
-      .support-search input{ min-height:42px; font-size:13px; padding:0 16px; }
-      .primary-grid,.quick-grid{ grid-template-columns:1fr; gap:12px; }
-      .service-card,.quick-card{ max-width:420px; margin:0 auto; }
-      .actions.double{ flex-direction:row; gap:8px; }
-      .actions.double .btn-pill{ min-width:0; font-size:12px; }
-    }
-    @media (prefers-reduced-motion:reduce){
-      *,*::before,*::after{ animation:none!important; transition:none!important; }
-      .service-card:hover,.quick-card:hover{ transform:none!important; }
+
+    @media (max-width:760px) {
+      .page {
+        width:min(100% - 18px, 560px);
+        padding:9px 0;
+      }
+
+      .topbar {
+        min-height:58px;
+        padding:14px;
+      }
+
+      .brand h1 {
+        font-size:18px;
+        letter-spacing:.08em;
+      }
+
+      .side {
+        grid-template-columns:1fr;
+      }
+
+      .buttons,
+      .list {
+        grid-template-columns:1fr;
+      }
+
+      .wide {
+        grid-column:auto;
+      }
+
+      iframe {
+        height:840px;
+      }
     }
   </style>
 </head>
-<body>
-  <div class="bg-fixed" aria-hidden="true"></div>
 
-  <div class="page">
-    <header class="hero-header">
-      <img src="assets/ff.png" alt="Coldwell Banker UAE logo" class="hero-logo" loading="eager">
-      <h1 class="hero-title">CB - HELPDESK</h1>
-      <div class="hero-rule" aria-hidden="true"></div>
-      <div class="support-search">
-        <input id="supportSearch" type="search" placeholder="Search support, forms, IT, HR, database..." aria-label="Search support options" autocomplete="off">
-      </div>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="CB Helpdesk Home">
+        <span class="logo-mark">CB</span>
+        <span>
+          <h1>CB HELPDESK</h1>
+          <small>Coldwell Banker UAE Support Portal</small>
+        </span>
+      </a>
+
     </header>
 
-    <main class="dashboard" role="main">
-      <section class="primary-grid" aria-label="Primary support services">
-        <article class="service-card holo-card admin" data-keywords="admin, admin support, listing, listings, property listing, create listing, update listing, publish listing, bulk listing, bayut listing, bayut hot, bayut signature, crm, crm support, closing, closings, crm closing, documentation, document support, conveyancing, form, forms, form a, form b, form f, aa form, create form, update form, print form, form request, form support, admin forms, opportunity, opportunity create, opportunity update, reserve, reservation, cancellation, invoice, voucher, acknowledgement voucher, tenancy, tenancy contract, contract a, contract, deal, deal closing, sales support, property publish, listing issue, portal listing, listing approval, approval, approvals, approve, request approval, admin approval, sales approval, department approval, team approval, image upload, photo upload, listing image, listing images, upload image, upload photos, property image, property photos, bayut image, portal image">
-          <div class="kicker">Support</div>
-          <h2 class="service-title">Admin</h2>
-          <ul class="features"><li>Listing Support</li><li>CRM Closings</li><li>Documentation</li><li>Conveyancing</li></ul>
-          <div class="actions double"><a class="btn-pill btn-wsp" target="_blank" href="https://wa.me/971529236871" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i>WhatsApp</a><a class="btn-pill" target="_blank" href="raise-ticket.html" rel="noopener">Raise Ticket</a></div>
-        </article>
-
-        <article class="service-card holo-card marketing" data-keywords="marketing, marketing support, photoshoot, photoshoots, photography, photographer, video, videos, videography, edit, edits, editing, enhancing, image edit, photo edit, campaign, campaigns, social media, instagram, facebook, linkedin, post, posts, creative, design, designer, brochure, flyer, poster, reels, reel, content, branding, advertisement, ads, property video, property photoshoot, media request, marketing request, listing photos, listing video">
-          <div class="kicker">Support</div>
-          <h2 class="service-title">Marketing</h2>
-          <ul class="features"><li>Photoshoots</li><li>Videography</li><li>Edits &amp; Enhancing</li><li>Campaign Support</li></ul>
-          <div class="actions"><a class="btn-pill" target="_blank" href="https://www.mycbverse.com/" rel="noopener">Raise Ticket</a></div>
-        </article>
-
-        <article class="service-card holo-card database" data-keywords="database, data, property data, owner, owners, owner records, transaction, transactions, transaction details, unit, units, unit number, building, tower, area, community, contact, contacts, landlord, landlords, property owner, records, mobile number, phone number, owner number, property details, database request, data request, broker data, agent data, availability, property availability, apartment data, villa data, townhouse data, lead data, buyer data, seller data">
-          <div class="kicker">Request</div>
-          <h2 class="service-title">Database</h2>
-          <ul class="features"><li>Property Data</li><li>Owner Records</li><li>Transaction Details</li></ul>
-          <div class="actions"><a class="btn-pill" target="_blank" href="https://forms.office.com/Pages/ResponsePage.aspx?id=FU7WuVni9kewI6CLXerb9LqtFKdo_AtBqCrLGMMVQGVUNThBMFpHOU1TQlNVSUZESkpQRzg4RVZYOS4u" rel="noopener">Request Data</a></div>
-        </article>
-
-        <article class="service-card holo-card it" data-keywords="it, it support, technical, technical support, device, laptop, computer, pc, desktop, monitor, email, outlook, password, reset password, account, accounts, setup, user setup, crm, platform, platforms, internet, wifi, network, printer, scanner, access, login, sign in, freshservice, software, hardware, microsoft, office 365, o365, teams, sharepoint, onedrive, vpn, system issue, website issue, slow computer, email issue, outlook issue, license, license issue, mobile app, authenticator, mfa, otp, browser issue, salesforce, cold calling, error, errors, system error, login error, salesforce error, crm error, network error, authentication, microsoft authenticator">
-          <div class="kicker">Support</div>
-          <h2 class="service-title">IT</h2>
-          <ul class="features"><li>Setup and Accounts</li><li>Device Support</li><li>CRM and Platforms</li><li>Technical Support</li></ul>
-          <div class="actions double"><a class="btn-pill btn-wsp" target="_blank" href="https://wa.me/971554479709" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i>WhatsApp</a><a class="btn-pill" target="_blank" href="https://cbae.freshservice.com/support/tickets/new" rel="noopener">Raise Ticket</a></div>
-        </article>
+    <section class="workspace">
+      <section class="form-card" id="admin-ticket">
+        <div class="iframe-wrap">
+          <iframe aria-label="Admin Ticket Form" src="https://forms.zohopublic.com/mycbhelp1/form/adminticket2/formperma/tJLNu795U-GLf-yPhWjFgcUH9OXgi1op-W_YLVOQF8c"></iframe>
+        </div>
       </section>
 
-      <section class="quick-grid" aria-label="Quick access links">
-        <a class="quick-card holo-card policies" target="_blank" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" rel="noopener" data-keywords="policy, policies, guidelines, rules, company policy, procedure, procedures, compliance, handbook, staff rules, employee rules, office rules, company guidelines, hr policy, it policy, sales policy, process, process document, standard procedure, sop, terms, internal policy"><div class="quick-kicker">Guidelines</div><h3 class="quick-title">Policies</h3><span class="quick-button">Get Started</span></a>
-        <a class="quick-card holo-card manager" target="_blank" href="https://coldwellbankeruae.sharepoint.com/sites/CBManagersMarketingRequestPortal" rel="noopener" data-keywords="manager, managers, portal, manager portal, marketing request, team request, manager request, team portal, manager access, manager dashboard, request status, sales manager, line manager"><div class="quick-kicker">Access</div><h3 class="quick-title">Manager's Portal</h3><span class="quick-button">Open Portal</span></a>
-        <a class="quick-card holo-card hr" target="_blank" href="https://cbemirates.keka.com/" rel="noopener" data-keywords="hr, human resources, keka, leave, leaves, leave request, attendance, salary, payroll, payslip, employee, employees, onboarding, offboarding, joining, resignation, visa, visa status, labour, labor, insurance, medical insurance, employee document, hr document, hr support, hr request, annual leave, sick leave, attendance issue, keka issue, employee profile, employee letter, salary certificate, noc, hr form"><div class="quick-kicker">Portal</div><h3 class="quick-title">HR</h3><span class="quick-button">Open HR</span></a>
-        <a class="quick-card holo-card docs" target="_blank" href="https://coldwellbankeruae-my.sharepoint.com/my?id=%2Fpersonal%2Fzubair%5Fcbemirates%5Fae%2FDocuments%2FColdwell%20Banker%20Share%2FSales%20Forms&viewid=fc5427bf%2Dea1e%2D449d%2D9578%2D63de2e9d86f8" rel="noopener" data-keywords="document, documents, document center, forms, sales forms, templates, template, agreement, agreements, contract, contracts, files, file, download, sales document, property document, form template, company document, admin forms, hr forms, marketing templates, sharepoint, sales forms library, document library, pdf, word file, excel file, letterhead, invoice template, receipt template, agreement template"><div class="quick-kicker">Forms</div><h3 class="quick-title">Document Center</h3><span class="quick-button">Open Center</span></a>
-        <a class="quick-card holo-card assistant-card" target="_blank" href="assist-request.html" rel="noopener" data-keywords="help, assist, assistance, request assist, how may i help, how may i help you, listing help, listing guidance, how to do listing, form a, form b, form f, guidance, guide, support guidance, need help, how to, how to create listing, how to create form a, how to create form b, how to create form f, conveyancing help, sales help, admin guidance, process help, step by step, training, explain, instruction, support request"><div class="quick-kicker">Assistant</div><h3 class="quick-title">How May I Help You</h3><span class="quick-button btn-assist">Request Assist</span></a>
-      </section>
-      <p class="no-results" id="noSupportResults" hidden>No matching support option found.</p>
-    </main>
+      <aside class="side">
+        <section class="panel">
+          <div class="panel-title">
+            Services
+            <small>Quick actions</small>
+          </div>
+          <div class="buttons">
+            <a class="btn-card dark" href="https://cbae.freshservice.com/support/tickets/new" target="_blank" rel="noopener">
+              <strong>IT Helpdesk</strong>
+              <span>System, account, CRM and device support</span>
+            </a>
+            <a class="btn-card green" href="https://wa.me/971529236871" target="_blank" rel="noopener">
+              <strong>Admin WhatsApp</strong>
+              <span>Raise ticket through WhatsApp</span>
+            </a>
+            <a class="btn-card" href="#" target="_blank" rel="noopener">
+              <strong>IT WhatsApp</strong>
+              <span>Quick technical assistance</span>
+            </a>
+            <a class="btn-card" href="https://www.mycbverse.com/" target="_blank" rel="noopener">
+              <strong>Marketing</strong>
+              <span>Creative, media and campaign requests</span>
+            </a>
+            <a class="btn-card" href="https://forms.office.com/Pages/ResponsePage.aspx?id=FU7WuVni9kewI6CLXerb9LqtFKdo_AtBqCrLGMMVQGVUNThBMFpHOU1TQlNVSUZESkpQRzg4RVZYOS4u" target="_blank" rel="noopener">
+              <strong>Database Request</strong>
+              <span>Owner data, property records and reports</span>
+            </a>
+            <a class="btn-card" href="#" target="_blank" rel="noopener">
+              <strong>How May I Help</strong>
+              <span>Listing guidance and Form A/B/F support</span>
+            </a>
+          </div>
+        </section>
 
-    <footer class="site-footer" role="contentinfo">© 2026 Coldwell Banker UAE | Helpdesk</footer>
-  </div>
-
-  <script>
-  (function(){
-    const cards=document.querySelectorAll('.holo-card');
-    function setVars(el,x,y,rect){
-      const mx=((x-rect.left)/rect.width)*100;
-      const my=((y-rect.top)/rect.height)*100;
-      const ry=((mx-50)/50)*6;
-      const rx=((50-my)/50)*6;
-      el.style.setProperty('--mx',mx+'%');
-      el.style.setProperty('--my',my+'%');
-      el.style.setProperty('--rx',rx.toFixed(2)+'deg');
-      el.style.setProperty('--ry',ry.toFixed(2)+'deg');
-      el.style.setProperty('--s','1.018');
-      el.style.setProperty('--shine','.20');
-    }
-    function resetVars(el){
-      el.style.setProperty('--rx','0deg');
-      el.style.setProperty('--ry','0deg');
-      el.style.setProperty('--s','1.01');
-      el.style.setProperty('--shine','.12');
-      el.style.setProperty('--mx','50%');
-      el.style.setProperty('--my','50%');
-    }
-    cards.forEach(el=>{
-      el.addEventListener('mousemove',e=>{ const r=el.getBoundingClientRect(); setVars(el,e.clientX,e.clientY,r); },{passive:true});
-      el.addEventListener('mouseleave',()=>resetVars(el),{passive:true});
-    });
-
-    const search=document.getElementById('supportSearch');
-    const noResults=document.getElementById('noSupportResults');
-    const groups=document.querySelectorAll('.primary-grid,.quick-grid');
-    function updateSearch(){
-      const query=search.value.trim().toLowerCase();
-      let matches=0;
-      cards.forEach(card=>{
-        const haystack=(card.textContent+' '+(card.dataset.keywords||'')).toLowerCase();
-        const visible=!query || haystack.includes(query);
-        card.hidden=!visible;
-        if(visible) matches++;
-      });
-      groups.forEach(group=>{
-        const hasVisible=Array.from(group.querySelectorAll('.holo-card')).some(card=>!card.hidden);
-        group.hidden=query && !hasVisible;
-      });
-      noResults.hidden=!query || matches>0;
-    }
-    if(search){
-      search.addEventListener('input',updateSearch);
-      updateSearch();
-    }
-  })();
-  </script>
-
-  <!-- Zoho widget -->
-  <style>
-  :root{
-    --cb-color:#2563eb;
-    --cb-w:380px;
-    --cb-h:560px;
-    --cb-radius:16px;
-    --cb-z:2147483000;
-  }
-  #cb-wrap{ position:fixed; right:18px; bottom:18px; z-index:var(--cb-z); }
-  #cb-toggle{ position:fixed; right:18px; bottom:18px; width:1px; height:1px; opacity:0; pointer-events:none; }
-  #cb-btn{
-    position:fixed; right:18px; bottom:18px;
-    display:grid; place-items:center;
-    width:56px; height:56px; border-radius:999px;
-    background:var(--cb-color); color:#fff; cursor:pointer;
-    font:600 18px system-ui,-apple-system,Segoe UI,Roboto,Arial;
-    box-shadow:0 12px 30px rgba(0,0,0,.24);
-    user-select:none;
-  }
-  #cb-btn:active{ transform:translateY(1px); }
-  #cb-panel{
-    position:fixed; right:18px; bottom:86px;
-    width:var(--cb-w); height:var(--cb-h);
-    background:#fff; border-radius:var(--cb-radius);
-    box-shadow:0 18px 60px rgba(0,0,0,.28);
-    overflow:hidden; display:grid; grid-template-rows:auto 1fr;
-    opacity:0; transform:translateY(8px); pointer-events:none;
-    transition:opacity .18s ease, transform .18s ease;
-  }
-  #cb-toggle:checked ~ #cb-panel{ opacity:1; transform:translateY(0); pointer-events:auto; }
-  .cb-hdr{ display:flex; align-items:center; justify-content:space-between; padding:6px 10px; background:#0f172a; color:#fff; font:600 14px system-ui; height:44px; }
-  .cb-close{ cursor:pointer; color:#fff; background:none; border:0; font-size:20px; line-height:1; }
-  .cb-frame{ width:100%; height:100%; border:0; display:block; background:#f8fafc; }
-  @media (max-width:520px){
-    #cb-panel{ right:0; left:0; bottom:0; width:100vw; height:100svh; border-radius:0; grid-template-rows:44px 1fr; }
-    #cb-btn{ right:12px; bottom:calc(12px + env(safe-area-inset-bottom,0)); }
-  }
-  </style>
-
-  <div id="cb-wrap" aria-live="polite">
-    <input type="checkbox" id="cb-toggle" />
-    <label id="cb-btn" for="cb-toggle" aria-controls="cb-panel" aria-expanded="false" title="Open chat">💬</label>
-    <div id="cb-panel" role="dialog" aria-label="Policy Assistant">
-      <div class="cb-hdr"><span>Assistant</span><label for="cb-toggle" class="cb-close" title="Close">✕</label></div>
-      <iframe class="cb-frame" title="Policy Assistant" src="https://chatbot-y9yw.onrender.com/static/chat.html?embed=1&api=https://chatbot-y9yw.onrender.com" allow="clipboard-read; clipboard-write" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
-    </div>
-  </div>
+        <section class="panel">
+          <div class="panel-title">
+            Portals
+            <small>Links</small>
+          </div>
+          <div class="list">
+            <a class="small-btn" href="https://coldwellbankeruae.sharepoint.com/sites/CBManagersMarketingRequestPortal" target="_blank" rel="noopener">
+              <span class="tag">MP</span>
+              <span><strong>Manager Portal</strong><span class="meta">Approvals</span></span>
+            </a>
+            <a class="small-btn" href="https://cbemirates.keka.com/" target="_blank" rel="noopener">
+              <span class="tag">HR</span>
+              <span><strong>HR</strong><span class="meta">Keka portal</span></span>
+            </a>
+            <a class="small-btn" href="https://coldwellbankeruae.sharepoint.com/sites/pnp" target="_blank" rel="noopener">
+              <span class="tag">P</span>
+              <span><strong>Policies</strong><span class="meta">Company P&amp;P</span></span>
+            </a>
+            <a class="small-btn" href="https://coldwellbankeruae-my.sharepoint.com/my?id=%2Fpersonal%2Fzubair%5Fcbemirates%5Fae%2FDocuments%2FColdwell%20Banker%20Share%2FSales%20Forms&viewid=fc5427bf%2Dea1e%2D449d%2D9578%2D63de2e9d86f8" target="_blank" rel="noopener">
+              <span class="tag">DC</span>
+              <span><strong>Document Center</strong><span class="meta">Sales forms</span></span>
+            </a>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
 </body>
 </html>

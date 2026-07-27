@@ -2131,6 +2131,24 @@
       }
     }
 
+
+    /* Fix: remove old top navigation/slider controls */
+    .nav,
+    .dots,
+    .swiper-pagination,
+    .swiper-button-next,
+    .swiper-button-prev,
+    .carousel-dots,
+    .slider-dots {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    .topbar {
+      justify-content: flex-start;
+    }
+
   </style>
 </head>
 <body>
@@ -2150,14 +2168,7 @@
             <strong>CB HELPDESK</strong>
           </span>
         </a>
-
-        <nav class="nav" aria-label="Main navigation">
-          <a href="#" class="active">Home</a>
-          <a href="#support">Support</a>
-          <a href="#forms">Forms</a>
-          <a href="#policies">Policies</a>
-        </nav>
-      </header>
+</header>
 
       <section class="content">
         <div class="left">
@@ -2359,14 +2370,7 @@
         </div>
 
       </section>
-
-      <div class="dots" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      
-    </main>
+</main>
     <div class="page-footer">© 2026 Coldwell Banker UAE | Helpdesk</div>
   </div>
 

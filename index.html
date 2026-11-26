@@ -2565,6 +2565,23 @@
       }
     }
 
+    /* IT support emphasis; retain the shared tile sizing and grid. */
+    .tiles .tile-it {
+      --tile-badge: #67a4e7;
+      background: #315b9f;
+      color: #fff;
+      transition: background-color .2s ease;
+    }
+    .tiles .tile-it small,
+    .tiles .tile-it strong { color: #fff; }
+    .tiles .tile-it:hover,
+    .tiles .tile-it:focus-visible {
+      background: #214f88;
+      transform: none;
+    }
+    .tiles .tile-it:focus-visible { outline: 2px solid #67a4e7; outline-offset: 3px; }
+    .tiles .tile-it:hover .tile-icon,
+    .tiles .tile-it:hover::after { transform: none; }
   </style>
 </head>
 <body>
@@ -2632,7 +2649,7 @@
               <span><small>Request</small><strong>Database</strong></span>
             </a>
 
-            <a href="https://cbae.freshservice.com/support/tickets/new" class="tile tile-gold" target="_blank" rel="noopener">
+            <a href="it-support.html" class="tile tile-it">
               <span class="tile-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path d="M4.5 8.5A3.5 3.5 0 0 1 8 5h8a3.5 3.5 0 0 1 3.5 3.5v5A3.5 3.5 0 0 1 16 17H10l-3.5 2v-2A3.5 3.5 0 0 1 4.5 13.5v-5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -2702,10 +2719,6 @@
   <path d="M12.04 4.1a7.82 7.82 0 0 0-6.72 11.82L4.5 19.1l3.26-.78A7.82 7.82 0 1 0 12.04 4.1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
   <path d="M9.05 8.35c.18-.4.35-.42.63-.42h.47c.16 0 .37.04.56.45.21.48.72 1.77.78 1.9.06.13.1.29.02.47-.08.18-.13.29-.26.44-.13.15-.28.34-.4.46-.13.13-.27.27-.12.53.15.26.67 1.1 1.45 1.78 1 .86 1.84 1.13 2.1 1.27.26.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.26.35-.22.6-.13.24.09 1.52.72 1.78.85.26.13.43.2.5.31.06.11.06.64-.15 1.25-.21.6-1.23 1.15-1.7 1.2-.44.04-1 .06-1.62-.1-.37-.1-.85-.27-1.46-.53-2.57-1.11-4.25-3.7-4.38-3.88-.13-.18-1.04-1.38-1.04-2.64 0-1.26.66-1.88.9-2.14Z" fill="currentColor"/>
 </svg><span>Admin WhatsApp</span></a>
-              <a href="https://wa.me/971554479709" class="whatsapp whatsapp-action" target="_blank" rel="noopener"><svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true">
-  <path d="M12.04 4.1a7.82 7.82 0 0 0-6.72 11.82L4.5 19.1l3.26-.78A7.82 7.82 0 1 0 12.04 4.1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-  <path d="M9.05 8.35c.18-.4.35-.42.63-.42h.47c.16 0 .37.04.56.45.21.48.72 1.77.78 1.9.06.13.1.29.02.47-.08.18-.13.29-.26.44-.13.15-.28.34-.4.46-.13.13-.27.27-.12.53.15.26.67 1.1 1.45 1.78 1 .86 1.84 1.13 2.1 1.27.26.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.26.35-.22.6-.13.24.09 1.52.72 1.78.85.26.13.43.2.5.31.06.11.06.64-.15 1.25-.21.6-1.23 1.15-1.7 1.2-.44.04-1 .06-1.62-.1-.37-.1-.85-.27-1.46-.53-2.57-1.11-4.25-3.7-4.38-3.88-.13-.18-1.04-1.38-1.04-2.64 0-1.26.66-1.88.9-2.14Z" fill="currentColor"/>
-</svg><span>IT WhatsApp</span></a>
             </div>
           </section>
         </div>
@@ -2734,7 +2747,7 @@
               <span><small>Request</small><strong>Database</strong></span>
             </a>
 
-            <a href="https://cbae.freshservice.com/support/tickets/new" class="tile tile-gold" target="_blank" rel="noopener">
+            <a href="it-support.html" class="tile tile-it">
               <span class="tile-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path d="M4.5 8.5A3.5 3.5 0 0 1 8 5h8a3.5 3.5 0 0 1 3.5 3.5v5A3.5 3.5 0 0 1 16 17H10l-3.5 2v-2A3.5 3.5 0 0 1 4.5 13.5v-5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -2782,13 +2795,6 @@
               <path d="M9.05 8.35c.18-.4.35-.42.63-.42h.47c.16 0 .37.04.56.45.21.48.72 1.77.78 1.9.06.13.1.29.02.47-.08.18-.13.29-.26.44-.13.15-.28.34-.4.46-.13.13-.27.27-.12.53.15.26.67 1.1 1.45 1.78 1 .86 1.84 1.13 2.1 1.27.26.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.26.35-.22.6-.13.24.09 1.52.72 1.78.85.26.13.43.2.5.31.06.11.06.64-.15 1.25-.21.6-1.23 1.15-1.7 1.2-.44.04-1 .06-1.62-.1-.37-.1-.85-.27-1.46-.53-2.57-1.11-4.25-3.7-4.38-3.88-.13-.18-1.04-1.38-1.04-2.64 0-1.26.66-1.88.9-2.14Z" fill="currentColor"/>
             </svg>
             <span>Admin WhatsApp</span>
-          </a>
-          <a href="https://wa.me/971554479709" class="mobile-wa-btn" target="_blank" rel="noopener">
-            <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12.04 4.1a7.82 7.82 0 0 0-6.72 11.82L4.5 19.1l3.26-.78A7.82 7.82 0 1 0 12.04 4.1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M9.05 8.35c.18-.4.35-.42.63-.42h.47c.16 0 .37.04.56.45.21.48.72 1.77.78 1.9.06.13.1.29.02.47-.08.18-.13.29-.26.44-.13.15-.28.34-.4.46-.13.13-.27.27-.12.53.15.26.67 1.1 1.45 1.78 1 .86 1.84 1.13 2.1 1.27.26.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.26.35-.22.6-.13.24.09 1.52.72 1.78.85.26.13.43.2.5.31.06.11.06.64-.15 1.25-.21.6-1.23 1.15-1.7 1.2-.44.04-1 .06-1.62-.1-.37-.1-.85-.27-1.46-.53-2.57-1.11-4.25-3.7-4.38-3.88-.13-.18-1.04-1.38-1.04-2.64 0-1.26.66-1.88.9-2.14Z" fill="currentColor"/>
-            </svg>
-            <span>IT WhatsApp</span>
           </a>
         </div>
 

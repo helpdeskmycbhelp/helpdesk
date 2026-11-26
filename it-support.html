@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>IT Support | CB Helpdesk</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+    :root{
+      --page-bg-top:#203f5c;
+      --page-bg-bot:#102d49;
+      --panel:#ffffff;
+      --text:#122238;
+      --muted:#64748b;
+      --line:#dbe6f2;
+      --accent:#6d8eae;
+      --accent-2:#67A4E7;
+      --danger:#e85b4b;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{min-height:100%; margin:0; overflow-x:hidden;}
+    body{
+      font-family:'Montserrat',Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:#102d49;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background:url('assets/t.jpg') center/cover no-repeat;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background:
+        radial-gradient(900px 480px at 18% 8%, rgba(255,255,255,.09), transparent 60%),
+        radial-gradient(760px 420px at 82% 2%, rgba(103,164,231,.18), transparent 62%),
+        linear-gradient(180deg, rgba(34,64,90,.82), rgba(18,50,79,.88));
+    }
+
+    .it-page{
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      padding:34px 22px;
+    }
+
+    .it-shell{
+      width:min(100%, 980px);
+    }
+
+    .it-topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+      color:#fff;
+    }
+
+    .it-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .it-brand img{
+      height:36px;
+      width:auto;
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));
+    }
+
+    .it-brand-title{
+      font-size:13px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-weight:600;
+      opacity:.9;
+    }
+
+    .it-back{
+      color:#fff;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.20);
+      background:rgba(255,255,255,.08);
+      border-radius:999px;
+      padding:9px 15px;
+      font-size:13px;
+      font-weight:600;
+      backdrop-filter:blur(10px);
+      transition:.2s ease;
+    }
+
+    .it-back:hover{
+      background:rgba(255,255,255,.15);
+      transform:translateY(-1px);
+    }
+
+    .it-card{
+      display:grid;
+      grid-template-columns:1fr;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.20);
+      border-radius:28px;
+      background:rgba(255,255,255,.92);
+      box-shadow:0 34px 80px rgba(0,0,0,.34);
+      backdrop-filter:blur(18px);
+    }
+
+    .it-intro{
+      padding:34px;
+      color:#fff;
+      background:
+        radial-gradient(520px 280px at 10% 0%, rgba(255,255,255,.16), transparent 60%),
+        linear-gradient(160deg, #153555, #0b2137 72%);
+    }
+
+    .it-eyebrow{
+      color:#9fc3e6;
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      font-weight:700;
+      margin-bottom:16px;
+    }
+
+    .it-intro h1{
+      margin:0;
+      color:#fff;
+      font-size:clamp(28px,4vw,43px);
+      line-height:1.02;
+      letter-spacing:-.045em;
+      font-weight:700;
+    }
+
+    .it-intro p{
+      margin:18px 0 0;
+      color:#d4e3f4;
+      line-height:1.7;
+      font-size:14px;
+      max-width:600px;
+    }
+
+    .form-panel{
+      min-width:0;
+      padding:30px 34px 24px;
+      overflow:hidden;
+      background:linear-gradient(180deg, #ffffff, #f7faff);
+    }
+
+    .form-panel iframe{
+      display:block;
+      max-width:100%;
+    }
+
+    @media (max-width:820px){
+      .it-page{padding:20px 14px; place-items:start center;}
+      .it-topbar{margin-bottom:12px;}
+      .it-card{grid-template-columns:1fr; border-radius:22px;}
+      .it-intro{padding:26px 22px;}
+      .form-panel{padding:24px 20px 22px;}
+      .it-brand-title{display:none;}
+    }
+  </style>
+</head>
+<body>
+  <main class="it-page">
+    <div class="it-shell">
+      <div class="it-topbar">
+        <div class="it-brand">
+          <img src="assets/ff.png" alt="Coldwell Banker UAE logo">
+          <div class="it-brand-title">CB Helpdesk</div>
+        </div>
+        <a class="it-back" href="index.html">Back to Helpdesk</a>
+      </div>
+      <section class="it-card">
+        <aside class="it-intro">
+          <div class="it-eyebrow">IT support form</div>
+          <h1>IT Support</h1>
+          <p>Submit an IT support ticket using the form and our team will help you.</p>
+        </aside>
+        <div class="form-panel">
+          <iframe aria-label='IT Support Ticket Form' frameborder="0" style="height:500px;width:99%;border:none;" src='https://forms.zohopublic.com/mycbhelp1/form/ITSupportTicketForm/formperma/QTW8LAWxP1kb2--f1DpTMTJUfkhbBypGDI5A4ZvsCdE' >
+</iframe>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
